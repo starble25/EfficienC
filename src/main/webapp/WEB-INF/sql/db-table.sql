@@ -23,6 +23,38 @@ NOCYCLE;
 	values ( USERS_PK.nextval, '123@aaa.com', '11' );
 */
 
+/*
+	insert into users
+	values (
+	    USERS_PK.nextval,
+	    '123@aaa.com',
+	    '123',
+	    '홍길동',
+	    '010-1234-5678',
+	    '123456-7777777',
+	    'POS',
+	    'DEPT',
+	    systimestamp,
+	    systimestamp,
+	    '101'
+	);
+	
+	insert into users
+	values (
+	    USERS_PK.nextval,
+	    '456@aaa.com',
+	    '456',
+	    '김이름',
+	    '010-1111-2222',
+	    '123456-7777777',
+	    'POS-2',
+	    'DEPT-2',
+	    systimestamp,
+	    systimestamp,
+	    '102'
+	);
+*/
+
 -- 주소록
 CREATE TABLE ADDRESS (
 	id NUMBER PRIMARY KEY,
