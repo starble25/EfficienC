@@ -1,10 +1,17 @@
 package com.app.dao.user;
 
-import org.springframework.stereotype.Repository;
+import java.util.List;
 
 import com.app.dto.user.User;
 
-@Repository
-public interface userDAO {
+public interface UserDAO {
+	// Create
 	int saveUser(User user);
+	
+	// Read
+	List<User> findUserList();
+	User findUserById(String id);
+	
+	// Update
+	int modifyUser(User user);
 }
