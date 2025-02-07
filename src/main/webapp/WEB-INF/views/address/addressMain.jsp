@@ -1,5 +1,6 @@
 <!-- <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%> -->
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,6 +48,16 @@
                         <td>팀원</td>
                         <td><button type="button" class="btnDeleteRow">삭제</button></td>
                     </tr>
+                    <c:forEach var="user" items="${userList}">
+                    	<tr class="listRow">
+                        <td>${user.name}</td>
+                        <td>${user.tel}</td>
+                        <td>${user.email}</td>
+                        <td>${user.deptCode}</td>
+                        <td>${user.positionCode}</td>
+                        <td><button type="button" class="btnDeleteRow">삭제</button></td>
+                    </tr>
+                    </c:forEach>
                 </tbody>
             </table>
         </div>

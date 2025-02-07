@@ -17,6 +17,6 @@ public class User {
 	String deptCode;
 	LocalDateTime createdAt;
 	LocalDateTime updatedAt;
-	int cmp_id;
+	int cmpId;
 	
 }
