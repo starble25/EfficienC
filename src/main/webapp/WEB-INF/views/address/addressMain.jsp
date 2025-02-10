@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-<link href="/css/addressMain.css" rel="stylesheet">
+<link href="/css/addressMain.css?after" rel="stylesheet">
 <!-- <link href="../../../resources/css/addressMain.css" rel="stylesheet"> -->
 
 </head>
@@ -56,13 +56,36 @@
                         <td>${user.deptCode}</td>
                         <td>${user.positionCode}</td>
                         <td><button type="button" class="btnDeleteRow">삭제</button></td>
+						<jsp:include page="/WEB-INF/views/address/profileModal.jsp">
+						    <jsp:param name="name" value="${user.name}" />
+						    <jsp:param name="tel" value="${user.tel}" />
+						    <jsp:param name="email" value="${user.email}" />
+						    <jsp:param name="deptCode" value="${user.deptCode}" />
+						    <jsp:param name="positionCode" value="${user.positionCode}" />
+						</jsp:include>
                     </tr>
                     </c:forEach>
                 </tbody>
             </table>
         </div>
+        <!-- <jsp:include page="/WEB-INF/views/address/profileModal.jsp"></jsp:include> -->
 
 	<script src="/js/addressMain.js"></script>
 <!-- 	<script src="../../../resources/js/addressMain.js"></script> -->
+    <script>
+        const listRows = document.getElementsByClassName("listRow");
+        for (let row of listRows) {
+            row.addEventListener('click', () => {
+                document.querySelector(".modalBackground").style.display = "flex";
+            });
+        }
+
+        const modalBackground = document.querySelector(".modalBackground");
+        modalBackground.addEventListener('click', (event) => {
+            if (event.target === modalBackground) {
+                modalBackground.style.display = "none";
+            }
+        });
+    </script>
 </body>
 </html>
