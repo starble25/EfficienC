@@ -1,4 +1,4 @@
-package com.app.service;
+package com.app.service.user;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -16,4 +16,8 @@ public interface UserService {
 	
 	// Update
 	int modifyUser(User user);
+
+	boolean isEmailCheck(String getEmail);
+	
+	User checkUserLogin(User user);
 }

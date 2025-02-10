@@ -1,4 +1,4 @@
-package com.app.service.impl;
+package com.app.service.user.impl;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.app.dao.user.UserDAO;
 import com.app.dto.user.User;
-import com.app.service.UserService;
+import com.app.service.user.UserService;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -17,8 +17,9 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public int saveUser(User user) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = userDAO.saveUser(user);
+
+		return result;
 	}
 
 	@Override
@@ -37,6 +38,18 @@ public class UserServiceImpl implements UserService {
 	public int modifyUser(User user) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public boolean isEmailCheck(String getEmail) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public User checkUserLogin(User user) {
+		User loginUser = userDAO.checkUserLogin(user);
+		return loginUser;
 	}
 
 
