@@ -26,9 +26,9 @@
 			name="pw"><br> 비밀번호 확인<br>
 		</label>
 
-
+		<button type="submit">회원가입 하기</button>
 	</form>
-	<button type="submit">회원가입 하기</button>
+
 </body>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>

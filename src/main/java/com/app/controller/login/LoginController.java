@@ -37,7 +37,7 @@ public class LoginController {
 		if (result > 0) {
 			return "redirect:/login";
 		} else {
-			return "/signup";
+			return "login/signup";
 		}
 	}
 
