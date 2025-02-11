@@ -7,9 +7,18 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1>EfficionC</h1>
-<h3>아이디를 찾고자하는 아이디를 입력해주세요.</h3>
-<input type="text"><br><br>
-<button type=submit>다음</button>
+<h2>사용자 목록</h2>
+
+	<c:forEach var="user" items="${userList}">
+		
+		<p>
+		
+<%-- 		<a href="/admin/user/${user.id}"> --%>
+		
+		${user.id} ${user.pw} ${user.name}
+		</a>
+		</p>
+		</c:forEach>
+		
 </body>
 </html>
