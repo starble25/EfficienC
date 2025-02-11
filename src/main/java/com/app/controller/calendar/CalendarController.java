@@ -14,21 +14,21 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
-@RequestMapping("/calendar")
+@RequestMapping("/calendar")  // 📌 기본 URL = "/calendar"
 public class CalendarController {
 
     @Autowired
     private CalendarService calendarService;
 
-    // 일정 목록 가져오기 (JSP 페이지 이동)
-    @GetMapping
+    // 📌 기본 캘린더 페이지 이동 (JSP로 렌더링)
+    @GetMapping  // 📌 "/" 제거
     public String showCalendar(Model model) {
         List<CalendarDTO> events = calendarService.getAllEvents();
         model.addAttribute("events", events);
-        return "calendar/calendar"; // calendar.jsp로 이동
+        return "calendar/calendar"; // 📌 JSP 파일 위치 확인
     }
 
-    // 일정 추가 (폼에서 데이터 받아서 처리)
+    // 📌 일정 추가 (폼에서 데이터 받아서 처리)
     @PostMapping("/add")
     public String addEvent(@RequestParam String title, 
                            @RequestParam(required = false) String startDate, 
@@ -36,20 +36,24 @@ public class CalendarController {
 
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
-            
+
+            // 기본값 설정 (현재 시간)
+            LocalDateTime now = LocalDateTime.now();
+
             Timestamp startDateTime = (startDate != null && !startDate.isEmpty()) 
                 ? Timestamp.valueOf(LocalDateTime.parse(startDate, formatter)) 
-                : null;
+                : Timestamp.valueOf(now); // 기본값 현재 시간
 
             Timestamp endDateTime = (endDate != null && !endDate.isEmpty()) 
                 ? Timestamp.valueOf(LocalDateTime.parse(endDate, formatter)) 
-                : null;
+                : Timestamp.valueOf(now.plusHours(1)); // 기본값 현재 시간 + 1시간
 
+            // 📌 DTO 객체 생성
             CalendarDTO event = new CalendarDTO(0, title, startDateTime, endDateTime, "기본");
             calendarService.addEvent(event);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "redirect:/calendar"; // 일정 추가 후 다시 달력 페이지로 이동
+        return "redirect:/calendar"; // 📌 캘린더 페이지로 리디렉트
     }
 }

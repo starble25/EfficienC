@@ -12,7 +12,7 @@ import java.sql.Timestamp;
 public class CalendarDTO {
     private int id;
     private String title;
-    private Timestamp startDate;
-    private Timestamp endDate;
+    private Timestamp startDate;  // 📌 기존 String → Timestamp로 변경
+    private Timestamp endDate;    // 📌 기존 String → Timestamp로 변경
     private String category;
 }
