@@ -14,4 +14,6 @@ public interface UserDAO {
 	
 	// Update
 	int modifyUser(User user);
+	
+	User checkUserLogin(User user);
 }

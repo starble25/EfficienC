@@ -41,4 +41,11 @@ public class UserDAOImpl implements UserDAO {
 		return 0;
 	}
 
+	@Override
+	public User checkUserLogin(User user) {
+		User loginUser = sqlSessionTemplate.selectOne("user_mapper.checkUserLogin", user);
+
+		return loginUser;
+	}
+
 }
