@@ -4,16 +4,16 @@
 
 <mapper namespace="com.app.dao.calendar.CalendarDAO">
 
-    <!-- 모든 이벤트 조회 -->
+    <!-- 일정 조회 -->
     <select id="getAllEvents" resultType="com.app.dto.calendar.CalendarDTO">
-        SELECT id, title, start_date AS startDate, end_date AS endDate
+        SELECT id, title, start_date AS startDate, end_date AS endDate, category
         FROM calendar_events
     </select>
 
-    <!-- 새로운 이벤트 추가 -->
+    <!-- 일정 추가 -->
     <insert id="addEvent" parameterType="com.app.dto.calendar.CalendarDTO">
-        INSERT INTO calendar_events (id, title, start_date, end_date)
-        VALUES (#{id}, #{title}, #{startDate}, #{endDate})
+        INSERT INTO calendar_events (id, title, start_date, end_date, category)
+        VALUES (calendar_events_seq.NEXTVAL, #{title}, #{startDate, jdbcType=TIMESTAMP}, #{endDate, jdbcType=TIMESTAMP}, #{category})
     </insert>
 
 </mapper>
