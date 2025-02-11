@@ -58,8 +58,8 @@ NOCYCLE;
 -- 주소록
 CREATE TABLE ADDRESS (
 	id NUMBER PRIMARY KEY,
-    my_id NUMBER REFERENCES USERS(id) ON DELETE CASCADE,
-    add_id NUMBER REFERENCES USERS(id) ON DELETE CASCADE,
+    my_id NUMBER,
+    add_id NUMBER,
 	favorite VARCHAR(1)
 );
 
@@ -68,3 +68,13 @@ START WITH 1
 INCREMENT BY 1
 NOCYCLE;
 
+/*
+INSERT INTO address (id, my_id, add_id, favorite)
+VALUES (ADDRESS_PK.NEXTVAL, 1,
+(select id from users where cmp_id='101'), 
+'F');
+INSERT INTO address (id, my_id, add_id, favorite)
+VALUES (ADDRESS_PK.NEXTVAL, 1,
+(select id from users where cmp_id='102'), 
+'F');
+*/

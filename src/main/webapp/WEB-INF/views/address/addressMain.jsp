@@ -7,16 +7,15 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-<link href="/css/addressMain.css" rel="stylesheet">
-<!-- <link href="../../../resources/css/addressMain.css" rel="stylesheet"> -->
+<link href="/css/addressMain.css?after" rel="stylesheet">
 
 </head>
 <body>
 	<h1>주소록 메인 페이지</h1>
     <div class="addressMainContainer">
         <div class="searchBar">
-            <input type="text" placeholder="이름 또는 연락처로 검색">
-            <button>검색</button>
+            <input type="text" placeholder="이름 또는 이메일로 검색" name="search" value="${user.search}">
+            <button id="btnSearchUser">검색</button>
         </div>
         <div class="addressList">
             <table>
@@ -49,13 +48,29 @@
                         <td><button type="button" class="btnDeleteRow">삭제</button></td>
                     </tr>
                     <c:forEach var="user" items="${userList}">
-                    	<tr class="listRow">
+                        <tr 
+                            class="listRow" 
+                            userId="${user.id}", 
+                            userName="${user.name}",
+                            userTel="${user.tel}"
+                            userEmail="${user.email}"
+                            userDeptCode="${user.deptCode}"
+                            userPositionCode="${user.positionCode}"
+                        >
                         <td>${user.name}</td>
                         <td>${user.tel}</td>
                         <td>${user.email}</td>
                         <td>${user.deptCode}</td>
                         <td>${user.positionCode}</td>
                         <td><button type="button" class="btnDeleteRow">삭제</button></td>
+                        <%@ include file="/WEB-INF/views/address/profileModal.jsp" %>
+<%-- 						<jsp:include page="/WEB-INF/views/address/profileModal.jsp"> --%>
+<%--                             <jsp:param name="name" value="${user.name}" /> --%>
+<%--                             <jsp:param name="tel" value="${user.tel}" /> --%>
+<%--                             <jsp:param name="email" value="${user.email}" /> --%>
+<%--                             <jsp:param name="deptCode" value="${user.deptCode}" /> --%>
+<%--                             <jsp:param name="positionCode" value="${user.positionCode}" /> --%>
+<%-- 						</jsp:include> --%>
                     </tr>
                     </c:forEach>
                 </tbody>
@@ -63,6 +78,34 @@
         </div>
 
 	<script src="/js/addressMain.js"></script>
-<!-- 	<script src="../../../resources/js/addressMain.js"></script> -->
+    <script>
+        const listRows = document.getElementsByClassName("listRow");
+        for (let row of listRows) {
+            row.addEventListener('click', () => {
+                // 모달 div Id에 값 세팅
+                document.getElementById("modalName").innerText = row.getAttribute("userName");
+                document.getElementById("modalTel").innerText = row.getAttribute("userTel");
+                document.getElementById("modalEmail").innerText = row.getAttribute("userEmail");
+                document.getElementById("modalDeptCode").innerText = row.getAttribute("userDeptCode");
+                document.getElementById("modalPositionCode").innerText = row.getAttribute("userPositionCode");
+                
+                // 클릭 시 모달 열림
+                document.querySelector(".modalBackground").style.display = "flex";
+            });
+        }
+
+        const modalBackground = document.querySelector(".modalBackground");
+        // 클릭 시 모달 닫힘
+        modalBackground.addEventListener('click', (event) => {
+            if (event.target === modalBackground) {
+                modalBackground.style.display = "none";
+            }
+        });
+
+        const btnSearchUser = document.getElementById("btnSearchUser");
+        btnSearchUser.addEventListener('click', ()=> {
+
+        })
+    </script>
 </body>
 </html>
