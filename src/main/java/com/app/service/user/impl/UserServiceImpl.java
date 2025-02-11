@@ -24,6 +24,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public List<User> findUserList() {
+		System.out.println("userServiceImpl findUserList");
 		List<User> userList = userDAO.findUserList();
 		return userList;
 	}
