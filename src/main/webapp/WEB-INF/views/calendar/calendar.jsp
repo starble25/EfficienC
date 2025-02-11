@@ -1,156 +1,85 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="ko">
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>기업 캘린더</title>
+    <title>캘린더</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-        }
-
-        #calendar {
-            width: 80%;
-            margin: auto;
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 5px;
-            padding: 10px;
-        }
-
-        .day {
-            border: 1px solid #ddd;
-            padding: 20px;
-            min-height: 100px;
-            position: relative;
-            text-align: left;
-        }
-
-        .day-header {
-            font-weight: bold;
-            background: #f2f2f2;
-            padding: 10px;
-            text-align: center;
-        }
-
-        .event {
-            background: #3498db;
-            color: white;
-            padding: 5px;
-            border-radius: 3px;
-            font-size: 12px;
-            margin-top: 5px;
-        }
-
-        .controls {
-            margin: 20px;
-        }
-
-        button {
-            padding: 10px 15px;
-            margin: 5px;
-            font-size: 16px;
-        }
+        body { font-family: Arial, sans-serif; text-align: center; }
+        .calendar-container { width: 80%; margin: auto; }
+        .calendar-header { display: flex; justify-content: center; align-items: center; margin-bottom: 20px; }
+        .calendar-header button { margin: 0 10px; padding: 5px 10px; }
+        .calendar-table { width: 100%; border-collapse: collapse; }
+        .calendar-table th, .calendar-table td { width: 14.28%; border: 1px solid #ccc; padding: 15px; text-align: center; height: 80px; }
+        .calendar-table th { background: #f0f0f0; }
     </style>
-</head>
-<body>
-
-    <h1>캘린더</h1>
-
-    <div class="controls">
-        <button onclick="prevMonth()">이전</button>
-        <span id="monthYear"></span>
-        <button onclick="nextMonth()">다음</button>
-    </div>
-
-    <div id="calendar"></div>
-
     <script>
-        let currentYear, currentMonth;
-        const calendar = document.getElementById("calendar");
+        document.addEventListener("DOMContentLoaded", function() {
+            let currentDate = new Date();
+            renderCalendar(currentDate);
 
-        function generateCalendar(year, month) {
-            calendar.innerHTML = ""; // 기존 내용 초기화
-
-            const firstDay = new Date(year, month, 1).getDay();
-            const lastDate = new Date(year, month + 1, 0).getDate();
-            document.getElementById("monthYear").innerText = `${year}년 ${month + 1}월`;
-
-            // 요일 헤더 추가
-            const days = ["일", "월", "화", "수", "목", "금", "토"];
-            days.forEach(day => {
-                const header = document.createElement("div");
-                header.classList.add("day-header");
-                header.innerText = day;
-                calendar.appendChild(header);
+            document.getElementById("prevMonth").addEventListener("click", function() {
+                currentDate.setMonth(currentDate.getMonth() - 1);
+                renderCalendar(currentDate);
             });
 
-            // 빈 칸 추가 (첫 주 요일 맞추기)
-            for (let i = 0; i < firstDay; i++) {
-                const emptyCell = document.createElement("div");
-                emptyCell.classList.add("day");
-                calendar.appendChild(emptyCell);
-            }
-
-            // 날짜 채우기
-            for (let date = 1; date <= lastDate; date++) {
-                const dayCell = document.createElement("div");
-                dayCell.classList.add("day");
-                dayCell.innerHTML = `<strong>${date}</strong>`;
-                dayCell.setAttribute("data-date", `${year}-${month + 1}-${date}`);
-
-                calendar.appendChild(dayCell);
-            }
-
-            // 서버에서 일정 불러오기
-            loadEvents();
-        }
-
-        function loadEvents() {
-            fetch('/calendar/events')  // 서버에서 일정 데이터 가져오기
-                .then(response => response.json())
-                .then(events => {
-                    events.forEach(event => {
-                        const startDate = new Date(event.start);
-                        const eventDay = document.querySelector(`[data-date="${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate()}"]`);
-                        if (eventDay) {
-                            const eventElement = document.createElement("div");
-                            eventElement.classList.add("event");
-                            eventElement.innerText = event.title;
-                            eventDay.appendChild(eventElement);
-                        }
-                    });
-                })
-                .catch(error => console.error("Error loading events:", error));
-        }
-
-        function prevMonth() {
-            currentMonth--;
-            if (currentMonth < 0) {
-                currentMonth = 11;
-                currentYear--;
-            }
-            generateCalendar(currentYear, currentMonth);
-        }
-
-        function nextMonth() {
-            currentMonth++;
-            if (currentMonth > 11) {
-                currentMonth = 0;
-                currentYear++;
-            }
-            generateCalendar(currentYear, currentMonth);
-        }
-
-        // 초기 실행
-        document.addEventListener("DOMContentLoaded", function () {
-            const today = new Date();
-            currentYear = today.getFullYear();
-            currentMonth = today.getMonth();
-            generateCalendar(currentYear, currentMonth);
+            document.getElementById("nextMonth").addEventListener("click", function() {
+                currentDate.setMonth(currentDate.getMonth() + 1);
+                renderCalendar(currentDate);
+            });
         });
-    </script>
 
+        function renderCalendar(date) {
+            const year = date.getFullYear();
+            const month = date.getMonth();
+            const firstDay = new Date(year, month, 1).getDay();
+            const lastDate = new Date(year, month + 1, 0).getDate();
+            
+            document.getElementById("calendarTitle").innerText = `${year}년 ${month + 1}월`;
+
+            let tableBody = document.getElementById("calendarBody");
+            tableBody.innerHTML = "";
+
+            let row = document.createElement("tr");
+            for (let i = 0; i < firstDay; i++) {
+                row.appendChild(document.createElement("td"));
+            }
+
+            for (let day = 1; day <= lastDate; day++) {
+                if (row.children.length === 7) {
+                    tableBody.appendChild(row);
+                    row = document.createElement("tr");
+                }
+                let cell = document.createElement("td");
+                cell.innerText = day;
+                row.appendChild(cell);
+            }
+            tableBody.appendChild(row);
+        }
+    </script>
+</head>
+<body>
+    <div class="calendar-container">
+        <h2>캘린더</h2>
+        <div class="calendar-header">
+            <button id="prevMonth">이전</button>
+            <h3 id="calendarTitle"></h3>
+            <button id="nextMonth">다음</button>
+        </div>
+        <table class="calendar-table">
+            <thead>
+                <tr>
+                    <th>일</th>
+                    <th>월</th>
+                    <th>화</th>
+                    <th>수</th>
+                    <th>목</th>
+                    <th>금</th>
+                    <th>토</th>
+                </tr>
+            </thead>
+            <tbody id="calendarBody"></tbody>
+        </table>
+    </div>
 </body>
 </html>
