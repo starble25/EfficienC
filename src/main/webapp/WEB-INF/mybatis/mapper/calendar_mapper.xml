@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.app.dao.calendar.CalendarDAO">
+
+    <!-- 모든 이벤트 조회 -->
+    <select id="getAllEvents" resultType="com.app.dto.calendar.CalendarDTO">
+        SELECT id, title, start_date AS startDate, end_date AS endDate
+        FROM calendar_events
+    </select>
+
+    <!-- 새로운 이벤트 추가 -->
+    <insert id="addEvent" parameterType="com.app.dto.calendar.CalendarDTO">
+        INSERT INTO calendar_events (id, title, start_date, end_date)
+        VALUES (#{id}, #{title}, #{startDate}, #{endDate})
+    </insert>
+
+</mapper>
