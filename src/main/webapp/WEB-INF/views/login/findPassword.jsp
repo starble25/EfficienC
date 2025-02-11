@@ -7,11 +7,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h3>비밀번호 재설정을 위해 사용자 확인을 진행합니다.</h3>
-
-<button type=submit>휴대폰 본인인증</button>
-
-<!-- 이후 창 팝업 되며 휴대전화 인증 -->
-
+<h1>EfficionC</h1>
+<h3>비밀번호를 찾고자하는 아이디를 입력해주세요.</h3>
+<input type="text"><br><br>
+<button type=submit>다음</button>
 </body>
 </html>

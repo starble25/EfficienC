@@ -17,8 +17,8 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public int saveUser(User user) {
-		int result = sqlSessionTemplate.insert("user_mapper.saveUser", user);
-		return result;
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	@Override
@@ -39,13 +39,6 @@ public class UserDAOImpl implements UserDAO {
 	public int modifyUser(User user) {
 		// TODO Auto-generated method stub
 		return 0;
-	}
-
-	@Override
-	public User checkUserLogin(User user) {
-		User loginUser = sqlSessionTemplate.selectOne("user_mapper.checkUserLogin", user);
-
-		return loginUser;
 	}
 
 }

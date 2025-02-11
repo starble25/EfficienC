@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-로그인 후
+
 </body>
 </html>
