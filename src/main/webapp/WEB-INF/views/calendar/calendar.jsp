@@ -12,10 +12,18 @@
 </head>
 <body>
 
-    <!-- 📌 왼쪽 메뉴 -->
+    <!-- 📌 왼쪽 메뉴 (카테고리별 필터 추가) -->
     <div class="sidebar">
         <h3>📅 캘린더</h3>
         <button id="openModalBtn">일정 등록</button>
+        <h4>📌 일정 카테고리</h4>
+        <ul class="category-list">
+            <li><input type="checkbox" class="category-filter" value="전체" checked> 전체</li>
+            <li><input type="checkbox" class="category-filter" value="회의" checked> 회의</li>
+            <li><input type="checkbox" class="category-filter" value="마감일" checked> 마감일</li>
+            <li><input type="checkbox" class="category-filter" value="워크샵" checked> 워크샵</li>
+            <li><input type="checkbox" class="category-filter" value="외부 일정" checked> 외부 일정</li>
+        </ul>
     </div>
 
     <!-- 📌 캘린더 컨테이너 -->

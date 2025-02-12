@@ -37,9 +37,9 @@ th {
 }
 
 .today {
-    background-color: #ffeb3b;
+    background-color:#D4F4FA;
     font-weight: bold;
-    border-radius: 50%;
+    /* border-radius: 50%; */
 }
 
 .event {
