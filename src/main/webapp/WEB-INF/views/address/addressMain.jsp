@@ -99,7 +99,10 @@
                         <td>${user.email}</td>
                         <td>${user.deptCode}</td>
                         <td>${user.positionCode}</td>
-                        <td><button type="button" class="btnAddUser">추가</button></td>
+                        <td><button 
+                                type="button" class="btnAddUser" 
+                                data-user-id="${user.id}" 
+                            >추가</button></td>
                         <%@ include file="/WEB-INF/views/address/profileModal.jsp" %>
                     	</tr>
                     </c:forEach>
@@ -110,6 +113,7 @@
         </div>
 
 	<script src="/js/addressMain.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
         const listRows = document.getElementsByClassName("listRow");
         for (let row of listRows) {
@@ -143,18 +147,31 @@
 
         // 주소록 추가
         const btnAddUser = document.querySelectorAll(".btnAddUser");
-        function addUser(userId) {
-            
-        }
-
-        // 검색
-//         const btnSearchUser = document.getElementById("btnSearchUser");
-//         const myAddressList = document.getElementById("myAddressList");
-//         const searchUserList = document.getElementById("searchUserList");
-//         btnSearchUser.addEventListener('click', ()=> {
-//             myAddressList.style.display = "none";
-//             searchUserList.style.display = "";
-//         });
+        btnAddUser.forEach( button => {
+            button.addEventListener('click', (event) => {
+                const userId = event.target.getAttribute("data-user-id");
+                console.log("userId : " + userId);
+                
+                $.ajax({
+    				type: "POST",
+    				url: "http://localhost:8080/address/addUser",
+    				headers:{
+    					"Content-type":"application/json;"
+    				},
+    				data: userId,
+    				success: function(result){
+    					console.log("ajax success");
+    					
+    					//실행할 코드
+    					
+    				},
+    				error: function(error){
+    					console.log("addressMain.jsp btnAddUser ajax error")
+    					console.log(error);
+    				}
+    			});
+            });
+        })
 
     </script>
 </body>

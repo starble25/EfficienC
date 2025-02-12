@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.app.dto.user.User;
 import com.app.service.address.AddressService;
@@ -38,7 +40,7 @@ public class AddressController {
 			System.out.println(user.toString());
 		}
 		
-//		showAddress : 1)내 주소록 2)검색결과 주소록
+//		showAddress : 1 = 내 주소록, 2 = 검색결과 주소록
 		int showAddress = 1;
 		model.addAttribute("showAddress", showAddress);
 		
@@ -85,6 +87,14 @@ public class AddressController {
         }
         
         return "redirect:/address";
+	}
+	
+	// 주소록 추가
+	@ResponseBody
+	@PostMapping("address/addUser")
+	public void addUser(@RequestBody String data) {
+		System.out.println("address/adddUser ajax post");
+		System.out.println("data : " + data);
 	}
 	
 }
