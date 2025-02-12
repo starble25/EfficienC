@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     let currentDate = new Date();
+    let currentView = "monthly";
 
     function updateCalendar() {
         const year = currentDate.getFullYear();
@@ -20,11 +21,9 @@ document.addEventListener("DOMContentLoaded", function () {
         for (let date = 1; date <= lastDate; date++) {
             let cell = document.createElement("td");
             let formattedDate = `${year}-${String(month + 1).padStart(2, '0')}-${String(date).padStart(2, '0')}`;
-            cell.innerText = date;
             cell.setAttribute("data-date", formattedDate);
-            cell.addEventListener("click", () => showEventDetails(formattedDate));
+            cell.innerHTML = `<strong>${date}</strong> <ul class="event-list"></ul>`;
 
-            // 📌 오늘 날짜 노란색 강조
             if (formattedDate === today) {
                 cell.classList.add("today");
             }
@@ -52,10 +51,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     calendarCells.forEach(cell => {
                         if (cell.getAttribute("data-date") === formattedDate) {
-                            let eventDiv = document.createElement("div");
-                            eventDiv.classList.add("event");
-                            eventDiv.innerText = event.title;
-                            cell.appendChild(eventDiv);
+                            let eventList = cell.querySelector(".event-list");
+                            let eventItem = document.createElement("li");
+                            eventItem.innerText = `${event.startTime} ${event.title}`;
+                            eventItem.classList.add(event.category.toLowerCase());
+                            eventList.appendChild(eventItem);
                         }
                     });
                 });
@@ -68,11 +68,12 @@ document.addEventListener("DOMContentLoaded", function () {
         updateCalendar();
     };
 
-    document.getElementById("openEventPopupBtn").addEventListener("click", function () {
-        let popupUrl = "/calendar/event-form";
-        let popupOptions = "width=500,height=600,top=100,left=200,scrollbars=yes";
-        window.open(popupUrl, "EventPopup", popupOptions);
-    });
+    window.changeView = function (view) {
+        document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.remove("active"));
+        document.querySelector(`.tab-btn[onclick="changeView('${view}')"]`).classList.add("active");
+        currentView = view;
+        updateCalendar();
+    };
 
     updateCalendar();
 });

@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -6,7 +6,6 @@
     <meta charset="UTF-8">
     <title>캘린더</title>
 
-    <!-- 📌 JSTL을 활용한 정적 리소스 로드 -->
     <link rel="stylesheet" href="<c:url value='/css/calendar.css'/>">
     <script src="<c:url value='/js/calendar.js'/>" defer></script>
 </head>
@@ -15,15 +14,16 @@
     <!-- 📌 왼쪽 사이드바 -->
     <div class="sidebar">
         <h3>📅 캘린더</h3>
-        <button id="openEventPopupBtn">일정 등록</button>
-        <h4>📌 일정 카테고리</h4>
-        <ul class="category-list">
-            <li><input type="checkbox" class="category-filter" value="전체" checked> 전체</li>
-            <li><input type="checkbox" class="category-filter" value="회의" checked> 회의</li>
-            <li><input type="checkbox" class="category-filter" value="마감일" checked> 마감일</li>
-            <li><input type="checkbox" class="category-filter" value="워크샵" checked> 워크샵</li>
-            <li><input type="checkbox" class="category-filter" value="외부 일정" checked> 외부 일정</li>
+        <button id="openModalBtn">일정 등록</button>
+
+        <h4 class="calendar-category">내 캘린더</h4>
+        <ul class="calendar-list">
+            <li><span class="color-dot blue"></span> 내 일정(기본)</li>
+            <li><span class="color-dot green"></span> 중요</li>
+            <li><span class="color-dot red"></span> 연차</li>
         </ul>
+
+        <span class="add-calendar">+ 내 캘린더 추가</span>
     </div>
 
     <!-- 📌 캘린더 컨테이너 -->
@@ -46,18 +46,9 @@
                 </tr>
             </thead>
             <tbody id="calendar-body">
-                <!-- 📌 JS에서 동적으로 생성 -->
             </tbody>
         </table>
     </div>
-
-    <script>
-        document.getElementById("openEventPopupBtn").addEventListener("click", function () {
-            let popupUrl = "/calendar/event-form";
-            let popupOptions = "width=500,height=600,top=100,left=200,scrollbars=yes";
-            window.open(popupUrl, "EventPopup", popupOptions);
-        });
-    </script>
 
 </body>
 </html>

@@ -10,7 +10,7 @@ body {
 
 /* 📌 왼쪽 사이드바 (고정 위치) */
 .sidebar {
-    width: 260px; /* 기존 250px → 260px */
+    width: 260px;
     height: 100vh;
     background-color: #f8f9fa;
     padding: 20px;
@@ -19,13 +19,74 @@ body {
     left: 0;
     top: 0;
     overflow-y: auto;
-    z-index: 10; /* 캘린더 위에 고정 */
+    z-index: 10;
 }
 
-/* 📌 캘린더가 사이드바와 겹치지 않도록 여백 추가 */
+/* 📌 "일정 등록" 버튼 */
+.sidebar button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-bottom: 15px;
+}
+
+.sidebar button:hover {
+    background-color: #0056b3;
+}
+
+/* 📌 캘린더 카테고리 목록 */
+.calendar-category {
+    text-align: left;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.calendar-list {
+    list-style: none;
+    padding: 0;
+}
+
+.calendar-list li {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+/* 📌 색상 표시 */
+.color-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.blue { background-color: #007bff; }
+.green { background-color: #28a745; }
+.red { background-color: #dc3545; }
+
+/* 📌 "내 캘린더 추가" */
+.add-calendar {
+    color: #007bff;
+    font-size: 13px;
+    cursor: pointer;
+    margin-top: 10px;
+    display: inline-block;
+}
+
+.add-calendar:hover {
+    text-decoration: underline;
+}
+
+/* 📌 캘린더 컨테이너 */
 .calendar-container {
-    width: calc(100% - 280px); /* 사이드바 너비 고려 */
-    margin-left: 280px; /* 사이드바와의 간격 확보 */
+    width: calc(100% - 280px);
+    margin-left: 280px;
     padding: 20px;
     overflow-x: auto;
     overflow-y: hidden;
@@ -46,6 +107,7 @@ th, td {
     text-align: left;
     vertical-align: top;
     padding: 10px;
+    position: relative;
 }
 
 /* 📌 오늘 날짜 강조 (노란색) */
@@ -56,54 +118,17 @@ th, td {
 
 /* 📌 일정 스타일 */
 .event {
-    background-color: #4CAF50;
     color: white;
     font-size: 12px;
     padding: 5px;
     margin-top: 5px;
     border-radius: 3px;
     display: inline-block;
-    width: 90%;
-    text-align: center;
+    width: 95%;
+    text-align: left;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-}
-
-/* 📌 일정 카테고리 색상 */
-.event.meeting { background-color: #1E88E5; }   /* 회의 (파란색) */
-.event.deadline { background-color: #E53935; }  /* 마감일 (빨간색) */
-.event.workshop { background-color: #FB8C00; }  /* 워크샵 (주황색) */
-.event.external { background-color: #43A047; }  /* 외부 일정 (초록색) */
-
-/* 📌 모달창 스타일 */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 20;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 400px;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    padding: 20px;
-}
-
-.modal-content {
-    text-align: left;
-}
-
-.modal-content h3 {
-    margin-top: 0;
-}
-
-.close {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    cursor: pointer;
-    font-size: 18px;
+    padding-left: 10px;
     font-weight: bold;
 }
