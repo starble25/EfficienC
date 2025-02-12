@@ -29,11 +29,13 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             row.appendChild(cell);
+
             if ((firstDay + date) % 7 === 0 || date === lastDate) {
                 calendarBody.appendChild(row);
                 row = document.createElement("tr");
             }
         }
+
         loadEvents();
     }
 
@@ -46,17 +48,24 @@ document.addEventListener("DOMContentLoaded", function () {
         fetch("/calendar/events")
             .then(response => response.json())
             .then(events => {
-                events.forEach(event => {
-                    let eventDate = new Date(event.start);
-                    let day = eventDate.getDate();
-                    let cells = document.querySelectorAll("#calendar-body td");
+                let calendarCells = document.querySelectorAll("#calendar-body td");
 
-                    cells.forEach(cell => {
-                        if (parseInt(cell.innerText) === day) {
+                events.forEach(event => {
+                    let eventDate = new Date(event.startDate);
+                    let eventYear = eventDate.getFullYear();
+                    let eventMonth = eventDate.getMonth();
+                    let eventDay = eventDate.getDate();
+
+                    calendarCells.forEach(cell => {
+                        let cellDate = cell.getAttribute("data-date");
+
+                        if (cellDate === `${eventYear}-${String(eventMonth + 1).padStart(2, '0')}-${String(eventDay).padStart(2, '0')}`) {
                             let eventDiv = document.createElement("div");
                             eventDiv.classList.add("event");
                             eventDiv.innerText = event.title;
-                            cell.appendChild(eventDiv);
+                            if (!cell.querySelector(".event")) {
+                                cell.appendChild(eventDiv);
+                            }
                         }
                     });
                 });
@@ -64,51 +73,13 @@ document.addEventListener("DOMContentLoaded", function () {
             .catch(error => console.error("Error loading events:", error));
     }
 
+    document.getElementById("openModalBtn").addEventListener("click", function () {
+        document.getElementById("eventModal").style.display = "block";
+    });
+
+    document.querySelector(".close").addEventListener("click", function () {
+        document.getElementById("eventModal").style.display = "none";
+    });
+
     updateCalendar();
-
-    // ✅ 모달창 제어
-    const modal = document.getElementById("eventModal");
-    const openModalBtn = document.getElementById("openModalBtn");
-    const closeModalBtn = document.querySelector(".close");
-    const eventForm = document.getElementById("eventForm");
-
-    openModalBtn.addEventListener("click", () => {
-        modal.style.display = "block";
-    });
-
-    closeModalBtn.addEventListener("click", () => {
-        modal.style.display = "none";
-    });
-
-    window.onclick = function (event) {
-        if (event.target === modal) {
-            modal.style.display = "none";
-        }
-    };
-
-    eventForm.addEventListener("submit", function (event) {
-        event.preventDefault();
-
-        const title = document.getElementById("title").value;
-        const startDate = document.getElementById("startDate").value;
-        const endDate = document.getElementById("endDate").value;
-        const category = document.getElementById("category").value;
-
-        fetch("/calendar/add", {
-            method: "POST",
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            body: new URLSearchParams({ title, startDate, endDate, category })
-        })
-            .then(response => response.text())
-            .then(result => {
-                if (result === "success") {
-                    alert("일정이 추가되었습니다!");
-                    modal.style.display = "none";
-                    updateCalendar();
-                } else {
-                    alert("일정 추가 실패!");
-                }
-            })
-            .catch(error => console.error("Error adding event:", error));
-    });
 });

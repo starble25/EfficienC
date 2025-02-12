@@ -20,7 +20,7 @@ public class CalendarController {
     @Autowired
     private CalendarService calendarService;
 
-    // 📌 캘린더 페이지 렌더링
+    // 📌 캘린더 페이지 렌더링 (JSP로 이동)
     @GetMapping
     public String showCalendar(Model model) {
         List<CalendarDTO> events = calendarService.getAllEvents();
@@ -28,11 +28,18 @@ public class CalendarController {
         return "calendar/calendar";
     }
 
-    // 📌 모든 일정 조회 (JSON 응답)
+    // 📌 모든 일정 조회 (JSON 응답 - 달력에 표시됨)
     @GetMapping("/events")
     @ResponseBody
     public List<CalendarDTO> getAllEvents() {
         return calendarService.getAllEvents();
+    }
+
+    // 📌 특정 일정 조회 (ID 기반)
+    @GetMapping("/event/{id}")
+    @ResponseBody
+    public CalendarDTO getEventById(@PathVariable("id") int id) {
+        return calendarService.getEventById(id);
     }
 
     // 📌 일정 추가 (모달창에서 등록된 데이터 저장)
@@ -41,7 +48,7 @@ public class CalendarController {
     public String addEvent(@RequestParam String title, 
                            @RequestParam String startDate, 
                            @RequestParam String endDate,
-                           @RequestParam String category) {
+                           @RequestParam(required = false, defaultValue = "기본") String category) {
 
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");

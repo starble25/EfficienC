@@ -5,7 +5,8 @@ import java.util.List;
 
 public interface CalendarService {
     List<CalendarDTO> getAllEvents();
+    CalendarDTO getEventById(int id); // 📌 특정 일정 조회 추가
     void addEvent(CalendarDTO event);
-    void deleteEvent(int id);  // ✅ 추가
-    void updateEvent(CalendarDTO event);  // ✅ 추가
+    void deleteEvent(int id);
+    void updateEvent(CalendarDTO event);
 }
