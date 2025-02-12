@@ -3,79 +3,109 @@
 body {
     font-family: Arial, sans-serif;
     text-align: center;
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
 }
 
+/* 📌 왼쪽 사이드바 (고정 위치) */
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background-color: #f8f9fa;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    left: 0;
+    top: 0;
+    overflow-y: auto;
+}
+
+/* 📌 사이드바와 캘린더 사이 간격 추가 */
+.sidebar + .calendar-container {
+    margin-left: 280px; /* 기존 250px → 280px로 변경 */
+}
+
+/* 📌 일정 카테고리 */
+.category-list {
+    list-style: none;
+    padding: 0;
+    text-align: left;
+}
+
+.category-list li {
+    margin: 5px 0;
+}
+
+/* 📌 캘린더 컨테이너 (왼쪽 여백 고려) */
 .calendar-container {
-    width: 80%;
-    margin: 0 auto;
+    width: calc(100% - 280px); /* 사이드바 간격 추가 반영 */
+    padding: 20px;
+    overflow-x: auto;
+    overflow-y: hidden;
 }
 
+/* 📌 캘린더 테이블 */
 table {
     width: 100%;
+    min-width: 800px;
     border-collapse: collapse;
     table-layout: fixed;
 }
 
 th, td {
     width: 14.28%;
-    height: 80px;
+    height: 100px;
     border: 1px solid #ccc;
-    text-align: center;
+    text-align: left;
     vertical-align: top;
+    padding: 10px; /* 간격 추가 */
 }
 
-th {
-    background-color: #f5f5f5;
-    font-weight: bold;
-}
-
-.nav-buttons {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 10px;
-}
-
-.today {
-    background-color:#D4F4FA;
-    font-weight: bold;
-    /* border-radius: 50%; */
-}
-
+/* 📌 캘린더 내의 일정 간격 추가 */
 .event {
     background-color: #4CAF50;
     color: white;
     font-size: 12px;
-    padding: 3px;
+    padding: 5px;
     margin-top: 5px;
     border-radius: 3px;
+    display: inline-block;
+    width: 90%; /* 기존 100% → 90% */
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /* 📌 모달창 스타일 */
 .modal {
     display: none;
     position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 10;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 20px;
 }
 
 .modal-content {
-    background-color: white;
-    margin: 15% auto;
-    padding: 20px;
-    width: 300px;
-    border-radius: 8px;
-    position: relative;
+    text-align: left;
+}
+
+.modal-content h3 {
+    margin-top: 0;
 }
 
 .close {
     position: absolute;
+    right: 10px;
     top: 10px;
-    right: 15px;
-    font-size: 20px;
     cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
 }
