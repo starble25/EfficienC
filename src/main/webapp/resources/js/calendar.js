@@ -4,77 +4,84 @@ document.addEventListener("DOMContentLoaded", function () {
     function updateCalendar() {
         const year = currentDate.getFullYear();
         const month = currentDate.getMonth();
-        const firstDay = new Date(year, month, 1).getDay();
-        const lastDate = new Date(year, month + 1, 0).getDate();
-        const today = new Date();
-
         document.getElementById("current-year-month").innerText = `${year}년 ${month + 1}월`;
 
+        let firstDay = new Date(year, month, 1).getDay();
+        let lastDate = new Date(year, month + 1, 0).getDate();
+        let today = new Date();
         let calendarBody = document.getElementById("calendar-body");
         calendarBody.innerHTML = "";
 
         let row = document.createElement("tr");
-
         for (let i = 0; i < firstDay; i++) {
-            let emptyCell = document.createElement("td");
-            row.appendChild(emptyCell);
+            row.appendChild(document.createElement("td"));
         }
 
         for (let date = 1; date <= lastDate; date++) {
             let cell = document.createElement("td");
-            let dateNumber = document.createElement("span");
-            dateNumber.classList.add("date-number");
-            dateNumber.innerText = date;
-
-            cell.appendChild(dateNumber);
+            cell.innerText = date;
             cell.setAttribute("data-date", `${year}-${String(month + 1).padStart(2, '0')}-${String(date).padStart(2, '0')}`);
 
-            // 📌 오늘 날짜 강조
             if (year === today.getFullYear() && month === today.getMonth() && date === today.getDate()) {
                 cell.classList.add("today");
             }
 
             row.appendChild(cell);
-
             if ((firstDay + date) % 7 === 0 || date === lastDate) {
                 calendarBody.appendChild(row);
                 row = document.createElement("tr");
             }
         }
-
         loadEvents();
     }
-
-    window.changeMonth = function (change) {
-        currentDate.setMonth(currentDate.getMonth() + change);
-        updateCalendar();
-    };
 
     function loadEvents() {
         fetch("/calendar/events")
             .then(response => response.json())
             .then(events => {
                 let calendarCells = document.querySelectorAll("#calendar-body td");
-
                 events.forEach(event => {
-                    let eventDate = new Date(event.start);
-                    let formattedDate = `${eventDate.getFullYear()}-${String(eventDate.getMonth() + 1).padStart(2, '0')}-${String(eventDate.getDate()).padStart(2, '0')}`;
+                    let eventDate = new Date(event.startDate);
+                    let eventDay = eventDate.getDate();
 
                     calendarCells.forEach(cell => {
-                        if (cell.getAttribute("data-date") === formattedDate) {
+                        if (parseInt(cell.innerText) === eventDay) {
                             let eventDiv = document.createElement("div");
                             eventDiv.classList.add("event");
                             eventDiv.innerText = event.title;
-
-                            if (!cell.querySelector(".event")) {
-                                cell.appendChild(eventDiv);
-                            }
+                            cell.appendChild(eventDiv);
                         }
                     });
                 });
-            })
-            .catch(error => console.error("Error loading events:", error));
+            });
     }
+
+    document.getElementById("eventForm").addEventListener("submit", function (event) {
+        event.preventDefault();
+        let eventData = {
+            title: document.getElementById("title").value,
+            startDate: document.getElementById("startDate").value,
+            endDate: document.getElementById("endDate").value,
+            category: document.getElementById("category").value
+        };
+
+        fetch("/calendar/add", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: new URLSearchParams(eventData)
+        }).then(() => {
+            updateCalendar();
+            document.getElementById("eventModal").style.display = "none";
+        });
+    });
+
+    document.getElementById("openModalBtn").addEventListener("click", () => {
+        document.getElementById("eventModal").style.display = "block";
+    });
+
+    document.querySelector(".close").addEventListener("click", () => {
+        document.getElementById("eventModal").style.display = "none";
+    });
 
     updateCalendar();
 });
