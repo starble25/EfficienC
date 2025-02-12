@@ -1,4 +1,4 @@
-package com.app.service.impl;
+package com.app.service.user.impl;
 
 import java.util.List;
 

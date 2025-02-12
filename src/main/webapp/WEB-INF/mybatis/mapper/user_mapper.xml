@@ -9,11 +9,6 @@
 	</select>
 	
 	
-	<select id="findUserList" resultType="User">
-		select * from USERS
-	</select>
-	
-	
 	<select id="findUserByEmail" resultType="User"
 		parameterType="String">
 		select *
