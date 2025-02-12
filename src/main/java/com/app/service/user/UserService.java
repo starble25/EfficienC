@@ -16,7 +16,6 @@ public interface UserService {
 	
 	// Read
 	List<User> findUserList();
-	User findUserById(String id);
 	
 	// Update
 	int modifyUser(User user);
@@ -26,4 +25,10 @@ public interface UserService {
 	User checkUserLogin(User user);
 		
 	public List<User> findUserListBySearchCondition(UserSearchCondition userSearchCondition);
+
+	User checkUserAuth(User user);
+
+	int changeUserPassword(User user);
+
+	User findUserByEmail(String email);
 }

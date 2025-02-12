@@ -31,11 +31,18 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public User findUserById(String id) {
-		// TODO Auto-generated method stub
-		return null;
+	public User checkUserAuth(User user) {
+		User checkUser = sqlSessionTemplate.selectOne("user_mapper.checkUserAuth", user);
+		System.out.println(checkUser + "UserDAO");
+		return checkUser;
 	}
-
+	
+	@Override
+	public int changeUserPassword(User user) {
+		int result = sqlSessionTemplate.update("user_mapper.changeUserPassword",user);
+		return result;
+	}
+	
 	@Override
 	public int modifyUser(User user) {
 		// TODO Auto-generated method stub
@@ -56,5 +63,13 @@ public class UserDAOImpl implements UserDAO {
 		
 		return userList;
 	}
+
+	@Override
+	public User findUserByEmail(String email) {
+		User user = sqlSessionTemplate.selectOne("user_mapper.findUserByEmail", email);
+		return user;
+	}
+
+
 
 }

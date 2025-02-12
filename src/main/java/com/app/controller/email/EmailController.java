@@ -47,7 +47,8 @@ public class EmailController {
 			e.printStackTrace();
 		}
 		System.out.println("랜덤숫자 : " + checkNum);
-		int result = checkNum;
-		return result;
+		return checkNum;
 	}
+	
+
 }

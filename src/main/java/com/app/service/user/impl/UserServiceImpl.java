@@ -31,9 +31,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User findUserById(String id) {
-		// TODO Auto-generated method stub
-		return null;
+	public User checkUserAuth(User user) {
+		
+		User checkUser = userDAO.checkUserAuth(user);
+		System.out.println(checkUser + "UserService");
+		return checkUser;
 	}
 
 	@Override
@@ -60,6 +62,18 @@ public class UserServiceImpl implements UserService {
 		List<User> userList = userDAO.findUserListBySearchCondition(userSearchCondition);
 		
 		return userList;
+	}
+
+	@Override
+	public int changeUserPassword(User user) {
+		int result =userDAO.changeUserPassword(user);
+		return result;
+	}
+
+	@Override
+	public User findUserByEmail(String email) {
+		User user = userDAO.findUserByEmail(email);
+		return user;
 	}
 
 

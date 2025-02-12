@@ -18,6 +18,7 @@
 		NULL
 		)
 	</insert>
+		
 	<select id="checkUserLogin" resultType="User"
 		parameterType="User">
 		select *
@@ -25,19 +26,29 @@
 		where email = #{email} AND pw = #{pw}
 	</select>
 	
+	<select id="findUserByEmail" resultType="User" parameterType="String">
+		select *
+		from USERS
+		WHERE email = #{email}	
+	</select>
+	
+	<select id="checkUserAuth" resultType="User"
+		parameterType="User">
+		select *
+		from USERS
+		where email = #{email} AND name = #{name} AND jumin = #{jumin} 
+	</select>
+	
+	<update id="changeUserPassword" parameterType="User">
+		UPDATE USERS
+		SET pw = #{pw}
+		WHERE email = #{email}
+	</update>
+	
 	
 	<select id="findUserList" resultType="User">
 		select * from USERS
 	</select>
-	
-	
-	<select id="findUserByEmail" resultType="User"
-		parameterType="String">
-		select *
-		FROM USERS
-		WHERE email = #{email}
-	</select>
-	
 	
 	<update id="modifyUser" parameterType="User">
 		UPDATE USERS

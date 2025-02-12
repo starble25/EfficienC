@@ -7,11 +7,27 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h3>비밀번호 재설정을 위해 사용자 확인을 진행합니다.</h3>
+	<h2>계정의 비밀번호를 재설정합니다.</h2>
+	<h4>비밀번호를 재설정 하기위한 정보를 입력해 주세요</h4>
 
-<button type=submit>휴대폰 본인인증</button>
+	<form action="/findPassword" method="post">
 
-<!-- 이후 창 팝업 되며 휴대전화 인증 -->
+		<input placeholder="이메일" name="email" id="email"
+			type="email" autofocus> <br>
 
+		<p>이름</p>
+		<input type="text" name="name" id="name"><br>
+		<p>주민번호</p>
+
+		<input type="text" name="jumin" id="jumin"><br>
+
+		<button type="submit">다음</button>
+
+
+
+		
+
+	</form>
 </body>
+
 </html>

@@ -30,13 +30,6 @@ public class LoginController {
 		return "login/login";
 	}
 	
-	@GetMapping("/logout")
-	public String logout(HttpSession session) {
-		LoginManager.logout(session);
-		
-		return "redirect:/login";
-	}
-	
 
 	@PostMapping("/login")
 	public String loginAction(User user, HttpSession httpSession) {
@@ -55,4 +48,13 @@ public class LoginController {
 		}
 	}
 
+	@GetMapping("/logout")
+	public String logoutAction(HttpSession session) {
+		System.out.println("사용자 로그아웃함");
+		LoginManager.logout(session);
+		
+		//session.invalidate();
+		
+		return "redirect:/login";
+	}
 }
