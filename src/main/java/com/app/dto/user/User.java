@@ -1,9 +1,10 @@
 package com.app.dto.user;
 
 import java.time.LocalDateTime;
-
 import lombok.Data;
+import lombok.Getter;
 
+@Getter
 @Data
 public class User {
 	

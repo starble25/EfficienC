@@ -11,5 +11,6 @@
 	<typeAliases>
 		<typeAlias type="com.app.dto.user.User" alias="User"/>
 		<typeAlias type="com.app.dto.address.Address" alias="Address"/>
+		<typeAlias type="com.app.dto.user.UserSearchCondition" alias="UserSearchCondition"/>
 	</typeAliases>
 </configuration>

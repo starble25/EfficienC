@@ -7,7 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.app.dao.user.UserDAO;
 import com.app.dto.user.User;
-import com.app.service.UserService;
+import com.app.dto.user.UserSearchCondition;
+import com.app.service.user.UserService;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -38,6 +39,26 @@ public class UserServiceImpl implements UserService {
 	public int modifyUser(User user) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public boolean isEmailCheck(String getEmail) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public User checkUserLogin(User user) {
+		User loginUser = userDAO.checkUserLogin(user);
+		return loginUser;
+	}
+
+	@Override
+	public List<User> findUserListBySearchCondition(UserSearchCondition userSearchCondition) {
+
+		List<User> userList = userDAO.findUserListBySearchCondition(userSearchCondition);
+		
+		return userList;
 	}
 
 
