@@ -4,27 +4,28 @@ document.addEventListener("DOMContentLoaded", function () {
     function updateCalendar() {
         const year = currentDate.getFullYear();
         const month = currentDate.getMonth();
-        const firstDay = new Date(year, month, 1).getDay();
-        const lastDate = new Date(year, month + 1, 0).getDate();
-        const today = new Date();
-
         document.getElementById("current-year-month").innerText = `${year}년 ${month + 1}월`;
 
         let calendarBody = document.getElementById("calendar-body");
         calendarBody.innerHTML = "";
+        const firstDay = new Date(year, month, 1).getDay();
+        const lastDate = new Date(year, month + 1, 0).getDate();
+        let today = new Date().toISOString().split('T')[0];
 
         let row = document.createElement("tr");
-
         for (let i = 0; i < firstDay; i++) {
             row.appendChild(document.createElement("td"));
         }
 
         for (let date = 1; date <= lastDate; date++) {
             let cell = document.createElement("td");
+            let formattedDate = `${year}-${String(month + 1).padStart(2, '0')}-${String(date).padStart(2, '0')}`;
             cell.innerText = date;
-            cell.setAttribute("data-date", `${year}-${String(month + 1).padStart(2, '0')}-${String(date).padStart(2, '0')}`);
+            cell.setAttribute("data-date", formattedDate);
+            cell.addEventListener("click", () => showEventDetails(formattedDate));
 
-            if (year === today.getFullYear() && month === today.getMonth() && date === today.getDate()) {
+            // 📌 오늘 날짜 노란색 강조
+            if (formattedDate === today) {
                 cell.classList.add("today");
             }
 
@@ -39,11 +40,6 @@ document.addEventListener("DOMContentLoaded", function () {
         loadEvents();
     }
 
-    window.changeMonth = function (change) {
-        currentDate.setMonth(currentDate.getMonth() + change);
-        updateCalendar();
-    };
-
     function loadEvents() {
         fetch("/calendar/events")
             .then(response => response.json())
@@ -52,20 +48,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 events.forEach(event => {
                     let eventDate = new Date(event.startDate);
-                    let eventYear = eventDate.getFullYear();
-                    let eventMonth = eventDate.getMonth();
-                    let eventDay = eventDate.getDate();
+                    let formattedDate = eventDate.toISOString().split('T')[0];
 
                     calendarCells.forEach(cell => {
-                        let cellDate = cell.getAttribute("data-date");
-
-                        if (cellDate === `${eventYear}-${String(eventMonth + 1).padStart(2, '0')}-${String(eventDay).padStart(2, '0')}`) {
+                        if (cell.getAttribute("data-date") === formattedDate) {
                             let eventDiv = document.createElement("div");
                             eventDiv.classList.add("event");
                             eventDiv.innerText = event.title;
-                            if (!cell.querySelector(".event")) {
-                                cell.appendChild(eventDiv);
-                            }
+                            cell.appendChild(eventDiv);
                         }
                     });
                 });
@@ -73,12 +63,15 @@ document.addEventListener("DOMContentLoaded", function () {
             .catch(error => console.error("Error loading events:", error));
     }
 
-    document.getElementById("openModalBtn").addEventListener("click", function () {
-        document.getElementById("eventModal").style.display = "block";
-    });
+    window.changeMonth = function (change) {
+        currentDate.setMonth(currentDate.getMonth() + change);
+        updateCalendar();
+    };
 
-    document.querySelector(".close").addEventListener("click", function () {
-        document.getElementById("eventModal").style.display = "none";
+    document.getElementById("openEventPopupBtn").addEventListener("click", function () {
+        let popupUrl = "/calendar/event-form";
+        let popupOptions = "width=500,height=600,top=100,left=200,scrollbars=yes";
+        window.open(popupUrl, "EventPopup", popupOptions);
     });
 
     updateCalendar();

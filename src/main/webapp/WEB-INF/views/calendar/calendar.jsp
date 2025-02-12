@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -15,7 +15,7 @@
     <!-- 📌 왼쪽 사이드바 -->
     <div class="sidebar">
         <h3>📅 캘린더</h3>
-        <button id="openModalBtn">일정 등록</button>
+        <button id="openEventPopupBtn">일정 등록</button>
         <h4>📌 일정 카테고리</h4>
         <ul class="category-list">
             <li><input type="checkbox" class="category-filter" value="전체" checked> 전체</li>
@@ -51,34 +51,13 @@
         </table>
     </div>
 
-    <!-- 📌 모달창 (일정 등록) -->
-    <div id="eventModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h3>일정 등록</h3>
-            <form id="eventForm">
-                <label>제목:</label>
-                <input type="text" id="title" required>
-
-                <label>시작 날짜:</label>
-                <input type="datetime-local" id="startDate" required>
-
-                <label>종료 날짜:</label>
-                <input type="datetime-local" id="endDate">
-
-                <label>카테고리:</label>
-                <select id="category">
-                    <option value="기본">기본</option>
-                    <option value="회의">회의</option>
-                    <option value="마감일">마감일</option>
-                    <option value="워크샵">워크샵</option>
-                    <option value="외부 일정">외부 일정</option>
-                </select>
-
-                <button type="submit">등록</button>
-            </form>
-        </div>
-    </div>
+    <script>
+        document.getElementById("openEventPopupBtn").addEventListener("click", function () {
+            let popupUrl = "/calendar/event-form";
+            let popupOptions = "width=500,height=600,top=100,left=200,scrollbars=yes";
+            window.open(popupUrl, "EventPopup", popupOptions);
+        });
+    </script>
 
 </body>
 </html>

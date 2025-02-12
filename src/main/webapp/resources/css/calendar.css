@@ -10,7 +10,7 @@ body {
 
 /* 📌 왼쪽 사이드바 (고정 위치) */
 .sidebar {
-    width: 250px;
+    width: 260px; /* 기존 250px → 260px */
     height: 100vh;
     background-color: #f8f9fa;
     padding: 20px;
@@ -19,27 +19,13 @@ body {
     left: 0;
     top: 0;
     overflow-y: auto;
+    z-index: 10; /* 캘린더 위에 고정 */
 }
 
-/* 📌 사이드바와 캘린더 사이 간격 추가 */
-.sidebar + .calendar-container {
-    margin-left: 280px; /* 기존 250px → 280px로 변경 */
-}
-
-/* 📌 일정 카테고리 */
-.category-list {
-    list-style: none;
-    padding: 0;
-    text-align: left;
-}
-
-.category-list li {
-    margin: 5px 0;
-}
-
-/* 📌 캘린더 컨테이너 (왼쪽 여백 고려) */
+/* 📌 캘린더가 사이드바와 겹치지 않도록 여백 추가 */
 .calendar-container {
-    width: calc(100% - 280px); /* 사이드바 간격 추가 반영 */
+    width: calc(100% - 280px); /* 사이드바 너비 고려 */
+    margin-left: 280px; /* 사이드바와의 간격 확보 */
     padding: 20px;
     overflow-x: auto;
     overflow-y: hidden;
@@ -48,7 +34,7 @@ body {
 /* 📌 캘린더 테이블 */
 table {
     width: 100%;
-    min-width: 800px;
+    min-width: 900px;
     border-collapse: collapse;
     table-layout: fixed;
 }
@@ -59,10 +45,16 @@ th, td {
     border: 1px solid #ccc;
     text-align: left;
     vertical-align: top;
-    padding: 10px; /* 간격 추가 */
+    padding: 10px;
 }
 
-/* 📌 캘린더 내의 일정 간격 추가 */
+/* 📌 오늘 날짜 강조 (노란색) */
+.today {
+    background-color: #ffeb3b !important;
+    font-weight: bold;
+}
+
+/* 📌 일정 스타일 */
 .event {
     background-color: #4CAF50;
     color: white;
@@ -71,18 +63,24 @@ th, td {
     margin-top: 5px;
     border-radius: 3px;
     display: inline-block;
-    width: 90%; /* 기존 100% → 90% */
+    width: 90%;
     text-align: center;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
+/* 📌 일정 카테고리 색상 */
+.event.meeting { background-color: #1E88E5; }   /* 회의 (파란색) */
+.event.deadline { background-color: #E53935; }  /* 마감일 (빨간색) */
+.event.workshop { background-color: #FB8C00; }  /* 워크샵 (주황색) */
+.event.external { background-color: #43A047; }  /* 외부 일정 (초록색) */
+
 /* 📌 모달창 스타일 */
 .modal {
     display: none;
     position: fixed;
-    z-index: 10;
+    z-index: 20;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);

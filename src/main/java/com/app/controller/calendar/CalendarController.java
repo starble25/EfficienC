@@ -28,6 +28,12 @@ public class CalendarController {
         return "calendar/calendar";
     }
 
+    // 📌 일정 등록 폼 (새 창에서 열림)
+    @GetMapping("/event-form")
+    public String showEventForm() {
+        return "calendar/event-form";
+    }
+
     // 📌 모든 일정 조회 (JSON 응답 - 달력에 표시됨)
     @GetMapping("/events")
     @ResponseBody
