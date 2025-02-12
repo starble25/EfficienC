@@ -20,12 +20,12 @@ public class CalendarController {
     @Autowired
     private CalendarService calendarService;
 
-    // 📌 캘린더 페이지 이동 (JSP 렌더링)
+    // 📌 캘린더 페이지 렌더링
     @GetMapping
     public String showCalendar(Model model) {
         List<CalendarDTO> events = calendarService.getAllEvents();
         model.addAttribute("events", events);
-        return "calendar/calendar"; // 📌 JSP 파일 위치
+        return "calendar/calendar";
     }
 
     // 📌 모든 일정 조회 (JSON 응답)
@@ -35,35 +35,25 @@ public class CalendarController {
         return calendarService.getAllEvents();
     }
 
-    // 📌 일정 추가 (폼에서 데이터 받아서 처리)
+    // 📌 일정 추가 (모달창에서 등록된 데이터 저장)
     @PostMapping("/add")
     @ResponseBody
     public String addEvent(@RequestParam String title, 
-                           @RequestParam(required = false) String startDate, 
-                           @RequestParam(required = false) String endDate,
+                           @RequestParam String startDate, 
+                           @RequestParam String endDate,
                            @RequestParam String category) {
 
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+            Timestamp startDateTime = Timestamp.valueOf(LocalDateTime.parse(startDate, formatter));
+            Timestamp endDateTime = Timestamp.valueOf(LocalDateTime.parse(endDate, formatter));
 
-            LocalDateTime now = LocalDateTime.now();
-
-            Timestamp startDateTime = (startDate != null && !startDate.isEmpty()) 
-                ? Timestamp.valueOf(LocalDateTime.parse(startDate, formatter)) 
-                : Timestamp.valueOf(now);
-
-            Timestamp endDateTime = (endDate != null && !endDate.isEmpty()) 
-                ? Timestamp.valueOf(LocalDateTime.parse(endDate, formatter)) 
-                : Timestamp.valueOf(now.plusHours(1));
-
-            // 📌 DTO 객체 생성 후 DB에 추가
             CalendarDTO event = new CalendarDTO(0, title, startDateTime, endDateTime, category);
             calendarService.addEvent(event);
-
-            return "success"; // 성공 응답
+            return "success";
         } catch (Exception e) {
             e.printStackTrace();
-            return "error"; // 실패 응답
+            return "error";
         }
     }
 
@@ -73,10 +63,10 @@ public class CalendarController {
     public String deleteEvent(@PathVariable("id") int id) {
         try {
             calendarService.deleteEvent(id);
-            return "success"; // 삭제 성공
+            return "success";
         } catch (Exception e) {
             e.printStackTrace();
-            return "error"; // 삭제 실패
+            return "error";
         }
     }
 
@@ -90,17 +80,15 @@ public class CalendarController {
                               @RequestParam String category) {
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
-
             Timestamp startDateTime = Timestamp.valueOf(LocalDateTime.parse(startDate, formatter));
             Timestamp endDateTime = Timestamp.valueOf(LocalDateTime.parse(endDate, formatter));
 
             CalendarDTO event = new CalendarDTO(id, title, startDateTime, endDateTime, category);
             calendarService.updateEvent(event);
-
-            return "success"; // 수정 성공
+            return "success";
         } catch (Exception e) {
             e.printStackTrace();
-            return "error"; // 수정 실패
+            return "error";
         }
     }
 }

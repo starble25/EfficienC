@@ -24,4 +24,16 @@ public class CalendarDAOImpl implements CalendarDAO {
     public void addEvent(CalendarDTO event) {
         sqlSession.insert(NAMESPACE + "addEvent", event);
     }
+
+    // 📌 추가된 메서드 (일정 삭제)
+    @Override
+    public void deleteEvent(int id) {
+        sqlSession.delete(NAMESPACE + "deleteEvent", id);
+    }
+
+    // 📌 추가된 메서드 (일정 수정)
+    @Override
+    public void updateEvent(CalendarDTO event) {
+        sqlSession.update(NAMESPACE + "updateEvent", event);
+    }
 }
