@@ -14,14 +14,14 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
-@RequestMapping("/calendar")  // 📌 기본 URL = "/calendar"
+@RequestMapping("/calendar")
 public class CalendarController {
 
     @Autowired
     private CalendarService calendarService;
 
     // 📌 기본 캘린더 페이지 이동 (JSP로 렌더링)
-    @GetMapping  // 📌 "/" 제거
+    @GetMapping
     public String showCalendar(Model model) {
         List<CalendarDTO> events = calendarService.getAllEvents();
         model.addAttribute("events", events);
@@ -42,11 +42,11 @@ public class CalendarController {
 
             Timestamp startDateTime = (startDate != null && !startDate.isEmpty()) 
                 ? Timestamp.valueOf(LocalDateTime.parse(startDate, formatter)) 
-                : Timestamp.valueOf(now); // 기본값 현재 시간
+                : Timestamp.valueOf(now);
 
             Timestamp endDateTime = (endDate != null && !endDate.isEmpty()) 
                 ? Timestamp.valueOf(LocalDateTime.parse(endDate, formatter)) 
-                : Timestamp.valueOf(now.plusHours(1)); // 기본값 현재 시간 + 1시간
+                : Timestamp.valueOf(now.plusHours(1));
 
             // 📌 DTO 객체 생성
             CalendarDTO event = new CalendarDTO(0, title, startDateTime, endDateTime, "기본");
@@ -54,6 +54,6 @@ public class CalendarController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "redirect:/calendar"; // 📌 캘린더 페이지로 리디렉트
+        return "redirect:/calendar";
     }
 }
