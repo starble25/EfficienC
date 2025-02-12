@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
     let currentDate = new Date();
-    let currentView = "monthly";
 
     function updateCalendar() {
         const year = currentDate.getFullYear();
@@ -54,7 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             let eventList = cell.querySelector(".event-list");
                             let eventItem = document.createElement("li");
                             eventItem.innerText = `${event.startTime} ${event.title}`;
-                            eventItem.classList.add(event.category.toLowerCase());
+                            eventItem.classList.add(event.category.toLowerCase().replace(/ /g, "-"));
                             eventList.appendChild(eventItem);
                         }
                     });
@@ -68,12 +67,40 @@ document.addEventListener("DOMContentLoaded", function () {
         updateCalendar();
     };
 
-    window.changeView = function (view) {
-        document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.remove("active"));
-        document.querySelector(`.tab-btn[onclick="changeView('${view}')"]`).classList.add("active");
-        currentView = view;
-        updateCalendar();
-    };
+    // 📌 모달창 제어
+    document.getElementById("openModalBtn").addEventListener("click", function () {
+        document.getElementById("eventModal").style.display = "block";
+    });
+
+    document.querySelector(".close").addEventListener("click", function () {
+        document.getElementById("eventModal").style.display = "none";
+    });
+
+    document.getElementById("eventForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        let title = document.getElementById("title").value;
+        let startDate = document.getElementById("startDate").value;
+        let endDate = document.getElementById("endDate").value;
+        let category = document.getElementById("category").value;
+
+        fetch("/calendar/add", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: `title=${encodeURIComponent(title)}&startDate=${encodeURIComponent(startDate)}&endDate=${encodeURIComponent(endDate)}&category=${encodeURIComponent(category)}`
+        })
+        .then(response => response.text())
+        .then(result => {
+            if (result === "success") {
+                alert("일정이 등록되었습니다!");
+                document.getElementById("eventModal").style.display = "none";
+                window.location.reload();
+            } else {
+                alert("등록 실패! 다시 시도해주세요.");
+            }
+        })
+        .catch(error => console.error("Error:", error));
+    });
 
     updateCalendar();
 });

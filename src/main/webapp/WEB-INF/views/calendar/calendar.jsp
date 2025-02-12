@@ -50,5 +50,32 @@
         </table>
     </div>
 
+    <!-- 📌 일정 등록 모달창 -->
+    <div id="eventModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>일정 등록</h3>
+            <form id="eventForm">
+                <label>제목:</label>
+                <input type="text" id="title" required>
+
+                <label>시작 날짜:</label>
+                <input type="datetime-local" id="startDate" required>
+
+                <label>종료 날짜:</label>
+                <input type="datetime-local" id="endDate">
+
+                <label>카테고리:</label>
+                <select id="category">
+                    <option value="내 일정(기본)">내 일정(기본)</option>
+                    <option value="중요">중요</option>
+                    <option value="연차">연차</option>
+                </select>
+
+                <button type="submit">등록</button>
+            </form>
+        </div>
+    </div>
+
 </body>
 </html>

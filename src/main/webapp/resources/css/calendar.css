@@ -132,3 +132,38 @@ th, td {
     padding-left: 10px;
     font-weight: bold;
 }
+
+/* 📌 모달창 스타일 */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+}
+
+/* 📌 모달창 내부 스타일 */
+.modal-content {
+    text-align: left;
+}
+
+.modal-content h3 {
+    margin-top: 0;
+}
+
+/* 📌 모달창 닫기 버튼 */
+.close {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+}
+
