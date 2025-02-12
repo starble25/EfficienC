@@ -20,6 +20,18 @@ public class AddressServiceImpl implements AddressService {
 		List<User> addressUserList = addressDAO.findAddressUserList();
 		return addressUserList;
 	}
+
+	@Override
+	public int removeUser(int userId) {
+		int result = addressDAO.removeUser(userId);
+		return result;
+	}
+
+	@Override
+	public List<User> findUserListBySearch(String searchKeyword) {
+		List<User> addressUserList = addressDAO.findUserListBySearch(searchKeyword);
+		return addressUserList;
+	}
 	
 	
 }
