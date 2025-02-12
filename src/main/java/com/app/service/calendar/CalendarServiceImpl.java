@@ -21,4 +21,14 @@ public class CalendarServiceImpl implements CalendarService {
     public void addEvent(CalendarDTO event) {
         calendarDAO.addEvent(event);
     }
+
+    @Override
+    public void deleteEvent(int id) {  // ✅ 삭제 기능 추가
+        calendarDAO.deleteEvent(id);
+    }
+
+    @Override
+    public void updateEvent(CalendarDTO event) {  // ✅ 일정 수정 기능 추가
+        calendarDAO.updateEvent(event);
+    }
 }
