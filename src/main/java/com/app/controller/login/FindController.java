@@ -38,7 +38,7 @@ public class FindController {
 
 	@GetMapping("/newPassword")
 	public String newPassword(HttpSession session) {
-		String email = (String)session.getAttribute("email");
+		String email = (String) session.getAttribute("email");
 		User user = userService.findUserByEmail(email);
 		session.setAttribute("email", user.getEmail());
 		return "login/newPassword";
@@ -111,9 +111,11 @@ public class FindController {
 	}
 
 	@PostMapping("/newPassword")
-	public String newPasswordAction(HttpSession session) {
-		String email = (String)session.getAttribute("email");
+	public String newPasswordAction(HttpSession session, @RequestParam String pw) {
+		String email = (String) session.getAttribute("email");
 		User user = userService.findUserByEmail(email);
+		System.out.println(user);
+		user.setPw(pw);
 		int result = userService.changeUserPassword(user);
 		if (result == 1) {
 			System.out.println("비밀번호 변경완료");
@@ -123,4 +125,5 @@ public class FindController {
 			return "login/fail";
 		}
 	}
+	
 }

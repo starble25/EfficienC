@@ -39,6 +39,7 @@ public class UserDAOImpl implements UserDAO {
 	
 	@Override
 	public int changeUserPassword(User user) {
+		System.out.println(user + "userDAO");
 		int result = sqlSessionTemplate.update("user_mapper.changeUserPassword",user);
 		return result;
 	}

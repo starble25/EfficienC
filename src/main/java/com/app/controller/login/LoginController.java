@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.dto.user.User;
@@ -32,7 +33,7 @@ public class LoginController {
 	
 
 	@PostMapping("/login")
-	public String loginAction(User user, HttpSession httpSession) {
+	public String loginAction(User user, HttpSession session) {
 
 		User loginUser = userService.checkUserLogin(user);
 
@@ -41,9 +42,10 @@ public class LoginController {
 			return "login/login";
 		} else {
 
-			LoginManager.setSessionLogin(httpSession, loginUser.getEmail());
-			System.out.println(loginUser.getEmail() + "사용자 로그인함");
-
+			LoginManager.setSessionLogin(session, loginUser.getEmail());
+			session.setAttribute("loginUserEmail", loginUser.getEmail());
+			session.setAttribute("loginUserId", loginUser.getId());
+		
 			return "redirect:/main";
 		}
 	}
@@ -52,7 +54,6 @@ public class LoginController {
 	public String logoutAction(HttpSession session) {
 		System.out.println("사용자 로그아웃함");
 		LoginManager.logout(session);
-		
 		//session.invalidate();
 		
 		return "redirect:/login";
