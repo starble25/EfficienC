@@ -4,28 +4,36 @@
 
 <mapper namespace="com.app.dao.calendar.CalendarDAO">
 
-    <!-- 📌 모든 일정 조회 -->
-    <select id="getAllEvents" resultType="com.app.dto.calendar.CalendarDTO">
-        SELECT id, title, start_date AS startDate, end_date AS endDate, category
+    <!-- 📌 로그인한 사용자의 일정 조회 -->
+    <select id="getUserEvents" resultType="com.app.dto.calendar.CalendarDTO">
+        SELECT id, title, start_date AS startDate, end_date AS endDate, category, user_email
         FROM calendar_events
+        WHERE user_email = #{userEmail}
+    </select>
+
+    <!-- 📌 특정 일정 조회 -->
+    <select id="getEventById" parameterType="int" resultType="com.app.dto.calendar.CalendarDTO">
+        SELECT id, title, start_date AS startDate, end_date AS endDate, category, user_email
+        FROM calendar_events
+        WHERE id = #{id}
     </select>
 
     <!-- 📌 일정 추가 -->
     <insert id="addEvent" parameterType="com.app.dto.calendar.CalendarDTO">
-        INSERT INTO calendar_events (id, title, start_date, end_date, category)
-        VALUES (calendar_events_seq.NEXTVAL, #{title}, #{startDate}, #{endDate}, #{category})
+        INSERT INTO calendar_events (id, title, start_date, end_date, category, user_email)
+        VALUES (calendar_events_seq.NEXTVAL, #{title}, #{startDate}, #{endDate}, #{category}, #{userEmail})
     </insert>
 
-    <!-- 📌 일정 삭제 -->
+    <!-- 📌 일정 삭제 (본인 일정만 삭제 가능) -->
     <delete id="deleteEvent">
-        DELETE FROM calendar_events WHERE id = #{id}
+        DELETE FROM calendar_events WHERE id = #{id} AND user_email = #{userEmail}
     </delete>
 
-    <!-- 📌 일정 수정 -->
+    <!-- 📌 일정 수정 (본인 일정만 수정 가능) -->
     <update id="updateEvent">
         UPDATE calendar_events 
         SET title = #{title}, start_date = #{startDate}, end_date = #{endDate}, category = #{category}
-        WHERE id = #{id}
+        WHERE id = #{id} AND user_email = #{userEmail}
     </update>
 
 </mapper>

@@ -13,8 +13,8 @@ public class CalendarServiceImpl implements CalendarService {
     private CalendarDAO calendarDAO;
 
     @Override
-    public List<CalendarDTO> getAllEvents() {
-        return calendarDAO.getAllEvents();
+    public List<CalendarDTO> getUserEvents(String userEmail) {
+        return calendarDAO.getUserEvents(userEmail);
     }
 
     @Override
@@ -28,8 +28,8 @@ public class CalendarServiceImpl implements CalendarService {
     }
 
     @Override
-    public void deleteEvent(int id) {
-        calendarDAO.deleteEvent(id);
+    public void deleteEvent(int id, String userEmail) {
+        calendarDAO.deleteEvent(id, userEmail);
     }
 
     @Override

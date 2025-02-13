@@ -39,4 +39,16 @@ public class CalendarDAOImpl implements CalendarDAO {
     public void updateEvent(CalendarDTO event) {
         sqlSession.update(NAMESPACE + "updateEvent", event);
     }
+
+	@Override
+	public List<CalendarDTO> getUserEvents(String userEmail) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void deleteEvent(int id, String userEmail) {
+		// TODO Auto-generated method stub
+		
+	}
 }
