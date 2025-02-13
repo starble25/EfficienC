@@ -43,16 +43,3 @@ public class LoginManager {
 		logout(request.getSession());
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

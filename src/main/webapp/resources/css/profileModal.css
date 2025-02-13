@@ -1,0 +1,58 @@
+@charset "UTF-8";
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 전체 배경 */
+.modalBackground {
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    position: fixed;
+
+    backdrop-filter: blur(1px);
+    background-color: rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 모달 컨테이너 */
+.profileModalContainer {
+    width: 700px;
+    height: 400px;
+    padding: 20px;
+    padding-top: 0;
+    border: 2px solid black;
+    background-color: #dadada;
+
+    position: absolute;
+}
+
+.profileModalContainer .modalHeader {
+    width: 100%;
+    height: 15%;
+    border: 1px solid blue;
+}
+
+.profileModalContainer .modalBody {
+    width: 100%;
+    height: 85%;
+    border: 1px solid green;
+
+    display: flex;
+}
+
+/* 프로필 & 내용 컨테이너 */
+.modalBody div {
+    width: 50%;
+    padding: 7px;
+}
+
+/* 프로필 사진 */
+.modalBody img {
+    width: 100%;
+}

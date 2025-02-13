@@ -46,8 +46,10 @@
 	</update>
 	
 	
+
 	<select id="findUserList" resultType="User">
-		select * from USERS
+		SELECT *
+		FROM USERS
 	</select>
 	
 	<update id="modifyUser" parameterType="User">
