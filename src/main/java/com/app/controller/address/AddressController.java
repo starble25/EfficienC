@@ -8,7 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.app.dto.user.User;
-import com.app.service.UserService;
+import com.app.service.user.UserService;
 
 @Controller
 public class AddressController {
