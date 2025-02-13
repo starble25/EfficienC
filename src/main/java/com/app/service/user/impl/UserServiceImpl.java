@@ -1,10 +1,8 @@
 package com.app.service.user.impl;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.app.dao.user.UserDAO;
 import com.app.dto.user.User;
 import com.app.dto.user.UserSearchCondition;
@@ -13,53 +11,55 @@ import com.app.service.user.UserService;
 @Service
 public class UserServiceImpl implements UserService {
 	
-	@Autowired
-	UserDAO userDAO;
+    @Autowired
+    private UserDAO userDAO;
 
-	@Override
-	public int saveUser(User user) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+    /** 📌 회원가입 (사용자 저장) */
+    @Override
+    public int saveUser(User user) {
+        return userDAO.saveUser(user);
+    }
 
-	@Override
-	public List<User> findUserList() {
-		System.out.println("userServiceImpl findUserList");
-		List<User> userList = userDAO.findUserList();
-		return userList;
-	}
+    /** 📌 전체 사용자 조회 */
+    @Override
+    public List<User> findUserList() {
+        System.out.println("UserServiceImpl - findUserList 호출됨");
+        return userDAO.findUserList();
+    }
 
-	@Override
-	public User findUserById(String id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    /** 📌 ID 기반 사용자 조회 */
+    @Override
+    public User findUserById(String id) {
+        return userDAO.findUserById(id);
+    }
 
-	@Override
-	public int modifyUser(User user) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+    /** 📌 사용자 정보 수정 */
+    @Override
+    public int modifyUser(User user) {
+        return userDAO.modifyUser(user);
+    }
 
-	@Override
-	public boolean isEmailCheck(String getEmail) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    /** 📌 이메일 중복 체크 */
+    @Override
+    public boolean isEmailCheck(String getEmail) {
+        return userDAO.isEmailCheck(getEmail);
+    }
 
-	@Override
-	public User checkUserLogin(User user) {
-		User loginUser = userDAO.checkUserLogin(user);
-		return loginUser;
-	}
+    /** 📌 로그인 처리 */
+    @Override
+    public User checkUserLogin(User user) {
+        return userDAO.checkUserLogin(user);
+    }
 
-	@Override
-	public List<User> findUserListBySearchCondition(UserSearchCondition userSearchCondition) {
+    /** 📌 검색 조건에 따른 사용자 리스트 조회 */
+    @Override
+    public List<User> findUserListBySearchCondition(UserSearchCondition userSearchCondition) {
+        return userDAO.findUserListBySearchCondition(userSearchCondition);
+    }
 
-		List<User> userList = userDAO.findUserListBySearchCondition(userSearchCondition);
-		
-		return userList;
-	}
-
-
+    /** 📌 이메일 기반 사용자 조회 */
+    @Override
+    public User findByEmail(String email) {
+        return userDAO.findByEmail(email);
+    }
 }

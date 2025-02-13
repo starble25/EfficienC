@@ -21,26 +21,20 @@ public class CalendarController {
     @Autowired
     private CalendarService calendarService;
 
-    // 📌 캘린더 페이지 렌더링 (JSP로 이동)
+    // 📌 캘린더 페이지 렌더링 (로그인한 사용자 일정만 표시)
     @GetMapping
     public String showCalendar(HttpSession session, Model model) {
-        String userEmail = (String) session.getAttribute("userEmail"); // 세션에서 로그인한 사용자 이메일 가져오기
+        String userEmail = (String) session.getAttribute("userEmail");
         if (userEmail == null) {
-            return "redirect:/login"; // 로그인 안 되어 있으면 로그인 페이지로 리디렉션
+            return "redirect:/login"; // 로그인 안 되어 있으면 로그인 페이지로 이동
         }
-        
-        List<CalendarDTO> events = calendarService.getUserEvents(userEmail); // 사용자별 일정 가져오기
+
+        List<CalendarDTO> events = calendarService.getUserEvents(userEmail);
         model.addAttribute("events", events);
         return "calendar/calendar";
     }
 
-    // 📌 일정 등록 폼 (새 창에서 열림)
-    @GetMapping("/event-form")
-    public String showEventForm() {
-        return "calendar/event-form";
-    }
-
-    // 📌 로그인한 사용자의 일정 조회 (JSON 응답 - 달력에 표시됨)
+    // 📌 로그인한 사용자의 일정 조회 (JSON 응답 - 달력에 표시)
     @GetMapping("/events")
     @ResponseBody
     public List<CalendarDTO> getUserEvents(HttpSession session) {
@@ -51,14 +45,7 @@ public class CalendarController {
         return calendarService.getUserEvents(userEmail);
     }
 
-    // 📌 특정 일정 조회 (ID 기반)
-    @GetMapping("/event/{id}")
-    @ResponseBody
-    public CalendarDTO getEventById(@PathVariable("id") int id) {
-        return calendarService.getEventById(id);
-    }
-
-    // 📌 일정 추가 (로그인한 사용자의 이메일 포함)
+    // 📌 일정 추가 (로그인한 사용자의 일정 저장)
     @PostMapping("/add")
     @ResponseBody
     public String addEvent(HttpSession session,
@@ -82,11 +69,11 @@ public class CalendarController {
             return "success";
         } catch (Exception e) {
             e.printStackTrace();
-            return "error";
+            return "error: failed to add event";
         }
     }
 
-    // 📌 일정 삭제 기능 (로그인한 사용자의 일정만 삭제 가능)
+    // 📌 일정 삭제 (본인의 일정만 삭제 가능)
     @DeleteMapping("/delete/{id}")
     @ResponseBody
     public String deleteEvent(HttpSession session, @PathVariable("id") int id) {
@@ -97,48 +84,19 @@ public class CalendarController {
 
         try {
             CalendarDTO event = calendarService.getEventById(id);
-            if (!event.getUserEmail().equals(userEmail)) {
-                return "error: unauthorized"; // 다른 사람 일정 삭제 불가
+            if (event == null) {
+                return "error: event not found";
             }
+
+            if (!event.getUserEmail().equals(userEmail)) {
+                return "error: unauthorized";
+            }
+            
             calendarService.deleteEvent(id, userEmail);
             return "success";
         } catch (Exception e) {
             e.printStackTrace();
-            return "error";
-        }
-    }
-
-    // 📌 일정 수정 기능 (로그인한 사용자의 일정만 수정 가능)
-    @PostMapping("/update")
-    @ResponseBody
-    public String updateEvent(HttpSession session,
-                              @RequestParam int id,
-                              @RequestParam String title,
-                              @RequestParam String startDate,
-                              @RequestParam String endDate,
-                              @RequestParam String category) {
-
-        String userEmail = (String) session.getAttribute("userEmail");
-        if (userEmail == null) {
-            return "error: not logged in";
-        }
-
-        try {
-            CalendarDTO event = calendarService.getEventById(id);
-            if (!event.getUserEmail().equals(userEmail)) {
-                return "error: unauthorized"; // 다른 사람 일정 수정 불가
-            }
-
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
-            Timestamp startDateTime = Timestamp.valueOf(LocalDateTime.parse(startDate, formatter));
-            Timestamp endDateTime = Timestamp.valueOf(LocalDateTime.parse(endDate, formatter));
-
-            CalendarDTO updatedEvent = new CalendarDTO(id, title, startDateTime, endDateTime, category, userEmail);
-            calendarService.updateEvent(updatedEvent);
-            return "success";
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "error";
+            return "error: failed to delete event";
         }
     }
 }

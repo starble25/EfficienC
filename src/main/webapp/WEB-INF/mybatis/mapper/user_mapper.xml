@@ -3,9 +3,53 @@
 
 <mapper namespace="user_mapper">
 
-	<select id="findUserList" resultType="User">
-		SELECT *
-		FROM USERS
-	</select>
+    <!-- 📌 전체 사용자 목록 조회 -->
+    <select id="findUserList" resultType="com.app.dto.user.User">
+        SELECT * FROM USERS
+    </select>
+
+    <!-- 📌 ID 기반 사용자 조회 -->
+    <select id="findUserById" parameterType="String" resultType="com.app.dto.user.User">
+        SELECT * FROM USERS WHERE id = #{id}
+    </select>
+
+    <!-- 📌 이메일 기반 사용자 조회 (로그인 시 사용) -->
+    <select id="findByEmail" parameterType="String" resultType="com.app.dto.user.User">
+        SELECT * FROM USERS WHERE email = #{email}
+    </select>
+
+    <!-- 📌 회원가입 (새로운 사용자 저장) -->
+    <insert id="saveUser" parameterType="com.app.dto.user.User">
+        INSERT INTO USERS (id, email, pw, name, tel, jumin, position_code, dept_code, created_at, updated_at, cmp_id)
+        VALUES (USERS_PK.NEXTVAL, #{email}, #{pw}, #{name}, #{tel}, #{jumin}, #{position_code}, #{dept_code}, SYSTIMESTAMP, SYSTIMESTAMP, #{cmp_id})
+    </insert>
+
+    <!-- 📌 사용자 정보 수정 -->
+    <update id="modifyUser" parameterType="com.app.dto.user.User">
+        UPDATE USERS
+        SET pw = #{pw}, name = #{name}, tel = #{tel}, jumin = #{jumin}, position_code = #{position_code}, 
+            dept_code = #{dept_code}, updated_at = SYSTIMESTAMP
+        WHERE id = #{id}
+    </update>
+
+    <!-- 📌 사용자 로그인 확인 -->
+    <select id="checkUserLogin" parameterType="com.app.dto.user.User" resultType="com.app.dto.user.User">
+        SELECT * FROM USERS WHERE email = #{email} AND pw = #{pw}
+    </select>
+
+    <!-- 📌 이메일 중복 체크 -->
+    <select id="isEmailCheck" parameterType="String" resultType="int">
+        SELECT COUNT(*) FROM USERS WHERE email = #{email}
+    </select>
+
+    <!-- 📌 검색 조건 기반 사용자 목록 조회 -->
+    <select id="findUserListBySearchCondition" parameterType="com.app.dto.user.UserSearchCondition" resultType="com.app.dto.user.User">
+        SELECT * FROM USERS
+        WHERE 
+            (#{name} IS NULL OR name LIKE '%' || #{name} || '%')
+            AND (#{email} IS NULL OR email LIKE '%' || #{email} || '%')
+            AND (#{position_code} IS NULL OR position_code = #{position_code})
+            AND (#{dept_code} IS NULL OR dept_code = #{dept_code})
+    </select>
 
 </mapper>
