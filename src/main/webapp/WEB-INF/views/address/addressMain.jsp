@@ -13,10 +13,13 @@
 </head>
 <body>
 	<h1>주소록 메인 페이지</h1>
+	<h2>${showAddress}</h2>
     <div class="addressMainContainer">
         <div class="searchBar">
-            <input type="text" placeholder="이름 또는 이메일로 검색" name="search" value="${user.search}">
-            <button id="btnSearchUser">검색</button>
+	        <form action="" method="post">
+	            <input type="text" placeholder="이름 또는 이메일로 검색" name="searchKeyword">
+	            <button id="btnSearchUser">검색</button>
+            </form>
         </div>
         <div class="addressList">
             <table>
@@ -30,8 +33,10 @@
                         <th></th>
                     </tr>
                 </thead>
-                <tbody>
-                    <!-- 여기에 주소 데이터가 추가될 예정입니다 -->
+                
+                <!-- 내 주소록 -->
+                <c:if test="${ showAddress == 1 }">
+                <tbody id="myAddressList">
                     <tr class="listRow">
                         <td>홍길동</td>
                         <td>010-1234-5678</td>
@@ -46,8 +51,39 @@
                         <td>qqqq@example.com</td>
                         <td>우리팀</td>
                         <td>팀원</td>
-                        <td><button type="button" class="btnDeleteRow">삭제</button></td>
+                        <td><button type="button" class="btnDeleteUser">삭제</button></td>
                     </tr>
+                    
+                    <c:forEach var="addressUser" items="${addressUserList}">
+                        <tr 
+                            class="listRow" 
+                            userId="${addressUser.id}" 
+                            userName="${addressUser.name}"
+                            userTel="${addressUser.tel}"
+                            userEmail="${addressUser.email}"
+                            userDeptCode="${addressUser.deptCode}"
+                            userPositionCode="${addressUser.positionCode}"
+                        >
+                        <td>${addressUser.name}</td>
+                        <td>${addressUser.tel}</td>
+                        <td>${addressUser.email}</td>
+                        <td>${addressUser.deptCode}</td>
+                        <td>${addressUser.positionCode}</td>
+                        <td>
+	                        <button 
+	                        	type="button" class="btnDeleteUser"
+	                        	onClick="removeUser(${addressUser.id})"
+	                       	>삭제</button>
+                       	</td>
+                        <%@ include file="/WEB-INF/views/address/profileModal.jsp" %>
+                    	</tr>
+                    </c:forEach>
+                </tbody>
+                </c:if>
+
+                <!-- 검색결과 주소록 -->
+				<c:if test="${ showAddress == 2 }">
+                <tbody id="searchUserList">
                     <c:forEach var="user" items="${userList}">
                         <tr 
                             class="listRow" 
@@ -63,22 +99,21 @@
                         <td>${user.email}</td>
                         <td>${user.deptCode}</td>
                         <td>${user.positionCode}</td>
-                        <td><button type="button" class="btnDeleteRow">삭제</button></td>
+                        <td><button 
+                                type="button" class="btnAddUser" 
+                                data-user-id="${user.id}" 
+                            >추가</button></td>
                         <%@ include file="/WEB-INF/views/address/profileModal.jsp" %>
-<%-- 						<jsp:include page="/WEB-INF/views/address/profileModal.jsp"> --%>
-<%--                             <jsp:param name="name" value="${user.name}" /> --%>
-<%--                             <jsp:param name="tel" value="${user.tel}" /> --%>
-<%--                             <jsp:param name="email" value="${user.email}" /> --%>
-<%--                             <jsp:param name="deptCode" value="${user.deptCode}" /> --%>
-<%--                             <jsp:param name="positionCode" value="${user.positionCode}" /> --%>
-<%-- 						</jsp:include> --%>
-                    </tr>
+                    	</tr>
                     </c:forEach>
                 </tbody>
+                </c:if>
+                
             </table>
         </div>
 
 	<script src="/js/addressMain.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
         const listRows = document.getElementsByClassName("listRow");
         for (let row of listRows) {
@@ -103,10 +138,41 @@
             }
         });
 
-        const btnSearchUser = document.getElementById("btnSearchUser");
-        btnSearchUser.addEventListener('click', ()=> {
+        // 주소록 삭제
+		function removeUser(userId) {
+			if(confirm("정말 삭제하시겠습니까?")){
+				location.href = '/address/removeUser?userId=' + userId;
+			} 
+		}
 
+        // 주소록 추가
+        const btnAddUser = document.querySelectorAll(".btnAddUser");
+        btnAddUser.forEach( button => {
+            button.addEventListener('click', (event) => {
+                const userId = event.target.getAttribute("data-user-id");
+                console.log("userId : " + userId);
+                
+                $.ajax({
+    				type: "POST",
+    				url: "http://localhost:8080/address/addUser",
+    				headers:{
+    					"Content-type":"application/json;"
+    				},
+    				data: userId,
+    				success: function(result){
+    					console.log("ajax success");
+    					
+    					//실행할 코드
+    					
+    				},
+    				error: function(error){
+    					console.log("addressMain.jsp btnAddUser ajax error")
+    					console.log(error);
+    				}
+    			});
+            });
         })
+
     </script>
 </body>
 </html>

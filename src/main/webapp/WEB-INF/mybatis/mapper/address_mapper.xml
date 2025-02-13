@@ -9,5 +9,19 @@
 		JOIN address
 		ON users.id = address.add_id
 	</select>
+	
+	<delete id="removeUser" parameterType="int">
+		DELETE FROM address
+		WHERE add_id = #{userId}
+	</delete>
+	
+	<select id="findUserListBySearch" resultType="User" parameterType="String">
+		SELECT *
+		FROM users
+		WHERE
+		name LIKE '%' || #{searchKeyword} || '%' 
+		OR
+		email LIKE '%' || #{searchKeyword} || '%' 
+	</select>
 
 </mapper>

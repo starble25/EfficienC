@@ -21,5 +21,17 @@ public class AddressDAOImpl implements AddressDAO {
 		return addressUserList;
 	}
 
+	@Override
+	public int removeUser(int userId) {
+		int result = sqlSessionTemplate.delete("address_mapper.removeUser", userId);
+		return result;
+	}
+
+	@Override
+	public List<User> findUserListBySearch(String searchKeyword) {
+		List<User> addressUserList = sqlSessionTemplate.selectList("address_mapper.findUserListBySearch", searchKeyword);
+		return addressUserList;
+	}
+
 	
 }
