@@ -10,7 +10,7 @@ public interface UserDAO {
 	int saveUser(User user);
 	
 	// Read
-	List<User> findUserList();
+	List<User> findUserList(User user);
 	
 	// Update
 	int modifyUser(User user);

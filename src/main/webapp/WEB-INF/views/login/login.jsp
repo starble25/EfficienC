@@ -18,7 +18,6 @@
 	</form>
 
 	<button onclick="location.href = '/signup'">회원가입</button>
-	<button onclick="location.href = '/findId'">아이디 찾기</button>
 	<button onclick="location.href = '/findPassword'">비밀번호 찾기</button>
 
 

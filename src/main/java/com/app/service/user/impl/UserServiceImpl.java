@@ -18,14 +18,15 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public int saveUser(User user) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = userDAO.saveUser(user);
+		return result;
 	}
 
 	@Override
-	public List<User> findUserList() {
-		System.out.println("userServiceImpl findUserList");
-		List<User> userList = userDAO.findUserList();
+	public List<User> findUserList(User user) {
+		
+		List<User> userList = userDAO.findUserList(user);
+		System.out.println(userList);
 		return userList;
 	}
 
@@ -39,8 +40,8 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public int modifyUser(User user) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = userDAO.modifyUser(user);
+		return result;
 	}
 
 	@Override
