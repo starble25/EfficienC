@@ -3,6 +3,7 @@ package com.app.controller.address;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.app.dto.address.Address;
 import com.app.dto.user.User;
 import com.app.service.address.AddressService;
 import com.app.service.user.UserService;
@@ -27,18 +29,19 @@ public class AddressController {
 	
 	// address 메인 페이지 연결
 	@GetMapping("/address")
-	public String addressMain(Model model) {
+	public String addressMain(Model model, HttpSession session) {
+		System.out.println("sesson.loginUserId : " + session.getAttribute("loginUserId"));
+		if( session.getAttribute("loginUserId") == null ) {
+			return "redirect:/login";
+		}
+		int loginUserId = (int) session.getAttribute("loginUserId");
+		
 		List<User> userList = userService.findUserList();
 		model.addAttribute("userList", userList);
 		
 		// 주소록에 있는 userList 조회
-		List<User> addressUserList = addressService.findAddressUserList();
+		List<User> addressUserList = addressService.findAddressUserList(loginUserId);
 		model.addAttribute("addressUserList", addressUserList);
-		
-		System.out.println("address User List");
-		for(User user : addressUserList) {
-			System.out.println(user.toString());
-		}
 		
 //		showAddress : 1 = 내 주소록, 2 = 검색결과 주소록
 		int showAddress = 1;
@@ -48,11 +51,20 @@ public class AddressController {
 	}
 	
 	@PostMapping("/address")
-	public String addressMainAction(Model model, HttpServletRequest request) {
-		
+	public String addressMainAction(Model model, HttpServletRequest request, HttpSession session) {
 		System.out.println("/address POST 요청 들어옴");
 		System.out.println("searchKeyword 값 : " + request.getParameter("searchKeyword"));
 		
+		// 내 주소록 리스트 추가
+		if( session.getAttribute("loginUserId") == null ) {
+			return "redirect:/login";
+		}
+		int loginUserId = (int) session.getAttribute("loginUserId");
+		List<User> addressUserList = addressService.findAddressUserList(loginUserId);
+		model.addAttribute("addressUserList", addressUserList);
+		System.out.println(addressUserList);
+		
+		// 검색결과 주소록
 		int showAddress = 2;
 		model.addAttribute("showAddress", showAddress);
 		String searchKeyword = request.getParameter("searchKeyword").trim();
@@ -92,9 +104,28 @@ public class AddressController {
 	// 주소록 추가
 	@ResponseBody
 	@PostMapping("address/addUser")
-	public void addUser(@RequestBody String data) {
-		System.out.println("address/adddUser ajax post");
-		System.out.println("data : " + data);
+	public void addUser(HttpSession session, @RequestBody String data) {
+		System.out.println("address/addUser ajax post");
+		System.out.println("data(추가할 유저 id) : " + data);
+		
+		if( session.getAttribute("loginUserId") != null ) {
+			
+			int loginUserId = (int) session.getAttribute("loginUserId");
+			
+			Address address = new Address();
+			address.setMyId(loginUserId);
+			address.setAddId(Integer.parseInt(data));
+			address.setFavorite("F");
+			
+			int result = addressService.saveAddress(address);
+			
+			if( result > 0 ) {
+				System.out.println("주소록 저장 성공");
+			} else {
+				System.out.println("주소록 저장 실패");
+			}
+		}
+
 	}
 	
 }
