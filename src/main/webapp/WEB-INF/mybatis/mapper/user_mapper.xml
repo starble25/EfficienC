@@ -45,8 +45,6 @@
 		WHERE email = #{email}
 	</update>
 	
-	
-
 	<select id="findUserList" resultType="User">
 		SELECT *
 		FROM USERS
@@ -54,10 +52,9 @@
 	
 	<update id="modifyUser" parameterType="User">
 		UPDATE USERS
-		SET pw =
-		#{pw},
+		SET pw = #{pw},
 		name = #{name},
-		position_code = #{positionCode}
+		position_code = #{positionCode},
 		dept_code = #{deptCode}
 		WHERE email = #{email}
 	</update>

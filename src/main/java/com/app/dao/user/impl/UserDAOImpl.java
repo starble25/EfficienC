@@ -18,14 +18,15 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public int saveUser(User user) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = sqlSessionTemplate.insert("user_mapper.saveUser", user);
+		return result;
 	}
 
+	
 	@Override
 	public List<User> findUserList() {
 		List<User> userList = sqlSessionTemplate.selectList("user_mapper.findUserList");
-		
+		System.out.println(userList);
 		return userList;
 	}
 
@@ -45,8 +46,8 @@ public class UserDAOImpl implements UserDAO {
 	
 	@Override
 	public int modifyUser(User user) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = sqlSessionTemplate.update("user_mapper.modifyUser", user);
+		return result;
 	}
 
 	@Override

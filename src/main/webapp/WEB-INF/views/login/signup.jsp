@@ -4,46 +4,64 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link href="css/signup.css" rel="stylesheet">
 <title>Insert title here</title>
 </head>
 <body>
+	<h2 class="formTitle">회원가입</h2>
+	<form action="" method="post" class="signupForm">
+		<div class="form">
+			
+			
+			<div class="formSection">
+				<div class = "itemContainer">
+					<input type="text" name="name" class = "item name"  placeholder="이름">
+				</div>
+				<div class = "itemContainer">
+					<input type="text" name="jumin" class = "item jumin" placeholder="주민등록번호">
+				</div>
+				<div class = "itemContainer">
+					<input type="text" name="tel" class = "item tel" placeholder="휴대전화번호">
+				</div>
+			</div>
+			
+			<div class="formSection">
+				<div class="itemContainer">
+					<input placeholder="이메일" name="email" id="email" type="email" class = "item email" autofocus><br>
+				</div>
+				<div class="authReq btn">
+					<input type="button" value="인증" id="requestAuthCode" class = "item"><br>
+				</div>
+				<div class="itemContainer">
+					<input  placeholder="인증코드 입력" maxlength="6" disabled="disabled"
+						name="authCode" id="authCode" type="text" autofocus class = "item">
+				</div>
 
-	<h2>회원가입</h2>
-	<form action="" method="post" class="form-group">
-		<p>이름</p>
-		<input type="text" name="name"><br>
-		<p>주민번호</p>
-		<input type="text" name="jumin"><br>
-		<p>전화번호</p>
-		<input type="text" name="tel"><br>
-		<p>이메일</p>
-
-		<input class="form-control" placeholder="이메일을 입력해주세요." name="email"
-			id="email" type="email" autofocus><br>
-
-		<div>
-			<input type="button" value="인증하기" id="requestAuthCode"
-				class="btn btn-primary"><br>
-		</div><br>
-
-		<input class="form-control" placeholder="인증 코드 6자리를 입력해주세요."
-			maxlength="6" disabled="disabled" name="authCode" id="authCode"
-			type="text" autofocus >
-
-		<div>
-			<input type="button" value="확인" id="inputAuthCode"
-				class="btn btn-primary" ><br>
+				<div class="authCode btn">
+				<input type="button" value="확인" id="inputAuthCode" class="item" >
+				</div>
+				
+				<div class="auth msg">
+				<span id="emailAuthWarn"></span>
+				</div>
+				
+				<div class="itemContainer">
+					<input type="password" name="pw" class="item" placeholder="비밀번호" >
+				</div>
+			
+				<div>
+				<input type="submit" value="회원가입" class="item btn btn-lg btn-success btn-block"
+					id="signup btn" disabled="disabled" >
+				</div>
 		</div>
-		<span id="emailAuthWarn"></span>
-		<p>비밀번호</p>
-		
-		<input type="password" name="pw"><br>
-		
-		<input type="submit" value="회원가입"
-			class="btn btn-lg btn-success btn-block" id="signupBtn"
-			disabled="disabled">
-	</form>
-
+		<div class="formSection">
+				<div class="authDetail">
+					<input type="checkbox" class="checkbox">
+					<input type="text" value="인증 약관 전체 동의"  class="item detail" readonly>
+				</div>
+		</div>
+	</div>
+</form>
 </body>
 
 <script
