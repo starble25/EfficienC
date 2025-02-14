@@ -28,4 +28,10 @@ public interface UserDAO {
 
     // 📌 검색 조건에 따른 사용자 리스트 조회
     List<User> findUserListBySearchCondition(UserSearchCondition userSearchCondition);
+
+	User checkUserAuth(User user);
+
+	int changeUserPassword(User user);
+
+	User findUserByEmail(String email);
 }

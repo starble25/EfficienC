@@ -1,45 +1,36 @@
 package com.app.controller.login;
 
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import javax.servlet.http.HttpSession;
-
 import com.app.dto.user.User;
 import com.app.service.user.UserService;
-import com.app.util.LoginManager;
 
 @Controller
 public class LoginController {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
+    /** 📌 회원가입 페이지 이동 */
     @GetMapping("/register")
     public String registerUser() {
         return "login/register";
     }
 
+    /** 📌 회원가입 처리 */
     @PostMapping("/register")
     public String registerUserAction(User user) {
-        System.out.println(user.toString());
-
+        // 단순 비밀번호 저장 (암호화 없이)
         int result = userService.saveUser(user);
-        System.out.println(result);
-
-        if (result > 0) {
-            return "redirect:/login";
-        } else {
-            return "/register";
-        }
+        return (result > 0) ? "redirect:/login" : "login/register";
     }
 
+    /** 📌 로그인 페이지 이동 */
     @GetMapping("/login")
     public String login() {
         return "login/login";
@@ -47,20 +38,23 @@ public class LoginController {
 
     /** 📌 로그인 처리 */
     @PostMapping("/login")
-    public String loginAction(@RequestParam(required = false) String email, 
-                              @RequestParam(required = false) String pw, 
+    public String loginAction(@RequestParam String email, 
+                              @RequestParam String pw, 
                               HttpSession session, 
                               Model model) {
-        System.out.println("로그인 시도 - email: " + email + ", pw: " + pw); // ✅ 디버깅 로그 추가
+        System.out.println("[로그인 시도] 이메일: " + email + ", 비밀번호(입력값): " + pw);
 
-        if (email == null || pw == null) {
-            model.addAttribute("error", "이메일과 비밀번호를 입력하세요.");
+        User user = userService.findUserByEmail(email.toLowerCase());
+
+        if (user == null) {
+            model.addAttribute("error", "존재하지 않는 이메일입니다.");
             return "login/login";
         }
 
-        User user = userService.findByEmail(email);
+        System.out.println("[DB 조회] 비밀번호: " + user.getPw());
 
-        if (user != null && user.getPw().equals(pw)) {
+        // ✅ 비밀번호 검증 (암호화 없이 단순 비교)
+        if (user.getPw().equals(pw)) {
             session.setAttribute("userEmail", user.getEmail());
             session.setAttribute("userName", user.getName());
             return "redirect:/calendar";
@@ -70,20 +64,10 @@ public class LoginController {
         }
     }
 
-    /** 📌 로그아웃 기능 */
+    /** 📌 로그아웃 처리 */
     @GetMapping("/logout")
     public String logout(HttpSession session) {
-        session.invalidate(); // ✅ 세션 초기화 (로그아웃)
-        return "redirect:/login"; // 로그인 페이지로 이동
-    }
-
-    @GetMapping("/findPassword")
-    public String findPw() {
-        return "login/findPassword";
-    }
-
-    @PostMapping("/findPassword")
-    public String findPw2() {
-        return "login/findPassword2";
+        session.invalidate();
+        return "redirect:/login";
     }
 }

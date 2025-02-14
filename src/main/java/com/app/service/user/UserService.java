@@ -27,4 +27,9 @@ public interface UserService {
 
     // 📌 조건 검색 (검색 조건 기반 사용자 리스트 조회)
     List<User> findUserListBySearchCondition(UserSearchCondition userSearchCondition);
+
+    // 📌 추가된 비밀번호 찾기 기능
+    void sendAuthCodeToEmail(String email); // 인증 코드 전송
+    boolean verifyAuthCode(String email, int authCode); // 인증 코드 검증
+    int resetPassword(String email, String newPassword); // 비밀번호 초기화
 }
