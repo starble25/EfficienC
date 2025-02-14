@@ -11,7 +11,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>주소록 상세보기</title>
 
 <link href="/css/profileModal.css?after" rel="stylesheet">
 
@@ -27,12 +27,7 @@
                     <img src="/image/profileImage.jpg">
                 </div>
                 <div>
-                    <!-- <div id="modalName">${name}</div>
-                    <div id="modalTel">${tel}</div>
-                    <div id="modalEmail">${email}</div>
-                    <div id="modalDeptCode">${deptCode}</div>
-                    <div id="modalPositionCode">${positionCode}</div> -->
-                    
+                    <!-- 아래 div들 id이름 바꾸면 안됨 -->
                     <div id="modalName"></div>
                     <div id="modalTel"></div>
                     <div id="modalEmail"></div>
