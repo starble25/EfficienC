@@ -25,8 +25,7 @@ public class LoginController {
     /** 📌 회원가입 처리 */
     @PostMapping("/register")
     public String registerUserAction(User user) {
-        // 단순 비밀번호 저장 (암호화 없이)
-        int result = userService.saveUser(user);
+        int result = userService.saveUser(user); // 비밀번호 암호화 없이 저장
         return (result > 0) ? "redirect:/login" : "login/register";
     }
 
@@ -44,6 +43,7 @@ public class LoginController {
                               Model model) {
         System.out.println("[로그인 시도] 이메일: " + email + ", 비밀번호(입력값): " + pw);
 
+        // 이메일을 소문자로 변환하여 DB 조회
         User user = userService.findUserByEmail(email.toLowerCase());
 
         if (user == null) {
