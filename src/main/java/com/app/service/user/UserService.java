@@ -15,7 +15,7 @@ public interface UserService {
 	int saveUser(User user);
 	
 	// Read
-	List<User> findUserList(User user);
+	List<User> findUserList();
 	
 	// Update
 	int modifyUser(User user);

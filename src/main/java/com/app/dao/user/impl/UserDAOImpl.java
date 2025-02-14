@@ -22,10 +22,11 @@ public class UserDAOImpl implements UserDAO {
 		return result;
 	}
 
+	
 	@Override
-	public List<User> findUserList(User user) {
+	public List<User> findUserList() {
 		System.out.println("userDAO findUserList");
-		List<User> userList = sqlSessionTemplate.selectList("user_mapper.findUserList", user);
+		List<User> userList = sqlSessionTemplate.selectList("user_mapper.findUserList");
 		System.out.println(userList);
 		return userList;
 	}

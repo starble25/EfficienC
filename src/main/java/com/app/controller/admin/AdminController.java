@@ -44,13 +44,13 @@ public class AdminController {
 
 	// 사용자 목록
 	@GetMapping("/admin/usersList")
-	public String users(Model model, UserSearchCondition userSearchCondition, User user) {
+	public String users(Model model) {
 
 		// List<User> userList = userService.findUserList();
-		List<User> userList = userService.findUserList(user);
+		List<User> userList = userService.findUserList();
 
 		model.addAttribute("userList", userList);
-		model.addAttribute("user", user);
+		
 
 		return "admin/usersList";
 

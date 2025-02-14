@@ -4,10 +4,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link href="css/user.css" rel="stylesheet">
 <title>Insert title here</title>
 </head>
 <body>
-	<h2>사용자 상세 페이지</h2>
+	<h2 class = "formTitle">사용자 상세 페이지</h2>
 	<input type="hidden" name="id" value="${user.id}">
 	<p>아이디 : ${user.email}</p>
 	<p>이름 : ${user.name}</p>

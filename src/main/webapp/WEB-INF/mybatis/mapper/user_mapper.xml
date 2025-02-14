@@ -45,8 +45,6 @@
 		WHERE email = #{email}
 	</update>
 	
-	
-
 	<select id="findUserList" resultType="User">
 		SELECT *
 		FROM USERS

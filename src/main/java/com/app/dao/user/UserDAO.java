@@ -9,8 +9,6 @@ public interface UserDAO {
 	// Create
 	int saveUser(User user);
 	
-	// Read
-	List<User> findUserList(User user);
 	
 	// Update
 	int modifyUser(User user);
@@ -24,6 +22,8 @@ public interface UserDAO {
 	int changeUserPassword(User user);
 
 	User findUserByEmail(String email);
+
+	List<User> findUserList();
 
 	
 }

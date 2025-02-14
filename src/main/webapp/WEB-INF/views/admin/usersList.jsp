@@ -6,7 +6,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link href="css/usersList.css" rel="stylesheet">
 <title>Insert title here</title>
+
 </head>
 <body>
 	<h2>사용자 목록</h2>
