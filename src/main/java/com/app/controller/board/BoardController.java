@@ -1,5 +1,7 @@
 package com.app.controller.board;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,25 +28,57 @@ import com.app.service.board.BoardService;
 //	        return new ModelAndView("redirect:/boardForm");
 //	    }
 //	}
+
+
+
+//@Controller
+//@RequestMapping("/board") // 추가
+//public class BoardController {
+//    @Autowired
+//    private BoardService boardService;
+//
+////    @RequestMapping("/form")  // URL을 변경
+////    public ModelAndView showBoardForm() {
+////        return new ModelAndView("boardForm");
+////    }
+//    
+//    @GetMapping("/form")
+//    public String boardForm() {
+//        return "board/boardForm"; 
+//    }
+//
+//    @PostMapping("/submit")  
+//    public ModelAndView submitBoard(@ModelAttribute Board board) {
+//        boardService.addBoard(board);
+//        return new ModelAndView("redirect:/board/form");
+//    }
+//}
+
+
 @Controller
-@RequestMapping("/board") // 추가
+@RequestMapping("/board") // 공통 URL 프리픽스
 public class BoardController {
     @Autowired
     private BoardService boardService;
 
-//    @RequestMapping("/form")  // URL을 변경
-//    public ModelAndView showBoardForm() {
-//        return new ModelAndView("boardForm");
-//    }
-    
     @GetMapping("/form")
-    public String boardForm() {
-        return "board/boardForm"; 
+    public ModelAndView boardForm() {
+        return new ModelAndView("board/boardForm");
     }
 
-    @PostMapping("/submit")  
+    @PostMapping("/submit")
     public ModelAndView submitBoard(@ModelAttribute Board board) {
         boardService.addBoard(board);
-        return new ModelAndView("redirect:/board/form");
+        return new ModelAndView("redirect:/boardList"); // 수정: 목록 페이지로 이동
+    }
+
+    @GetMapping("/list") // 추가: 게시글 목록 조회 기능
+    public ModelAndView showBoardList() {
+        List<Board> boardList = boardService.getAllBoards();
+        ModelAndView mav = new ModelAndView("board/boardList"); // 수정: board 폴더 안의 JSP 사용
+        mav.addObject("boardList", boardList);
+        return mav;
     }
 }
+
+

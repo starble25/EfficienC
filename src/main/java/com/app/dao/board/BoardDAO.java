@@ -2,7 +2,10 @@ package com.app.dao.board;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -33,5 +36,29 @@ public class BoardDAO {
 	        } catch (SQLException e) {
 	            e.printStackTrace();
 	        }
+	    }
+	    
+	    
+	    
+//	    목록 보여지는 페이지 위해 추가
+	    public List<Board> getAllBoards() { // 추가: 게시글 목록 조회 기능
+	        List<Board> boardList = new ArrayList<>();
+	        String sql = "SELECT id, title, created_at FROM board ORDER BY id DESC";
+	        
+	        try (Connection conn = dataSource.getConnection();
+	             PreparedStatement ps = conn.prepareStatement(sql);
+	             ResultSet rs = ps.executeQuery()) {
+
+	            while (rs.next()) {
+	                Board board = new Board();
+	                board.setId(rs.getInt("id"));
+	                board.setTitle(rs.getString("title"));
+	                board.setCreatedAt(rs.getDate("created_at"));
+	                boardList.add(board);
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	        return boardList;
 	    }
 	}
