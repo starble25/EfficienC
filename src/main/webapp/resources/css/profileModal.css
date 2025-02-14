@@ -22,8 +22,8 @@
 
 /* 모달 컨테이너 */
 .profileModalContainer {
-    width: 700px;
-    height: 400px;
+    width: 400px;
+    height: 600px;
     padding: 20px;
     padding-top: 0;
     border: 2px solid black;
@@ -34,25 +34,41 @@
 
 .profileModalContainer .modalHeader {
     width: 100%;
-    height: 15%;
+    height: 35px;
     border: 1px solid blue;
+}
+
+/* 닫기버튼 */
+.profileModalContainer .modalHeader button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 25px;
+    height: 25px;
+    border: 1px solid red;
 }
 
 .profileModalContainer .modalBody {
     width: 100%;
-    height: 85%;
     border: 1px solid green;
 
     display: flex;
+    flex-direction: column;
 }
 
-/* 프로필 & 내용 컨테이너 */
+/* 프로필 컨테이너 */
 .modalBody div {
-    width: 50%;
-    padding: 7px;
+    width: 100%;
+    padding: 1px;
 }
 
 /* 프로필 사진 */
 .modalBody img {
-    width: 100%;
+    width: 85%;
+    height: 300px;
+    object-fit: cover;
+    display: block;
+    margin: 0 auto;
+
+    border: 1px solid purple;
 }
