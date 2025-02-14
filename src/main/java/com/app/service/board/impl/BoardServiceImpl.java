@@ -2,6 +2,7 @@ package com.app.service.board.impl;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,9 +22,14 @@ public class BoardServiceImpl implements BoardService{
     public void addBoard(Board board) {
         MultipartFile file = board.getUploadFile();
         
-        if (!file.isEmpty()) {
-            String fileName = file.getOriginalFilename();
-            File saveFile = new File(UPLOAD_DIR + fileName);
+//        if (!file.isEmpty()) {
+//            String fileName = file.getOriginalFilename();
+//            File saveFile = new File(UPLOAD_DIR + fileName);
+            
+//        null 체크추가
+            if (file != null && !file.isEmpty()) {
+                String fileName = file.getOriginalFilename();
+                File saveFile = new File(UPLOAD_DIR + fileName);
             
             try {
                 file.transferTo(saveFile);	//파일을 로컬 폴더에 저장
@@ -34,5 +40,11 @@ public class BoardServiceImpl implements BoardService{
         }
 
         boardDAO.insertBoard(board);	//DB 저장
+    }
+    
+//    목록 조회를 위해
+    @Override
+    public List<Board> getAllBoards() { 
+        return boardDAO.getAllBoards();
     }
 }

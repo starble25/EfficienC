@@ -28,5 +28,8 @@
 
         <button type="submit">등록</button>
     </form>
+    
+<!--     목록 페이지로 이동 -->
+    <a href="boardList.jsp">목록으로</a>
 </body>
 </html>
