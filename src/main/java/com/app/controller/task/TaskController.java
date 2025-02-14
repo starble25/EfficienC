@@ -18,7 +18,8 @@ import com.app.service.task.TaskService;
 @Controller
 @RequestMapping("/tasks")
 public class TaskController {
-    private TaskService taskService = new TaskService();
+    @Autowired
+    TaskService taskService;
 
     @GetMapping
     public String showBoard(Model model) {

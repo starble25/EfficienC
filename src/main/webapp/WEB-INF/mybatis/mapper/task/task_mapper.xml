@@ -5,7 +5,7 @@
 
 
     <select id="getAllTasks" resultType="Task">
-    <!-- <select id="getAllTasks" resultType="com.example.dto.TaskDTO"> -->
+    <!-- <select id="getAllTasks" resultType="com.app.dto.task.Task"> -->
         SELECT * FROM tasks ORDER BY id DESC
     </select>
 

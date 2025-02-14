@@ -1,8 +1,10 @@
 package com.app.dao.task;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import org.apache.ibatis.session.SqlSession;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -37,32 +39,66 @@ import com.app.dto.task.Task;
 //}
 
 
+//@Repository
+//public class TaskDAO {
+//
+//    @Autowired
+//    private SqlSession sqlSession;
+//
+//    private static final String NAMESPACE = "com.app.dao.task.TaskDAO";
+//
+//    public List<Task> getAllTasks() {
+//    	List<Task> taskList = sqlSession.selectList(NAMESPACE + ".getAllTasks");
+//        return taskList;
+//    }
+//     
+//    public int addTask(String title) { 
+//    	int taskList = sqlSession.insert(NAMESPACE + ".addTask", title);
+//		return taskList;
+//    }
+//
+//    public int updateTaskStatus(int id, String status) {
+//    	int taskList = sqlSession.update(NAMESPACE + ".updateTaskStatus", new Task());
+//		return taskList;
+//    }
+//
+//    public int deleteTask(int id) {
+//    	int taskList = sqlSession.delete(NAMESPACE + ".deleteTask", id);
+//		return taskList;
+//    }
+// 
+//}
 @Repository
 public class TaskDAO {
 
     @Autowired
-    private SqlSession sqlSession;
+	private SqlSessionTemplate sqlSession;
 
-    private static final String NAMESPACE = "com.app.dao.task.TaskDAO";
+//    @Autowired
+//    public TaskDAO(SqlSessionTemplate sqlSession) {
+//        this.sqlSession = sqlSession;
+//        System.out.println("🚀 SqlSessionTemplate 주입됨: " + (sqlSession != null));
+//    }
+
+    private static final String NAMESPACE = "task_mapper";
 
     public List<Task> getAllTasks() {
-    	List<Task> taskList = sqlSession.selectList(NAMESPACE + ".getAllTasks");
-        return taskList;
+        return sqlSession.selectList(NAMESPACE + ".getAllTasks");
     }
-     
+    
     public int addTask(String title) { 
-    	int taskList = sqlSession.insert(NAMESPACE + ".addTask", title);
-		return taskList;
+        return sqlSession.insert(NAMESPACE + ".addTask", title);
     }
 
     public int updateTaskStatus(int id, String status) {
-    	int taskList = sqlSession.update(NAMESPACE + ".updateTaskStatus", new Task());
-		return taskList;
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("id", id);
+        paramMap.put("status", status);
+        
+        return sqlSession.update(NAMESPACE + ".updateTaskStatus", paramMap);
     }
 
     public int deleteTask(int id) {
-    	int taskList = sqlSession.delete(NAMESPACE + ".deleteTask", id);
-		return taskList;
+        return sqlSession.delete(NAMESPACE + ".deleteTask", id);
     }
- 
 }

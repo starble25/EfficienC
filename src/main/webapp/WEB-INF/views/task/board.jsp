@@ -40,7 +40,7 @@
 						<form action="tasks/updateStatus" method="post">
 							<input type="hidden" name="id" value="${task.id}"> <input
 								type="hidden" name="status" value="IN_PROGRESS">
-							<button type="submit">진행 중으로</button>
+							<button type="submit">진행 중</button>
 						</form>
 					</div>
 				</c:if>

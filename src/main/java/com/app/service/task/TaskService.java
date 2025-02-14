@@ -8,9 +8,13 @@ import org.springframework.stereotype.Service;
 import com.app.dao.task.TaskDAO;
 import com.app.dto.task.Task;
 
-//------DB 연동 전 코드----------
+////------DB 연동 전 코드----------
+@Service
 public class TaskService {
-	 private TaskDAO taskDAO = new TaskDAO();
+	 //private TaskDAO taskDAO = new TaskDAO(null);
+	
+	@Autowired
+	TaskDAO taskDAO;
 
 	    public List<Task> getAllTasks() {
 	        return taskDAO.getAllTasks();
@@ -38,7 +42,7 @@ public class TaskService {
 //    @Autowired
 //    private TaskDAO taskDAO;
 //
-//    public List<TaskDTO> getAllTasks() {
+//    public List<Task> getAllTasks() {
 //        return taskDAO.getAllTasks();
 //    }
 //
