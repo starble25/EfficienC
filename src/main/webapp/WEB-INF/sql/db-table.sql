@@ -68,3 +68,18 @@ START WITH 1
 INCREMENT BY 1
 NOCYCLE;
 
+
+--할 일 목록
+CREATE TABLE tasks (
+    id NUMBER GENERATED ALWAYS AS IDENTITY PRIMARY KEY, --GENERATED ALWAYS AS IDENTITY 자동증가되는 값 가짐을 의미
+    title VARCHAR2(255) NOT NULL,
+    description CLOB, --CLOB : 대용량의 텍스트 데이터를 저장
+    status VARCHAR2(20) DEFAULT 'TODO' CHECK (status IN ('TODO', 'IN_PROGRESS', 'DONE')) --기본값:TODO, check제약 조건때문에 값은 'TODO', 'IN_PROGRESS', 'DONE' 중 하나여야 함. 
+);
+
+CREATE SEQUENCE tasks_PK
+START WITH 1
+INCREMENT BY 1
+NOCYCLE;
+
+
