@@ -2,97 +2,64 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="user_mapper">
-	<insert id="saveUser" parameterType="User">
-		insert into USERS
-		values (
-		USERS_PK.nextval,
-		#{email},
-		#{pw},
-		#{name},
-		#{tel},
-		#{jumin},
-		NULL,
-		NULL,
-		NULL,
-		NULL,
-		NULL
-		)
-	</insert>
-		
-	<select id="checkUserLogin" resultType="User"
-		parameterType="User">
-		select *
-		from USERS
-		where email = #{email} AND pw = #{pw}
-	</select>
-	
-	<select id="findUserByEmail" resultType="User" parameterType="String">
-		select *
-		from USERS
-		WHERE email = #{email}	
-	</select>
-	
-	<select id="checkUserAuth" resultType="User"
-		parameterType="User">
-		select *
-		from USERS
-		where email = #{email} AND name = #{name} AND jumin = #{jumin} 
-	</select>
-	
-	<update id="changeUserPassword" parameterType="User">
-		UPDATE USERS
-		SET pw = #{pw}
-		WHERE email = #{email}
-	</update>
-	
-	
 
-	<select id="findUserList" resultType="User">
-		SELECT *
-		FROM USERS
-	</select>
-	
-	<update id="modifyUser" parameterType="User">
-		UPDATE USERS
-		SET pw =
-		#{pw},
-		name = #{name},
-		position_code = #{positionCode}
-		dept_code = #{deptCode}
-		WHERE email = #{email}
-	</update>
-	
-	
-	<select id="findUserListBySearchCondition"
-		parameterType="UserSearchCondition" resultType="User">
+    <!-- 📌 회원가입 (새로운 사용자 저장) -->
+    <insert id="saveUser" parameterType="com.app.dto.user.User">
+        INSERT INTO USERS (id, email, pw, name, tel, jumin, position_code, dept_code, created_at, updated_at, cmp_id)
+        VALUES (USERS_PK.NEXTVAL, #{email}, #{pw}, #{name}, #{tel}, #{jumin}, #{position_code}, #{dept_code}, SYSTIMESTAMP, SYSTIMESTAMP, #{cmp_id})
+    </insert>
 
-		SELECT *
-		FROM USERS
-		<where>
-			<if test="email != null and email != '' or name != null and name != ''">
-				(
-				<if test="email != null and email != ''">
-					id LIKE '%' || #{searchKeyword} || '%'
-				</if>
-				<if test="name != null and name != ''">
-					<if test="email != null and email != ''">
-						OR name LIKE '%' || #{searchKeyword} || '%'
-					</if>
-					<if test="email == null or email == ''">
-						name LIKE '%' || #{searchKeyword} || '%'
-					</if>
-				</if>
-				)
-			</if>
-			
-			<if test="positionCode != null and positionCode != ''">
-				AND position_code = #{positionCode}
-			</if>
-			
-			<if test="deptCode != null and deptCode != ''">
-				AND dept_code = #{deptCode}
-			</if>
-		</where>
-	</select>
+    <!-- 📌 사용자 로그인 확인 -->
+    <select id="checkUserLogin" parameterType="com.app.dto.user.User" resultType="com.app.dto.user.User">
+        SELECT * FROM USERS WHERE email = #{email} AND pw = #{pw}
+    </select>
+
+    <!-- 📌 사용자 인증 확인 (비밀번호 찾기) -->
+    <select id="checkUserAuth" resultType="com.app.dto.user.User" parameterType="com.app.dto.user.User">
+        SELECT * FROM USERS WHERE email = #{email} AND name = #{name} AND jumin = #{jumin}
+    </select>
+
+    <!-- 📌 이메일 기반 사용자 조회 (로그인 시 사용) -->
+    <select id="findByEmail" parameterType="String" resultType="com.app.dto.user.User">
+        SELECT * FROM USERS WHERE email = #{email}
+    </select>
+
+    <!-- 📌 ID 기반 사용자 조회 -->
+    <select id="findUserById" parameterType="String" resultType="com.app.dto.user.User">
+        SELECT * FROM USERS WHERE id = #{id}
+    </select>
+
+    <!-- 📌 비밀번호 변경 -->
+    <update id="changeUserPassword" parameterType="com.app.dto.user.User">
+        UPDATE USERS SET pw = #{pw} WHERE email = #{email}
+    </update>
+
+    <!-- 📌 사용자 정보 수정 -->
+    <update id="modifyUser" parameterType="com.app.dto.user.User">
+        UPDATE USERS
+        SET pw = #{pw}, name = #{name}, tel = #{tel}, jumin = #{jumin}, position_code = #{position_code}, 
+            dept_code = #{dept_code}, updated_at = SYSTIMESTAMP
+        WHERE id = #{id}
+    </update>
+
+    <!-- 📌 이메일 중복 체크 -->
+    <select id="isEmailCheck" parameterType="String" resultType="int">
+        SELECT COUNT(*) FROM USERS WHERE email = #{email}
+    </select>
+
+    <!-- 📌 전체 사용자 목록 조회 -->
+    <select id="findUserList" resultType="com.app.dto.user.User">
+        SELECT * FROM USERS
+    </select>
+
+    <!-- 📌 검색 조건 기반 사용자 목록 조회 -->
+    <select id="findUserListBySearchCondition" parameterType="com.app.dto.user.UserSearchCondition" resultType="com.app.dto.user.User">
+        SELECT * FROM USERS
+        WHERE 
+            (#{name} IS NULL OR name LIKE '%' || #{name} || '%')
+            AND (#{email} IS NULL OR email LIKE '%' || #{email} || '%')
+            AND (#{position_code} IS NULL OR position_code = #{position_code})
+            AND (#{dept_code} IS NULL OR dept_code = #{dept_code})
+    </select>
 
 </mapper>
