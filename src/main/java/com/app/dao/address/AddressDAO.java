@@ -10,5 +10,8 @@ import com.app.dto.user.User;
 public interface AddressDAO {
 
 	public List<User> findAddressUserList();
+	List<User> findUserListBySearch(String searchKeyword);
+	
+	int removeUser(int userId);
 	
 }
