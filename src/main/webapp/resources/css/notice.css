@@ -1,0 +1,84 @@
+@charset "UTF-8";
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 전체 컨테이너 */
+.noticeContainer {
+    width: 100%;
+    border: 1px solid black;
+}
+
+/* 공지사항 */
+.noticeContainer #noticeHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    border-bottom: 2px solid blue;
+}
+
+.noticeContainer h2 {
+    font-size: 38px;
+    margin: 10px 0;
+}
+
+.noticeContainer #btnInputNotice {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* 공지목록 컨테이너 */
+.noticeContainer .itemContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+}
+
+/* 테이블 */
+.noticeContainer .itemContainer table {
+    border-collapse: collapse;
+    text-align: left;
+
+    /* 행 높이 */
+    & tr {
+        height: 65px;
+        border-bottom: 1px solid green;
+    }
+
+    /* 행 길이 */
+    & .colTitle {
+        width: 50%;
+    }
+
+    & .colAuthor {
+        width: 20%;
+    }
+
+    & .colDate {
+        width: 20%;
+    }
+}
+
+/* .itemContainer table .rowContent {
+    min-height: 130px;
+
+    & td {
+        width: 100%;
+        padding: 15px;
+    }
+} */
+
+.itemContainer table .rowContent td {
+    
+
+
+    min-height: 130px;
+    width: 100%;
+    padding: 15px;
+
+}
