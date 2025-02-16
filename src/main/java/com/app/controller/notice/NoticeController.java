@@ -54,10 +54,9 @@ public class NoticeController {
 		return null;
 	}
 	
+	// 공지 삭제
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<String> delete(@PathVariable int id) {
-		System.out.println("delete method called");
-		System.out.println("id : " + id);
 		int result = noticeService.removeNotice(id);
 	    if ( result > 0 ) {
 	        System.out.println("removeNotice 성공");

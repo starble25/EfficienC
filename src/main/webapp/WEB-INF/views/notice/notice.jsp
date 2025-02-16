@@ -42,12 +42,17 @@
         </div>
     </div>
     
+    <!-- 공지사항 작성 Modal -->
+    <%@ include file="/WEB-INF/views/notice/noticeModal.jsp" %>
+    
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+    	//공지내용 토글
         $(".showContent").click(function(){
             $(this).next(".rowContent").toggle();
         });
         
+    	//공지삭제
         $(".btnDeleteNotice").click(function(event){
             event.preventDefault();
             const noticeId = $(this).val();
@@ -59,10 +64,28 @@
                     success: function(result) {
                         location.reload(); // 삭제 후 페이지 새로고침
                     },
-                    error: function(xhr, status, error) {
+                    error: function(error) {
                         alert("공지 삭제에 실패했습니다.");
                     }
                 });
+            }
+        });
+        
+        // 공지작성
+        // 모달 열기
+        $("#btnInputNotice").click(function() {
+            $(".noticeModal").css("display", "flex");
+        });
+
+        // 모달 닫기
+        $(".closeModal").click(function() {
+            $(".noticeModal").css("display", "none");
+        });
+
+        // 모달 영역 밖 클릭 시 닫기
+        $(window).click(function(event) {
+            if ($(event.target).is(".noticeModal")) {
+                $(".noticeModal").css("display", "none");
             }
         });
     </script>
