@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 
@@ -10,6 +10,7 @@
 
 <body>
 	<h1>project main page</h1>
+	<button onclick="location.href = '/logout'">로그아웃</button>
 </body>
 
 </html>

@@ -1,7 +1,8 @@
 @charset "UTF-8";
-
-h1 {
-	color : red;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 /* 전체 컨테이너 */
@@ -9,15 +10,23 @@ h1 {
     width: 80%;
     margin: 0 auto;
     padding: 20px;
-    background-color: #f4f4f4;
+    background-color: #f1f1f1;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
+/* 검색창 컨테이너 */
 .addressMainContainer .searchBar {
+    width: 100%;
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
+}
+
+.addressMainContainer .searchBar form {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
 }
 
 .addressMainContainer .searchBar input {
@@ -36,13 +45,19 @@ h1 {
     cursor: pointer;
 }
 
-/* 전체 테이블 */
+/* 테이블 컨테이너 */
+.addressMainContainer .addressList {
+    min-height: 70vh;
+}
+
+/* 테이블 */
 .addressMainContainer .addressList table {
     width: 100%;
     border-collapse: collapse;
 }
 
-/* row 스타일 */
+/* 테이블 스타일 */
+/* 테이블 행 */
 .addressList .listRow {
     width: 100%;
     /* background-color: white; */
@@ -54,6 +69,7 @@ h1 {
     }
 }
 
+/* 테이블 열 */
 .addressMainContainer .addressList th, .addressList td {
     padding: 10px;
     text-align: left;
@@ -64,11 +80,32 @@ h1 {
     background-color: #f2f2f2;
 }
 
-.addressMainContainer .addressList .btnDeleteRow {
+/* 삭제버튼 */
+.addressMainContainer .addressList .btnDeleteUser {
     padding: 5px 10px;
     background-color: #f44336;
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    float: right;
+
+    &:hover {
+        background-color: #00FFFF;
+    }
+}
+
+/* 추가버튼 */
+.addressMainContainer .addressList .btnAddUser {
+    padding: 5px 10px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    float: right;
+
+    &:hover {
+        background-color: #00FFFF;
+    }
 }

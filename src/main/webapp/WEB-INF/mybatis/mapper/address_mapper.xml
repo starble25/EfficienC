@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="address_mapper">
+
+	<select id="findAddressUserList" resultType="User" parameterType="int">
+		SELECT *
+		FROM users
+		JOIN address
+		ON users.id = address.add_id
+		WHERE address.my_id = #{loginUserId}
+	</select>
+	
+	<delete id="removeUser" parameterType="int">
+		DELETE FROM address
+		WHERE add_id = #{userId}
+	</delete>
+	
+	<select id="findUserListBySearch" resultType="User" parameterType="String">
+		SELECT *
+		FROM users
+		WHERE
+		name LIKE '%' || #{searchKeyword} || '%' 
+		OR
+		email LIKE '%' || #{searchKeyword} || '%' 
+	</select>
+	
+	<insert id="saveUser" parameterType="address">
+		INSERT INTO address
+		VALUES (
+			ADDRESS_PK.NEXTVAL, 
+			#{myId}, 
+			#{addId}, 
+			#{favorite}
+		)
+	</insert>
+
+</mapper>

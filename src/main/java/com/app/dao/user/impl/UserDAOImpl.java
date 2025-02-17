@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.app.dao.user.UserDAO;
 import com.app.dto.user.User;
+import com.app.dto.user.UserSearchCondition;
 
 @Repository
 public class UserDAOImpl implements UserDAO {
@@ -17,28 +18,59 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public int saveUser(User user) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = sqlSessionTemplate.insert("user_mapper.saveUser", user);
+		return result;
+	}
+
+	
+	@Override
+	public List<User> findUserList() {
+		List<User> userList = sqlSessionTemplate.selectList("user_mapper.findUserList");
+		System.out.println(userList);
+		return userList;
 	}
 
 	@Override
-	public List<User> findUserList() {
-		System.out.println("userDAO findUserList");
-		List<User> userList = sqlSessionTemplate.selectList("user_mapper.findUserList");
+	public User checkUserAuth(User user) {
+		User checkUser = sqlSessionTemplate.selectOne("user_mapper.checkUserAuth", user);
+		System.out.println(checkUser + "UserDAO");
+		return checkUser;
+	}
+	
+	@Override
+	public int changeUserPassword(User user) {
+		System.out.println(user + "userDAO");
+		int result = sqlSessionTemplate.update("user_mapper.changeUserPassword",user);
+		return result;
+	}
+	
+	@Override
+	public int modifyUser(User user) {
+		int result = sqlSessionTemplate.update("user_mapper.modifyUser", user);
+		return result;
+	}
+
+	@Override
+	public User checkUserLogin(User user) {
+		User loginUser = sqlSessionTemplate.selectOne("user_mapper.checkUserLogin", user);
+
+		return loginUser;
+	}
+	
+	@Override
+	public List<User> findUserListBySearchCondition(UserSearchCondition userSearchCondition) {
+		
+		List<User> userList = sqlSessionTemplate.selectList("user_mapper.findUserListBySearchCondition", userSearchCondition);
 		
 		return userList;
 	}
 
 	@Override
-	public User findUserById(String id) {
-		// TODO Auto-generated method stub
-		return null;
+	public User findUserByEmail(String email) {
+		User user = sqlSessionTemplate.selectOne("user_mapper.findUserByEmail", email);
+		return user;
 	}
 
-	@Override
-	public int modifyUser(User user) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+
 
 }

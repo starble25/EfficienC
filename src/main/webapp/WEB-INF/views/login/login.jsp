@@ -1,25 +1,47 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
+<link href="css/login.css" rel="stylesheet">
 <title>Insert title here</title>
 </head>
 <body>
-<h1>로그인</h1>
+	<h2 class="formTitle">로그인</h2>
 
-<form action="" method="post">
-아이디<br>
-<input type="text" id="willuseid"><br>
-비밀번호<br>
-<input type="password" id="willusepw"><br><br>
-<button type=submit>로그인</button>
-</form>
+	<form action="" method="post" class="loginForm">
+		<div class=form>
+			<div class="formSection">
+				<div class="itemContainer">
+					<div>
+						<input type="text" name="email" placeholder="이메일" class="item">
+					</div>
+					<div class="itemContainer">
+						<input type="password" name="pw" placeholder="비밀번호" class="item"><br>
+					</div>
+					<div class="itemContainer">
+						<button type=submit class="item btn">로그인</button>
+					</div>
+				</div>
+				</div>
+				<div class="formSection">
+					<div class="flexWrap" >
+						<div class="itemContainer flexItemWidth">
+							<input type="button" onclick="location.href = '/signup'" class="item" value="회원가입"></button>
+						</div>
+						<div class="itemContainer flexItemWidth">
+							<input type="button" onclick="location.href = '/findPassword'" class="item" value="비밀번호 찾기"></button>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+	
+	</form>
 
-<button type=submit>회원가입</button>
-<button type=submit>아이디 찾기</button>
-<button type=submit>비밀번호 찾기</button>
+
+
 
 </body>
 </html>

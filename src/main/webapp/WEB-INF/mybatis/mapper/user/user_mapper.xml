@@ -2,10 +2,94 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="user_mapper">
-
+	<insert id="saveUser" parameterType="User">
+		insert into USERS
+		values (
+		USERS_PK.nextval,
+		#{email},
+		#{pw},
+		#{name},
+		#{tel},
+		#{jumin},
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL
+		)
+	</insert>
+		
+	<select id="checkUserLogin" resultType="User"
+		parameterType="User">
+		select *
+		from USERS
+		where email = #{email} AND pw = #{pw}
+	</select>
+	
+	<select id="findUserByEmail" resultType="User" parameterType="String">
+		select *
+		from USERS
+		WHERE email = #{email}	
+	</select>
+	
+	<select id="checkUserAuth" resultType="User"
+		parameterType="User">
+		select *
+		from USERS
+		where email = #{email} AND name = #{name} AND jumin = #{jumin} 
+	</select>
+	
+	<update id="changeUserPassword" parameterType="User">
+		UPDATE USERS
+		SET pw = #{pw}
+		WHERE email = #{email}
+	</update>
+	
 	<select id="findUserList" resultType="User">
 		SELECT *
 		FROM USERS
+	</select>
+	
+	<update id="modifyUser" parameterType="User">
+		UPDATE USERS
+		SET pw = #{pw},
+		name = #{name},
+		position_code = #{positionCode},
+		dept_code = #{deptCode}
+		WHERE email = #{email}
+	</update>
+	
+	
+	<select id="findUserListBySearchCondition"
+		parameterType="UserSearchCondition" resultType="User">
+
+		SELECT *
+		FROM USERS
+		<where>
+			<if test="email != null and email != '' or name != null and name != ''">
+				(
+				<if test="email != null and email != ''">
+					id LIKE '%' || #{searchKeyword} || '%'
+				</if>
+				<if test="name != null and name != ''">
+					<if test="email != null and email != ''">
+						OR name LIKE '%' || #{searchKeyword} || '%'
+					</if>
+					<if test="email == null or email == ''">
+						name LIKE '%' || #{searchKeyword} || '%'
+					</if>
+				</if>
+				)
+			</if>
+			
+			<if test="positionCode != null and positionCode != ''">
+				AND position_code = #{positionCode}
+			</if>
+			
+			<if test="deptCode != null and deptCode != ''">
+				AND dept_code = #{deptCode}
+			</if>
+		</where>
 	</select>
 
 </mapper>
