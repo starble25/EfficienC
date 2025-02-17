@@ -6,11 +6,29 @@
 	<select id="findNoticeList" resultType="Notice">
 		SELECT *
 		FROM notice
+		ORDER BY id ASC
 	</select>
 	
 	<delete id="removeNotice" parameterType="int">
 		DELETE FROM notice
 		WHERE id = #{id}
 	</delete>
+	
+	<select id="getUserNameById" parameterType="int" resultType="String">
+		SELECT name
+		FROM users
+		WHERE id = #{id}
+	</select>
+	
+	<insert id="saveNotice" parameterType="Notice">
+		INSERT INTO notice
+		VALUES (
+			notice_pk.nextval,
+			#{title},
+			#{content},
+			#{author},
+			#{regDate}
+		)
+	</insert>
 
 </mapper>
