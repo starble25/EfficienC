@@ -3,11 +3,12 @@
 
 <mapper namespace="address_mapper">
 
-	<select id="findAddressUserList" resultType="User">
+	<select id="findAddressUserList" resultType="User" parameterType="int">
 		SELECT *
 		FROM users
 		JOIN address
 		ON users.id = address.add_id
+		WHERE address.my_id = #{loginUserId}
 	</select>
 	
 	<delete id="removeUser" parameterType="int">
@@ -23,5 +24,15 @@
 		OR
 		email LIKE '%' || #{searchKeyword} || '%' 
 	</select>
+	
+	<insert id="saveUser" parameterType="address">
+		INSERT INTO address
+		VALUES (
+			ADDRESS_PK.NEXTVAL, 
+			#{myId}, 
+			#{addId}, 
+			#{favorite}
+		)
+	</insert>
 
 </mapper>

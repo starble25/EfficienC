@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.app.dao.address.AddressDAO;
+import com.app.dto.address.Address;
 import com.app.dto.user.User;
 
 @Repository
@@ -16,8 +17,8 @@ public class AddressDAOImpl implements AddressDAO {
 	SqlSessionTemplate sqlSessionTemplate;
 
 	@Override
-	public List<User> findAddressUserList() {
-		List<User> addressUserList = sqlSessionTemplate.selectList("address_mapper.findAddressUserList");
+	public List<User> findAddressUserList(int loginUserId) {
+		List<User> addressUserList = sqlSessionTemplate.selectList("address_mapper.findAddressUserList", loginUserId);
 		return addressUserList;
 	}
 
@@ -31,6 +32,12 @@ public class AddressDAOImpl implements AddressDAO {
 	public List<User> findUserListBySearch(String searchKeyword) {
 		List<User> addressUserList = sqlSessionTemplate.selectList("address_mapper.findUserListBySearch", searchKeyword);
 		return addressUserList;
+	}
+
+	@Override
+	public int saveUser(Address address) {
+		int result = sqlSessionTemplate.insert("address_mapper.saveUser", address);
+		return result;
 	}
 
 	

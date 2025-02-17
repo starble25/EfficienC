@@ -1,0 +1,68 @@
+@charset "UTF-8";
+
+* {
+	margin: 0px;
+	padding: 0px;
+	box-sizing: border-box;
+}
+
+.formTitle {
+	color: lightgreen;
+	text-align: center;
+	margin-top: 50px;
+	margin-bottom: 30px;
+}
+
+.item:focus {
+	outline: none;
+}
+
+.signupForm{
+	display: flex;
+	justify-content: center;
+}
+
+.form {
+	width : 35%;
+	}
+	
+.formSection {
+	margin-top : 10px; 
+	margin-bottom : 10px;
+	border: 1px solid lightgray;
+	border-radius : 6px;
+}
+
+ .item {
+ 	width : 100%;
+	border: 0px;
+	padding : 5%;
+	font-size : 16px;
+	padding-left : 10px;
+	padding-right : 10px;
+	border-bottom : 1px solid lightgray;
+ }
+
+.itemContainer > .tel {
+	border-bottom : 0px;
+}
+
+.btn {
+	background-color : white;
+	border-bottom : 0px;
+	display: flex;
+	justify-content: center;
+}
+
+.authDetail{
+	display: flex;
+	justify-content: center;
+}
+
+.checkbox {
+	padding-left : 10px;
+}
+
+.detail {
+	width:80%;
+}

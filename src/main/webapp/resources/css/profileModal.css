@@ -22,8 +22,8 @@
 
 /* 모달 컨테이너 */
 .profileModalContainer {
-    width: 700px;
-    height: 400px;
+    width: 400px;
+    height: 600px;
     padding: 20px;
     padding-top: 0;
     border: 2px solid black;
@@ -32,27 +32,74 @@
     position: absolute;
 }
 
+/* 헤더 */
 .profileModalContainer .modalHeader {
     width: 100%;
-    height: 15%;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
     border: 1px solid blue;
 }
 
+.modalHeader #modalName {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* 닫기버튼 */
+.profileModalContainer .modalHeader button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 25px;
+    height: 25px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid red;
+}
+
+/* 프로필 컨테이너 */
 .profileModalContainer .modalBody {
     width: 100%;
-    height: 85%;
     border: 1px solid green;
 
     display: flex;
+    flex-direction: column;
 }
 
-/* 프로필 & 내용 컨테이너 */
 .modalBody div {
-    width: 50%;
-    padding: 7px;
+    width: 100%;
+    padding: 1px;
 }
 
 /* 프로필 사진 */
 .modalBody img {
-    width: 100%;
+    width: 85%;
+    height: 300px;
+    object-fit: cover;
+    display: block;
+    margin: 0 auto;
+
+    border: 1px solid purple;
+}
+
+.modalBody .itemContainer {
+    display: flex;
+    flex-flow: row wrap;
+    height: 230px;
+    padding: 5px;
+    align-items: center;
+
+    border: 1px solid black;
+}
+
+.modalBody .itemContainer .item {
+    display: flex;
+
+    & .itemName{
+        font-weight: bold;
+        width: 30%;
+    }
 }

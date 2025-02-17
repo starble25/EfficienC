@@ -37,23 +37,6 @@
                 <!-- 내 주소록 -->
                 <c:if test="${ showAddress == 1 }">
                 <tbody id="myAddressList">
-                    <tr class="listRow">
-                        <td>홍길동</td>
-                        <td>010-1234-5678</td>
-                        <td>hong@example.com</td>
-                        <td>개발팀</td>
-                        <td>사장</td>
-                        <td><button type="button" class="btnDeleteRow">삭제</button></td>
-                    </tr>
-                    <tr class="listRow">
-                        <td>홍길동2</td>
-                        <td>010-1234-5678</td>
-                        <td>qqqq@example.com</td>
-                        <td>우리팀</td>
-                        <td>팀원</td>
-                        <td><button type="button" class="btnDeleteUser">삭제</button></td>
-                    </tr>
-                    
                     <c:forEach var="addressUser" items="${addressUserList}">
                         <tr 
                             class="listRow" 
@@ -88,7 +71,7 @@
                         <tr 
                             class="listRow" 
                             userId="${user.id}", 
-                            userName="${user.name}",
+                            userName="${user.name}"
                             userTel="${user.tel}"
                             userEmail="${user.email}"
                             userDeptCode="${user.deptCode}"
@@ -99,6 +82,22 @@
                         <td>${user.email}</td>
                         <td>${user.deptCode}</td>
                         <td>${user.positionCode}</td>
+                        
+                        <!-- 주소록 추가시 버튼 비활성화 -->
+						<c:forEach var="address" items="${addressUserList}">
+                            <c:if test="${user.id == address.id}">
+                                <script>
+                                    document.addEventListener("DOMContentLoaded", function() {
+                                        const button = document.querySelector(`button[data-user-id="${user.id}"]`);
+                                        if (button) {
+                                            button.disabled = true;
+                                            button.innerText = "추가됨";
+                                            //button.style.backgroundColor = "red";
+                                        }
+                                    });
+                                </script>
+                            </c:if>
+                        </c:forEach>
                         <td><button 
                                 type="button" class="btnAddUser" 
                                 data-user-id="${user.id}" 
@@ -111,6 +110,7 @@
                 
             </table>
         </div>
+    </div>
 
 	<script src="/js/addressMain.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -118,15 +118,20 @@
         const listRows = document.getElementsByClassName("listRow");
         for (let row of listRows) {
             row.addEventListener('click', () => {
-                // 모달 div Id에 값 세팅
-                document.getElementById("modalName").innerText = row.getAttribute("userName");
-                document.getElementById("modalTel").innerText = row.getAttribute("userTel");
-                document.getElementById("modalEmail").innerText = row.getAttribute("userEmail");
-                document.getElementById("modalDeptCode").innerText = row.getAttribute("userDeptCode");
-                document.getElementById("modalPositionCode").innerText = row.getAttribute("userPositionCode");
-                
-                // 클릭 시 모달 열림
-                document.querySelector(".modalBackground").style.display = "flex";
+            	// 삭제 버튼이 아닌 경우에만 모달 열기
+                if (!event.target.classList.contains('btnDeleteUser') && 
+                    !event.target.classList.contains('btnAddUser')) {
+                    
+                    // 모달 div Id에 값 세팅
+                    document.getElementById("modalName").innerText = row.getAttribute("userName");
+                    document.getElementById("modalTel").innerText = row.getAttribute("userTel");
+                    document.getElementById("modalEmail").innerText = row.getAttribute("userEmail");
+                    document.getElementById("modalDeptCode").innerText = row.getAttribute("userDeptCode");
+                    document.getElementById("modalPositionCode").innerText = row.getAttribute("userPositionCode");
+
+                    // 클릭 시 모달 열림
+                    document.querySelector(".modalBackground").style.display = "flex";
+                }
             });
         }
 
@@ -162,7 +167,10 @@
     				success: function(result){
     					console.log("ajax success");
     					
-    					//실행할 코드
+    					// 주소록 추가 성공시 버튼 비활성화
+    					button.disabled = true;
+    					button.innerText = "추가됨";
+//     					button.style.backgroundColor = "red"
     					
     				},
     				error: function(error){

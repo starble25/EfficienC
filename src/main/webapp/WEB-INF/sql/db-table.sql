@@ -143,3 +143,36 @@ VALUES (calendar_events_seq.NEXTVAL, '외부 미팅', TO_TIMESTAMP('2025-02-25 1
 
 
 
+-- 공지사항
+CREATE TABLE NOTICE (
+    id NUMBER PRIMARY KEY,
+    title VARCHAR2(255),
+    content VARCHAR2(255),
+    author VARCHAR(32),
+    reg_date VARCHAR2(10)
+);
+
+CREATE SEQUENCE NOTICE_PK
+START WITH 1
+INCREMENT BY 1
+NOCYCLE;
+
+/*
+INSERT INTO NOTICE
+VALUES (
+    notice_pk.nextval, 
+    '첫 공지사항', 
+    '내용123123', 
+    '김작성', 
+    '2025-02-11'
+);
+
+INSERT INTO NOTICE
+VALUES (
+    notice_pk.nextval, 
+    '오늘의 공지사항', 
+    '오늘의 공지사항입니다~~ 12421412397213', 
+    '이공지', 
+    '2025-02-12'
+);
+*/
