@@ -10,12 +10,12 @@
 <body>
 
 <div class="container">
-    <!-- 왼쪽 사이드바 -->
+    <!-- 왼쪽 메뉴 -->
     <div class="sidebar">
         <jsp:include page="/WEB-INF/views/layouts/sidebar.jsp" />
     </div>
 
-    <!-- 컨텐츠 영역 -->
+    <!-- 메인 콘텐츠 -->
     <div class="content">
         <jsp:include page="/WEB-INF/views/layouts/content.jsp" />
     </div>

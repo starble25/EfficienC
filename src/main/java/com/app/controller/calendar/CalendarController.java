@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.app.dto.calendar.CalendarDTO;
 import com.app.service.calendar.CalendarService;
@@ -23,15 +24,19 @@ public class CalendarController {
 
     // 📌 캘린더 페이지 렌더링 (로그인한 사용자 일정만 표시)
     @GetMapping
-    public String showCalendar(HttpSession session, Model model) {
+    public ModelAndView showCalendar(HttpSession session) {
+        ModelAndView mv = new ModelAndView("layouts/layout");
         String userEmail = (String) session.getAttribute("userEmail");
+
         if (userEmail == null) {
-            return "redirect:/login"; // 로그인 안 되어 있으면 로그인 페이지로 이동
+            mv.setViewName("redirect:/login"); // 로그인 안 되어 있으면 로그인 페이지로 이동
+            return mv;
         }
 
         List<CalendarDTO> events = calendarService.getUserEvents(userEmail);
-        model.addAttribute("events", events);
-        return "calendar/calendar";
+        mv.addObject("contentPage", "/WEB-INF/views/calendar/calendar.jsp");
+        mv.addObject("events", events);
+        return mv;
     }
 
     // 📌 로그인한 사용자의 일정 조회 (JSON 응답 - 달력에 표시)

@@ -7,6 +7,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class BaseController {
 
+    // 홈 페이지
     @GetMapping("/home")
     public ModelAndView home() {
         ModelAndView mv = new ModelAndView("layouts/layout");
@@ -14,6 +15,7 @@ public class BaseController {
         return mv;
     }
 
+    // 마이페이지
     @GetMapping("/user/mypage")
     public ModelAndView myPage() {
         ModelAndView mv = new ModelAndView("layouts/layout");
@@ -21,13 +23,7 @@ public class BaseController {
         return mv;
     }
 
-    @GetMapping("/calendar/calendar")
-    public ModelAndView calendar() {
-        ModelAndView mv = new ModelAndView("layouts/layout");
-        mv.addObject("contentPage", "/WEB-INF/views/calendar/calendar.jsp");
-        return mv;
-    }
-
+    // 사용자 목록 페이지 (관리자)
     @GetMapping("/admin/usersList")
     public ModelAndView userList() {
         ModelAndView mv = new ModelAndView("layouts/layout");

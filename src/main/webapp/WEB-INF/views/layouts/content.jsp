@@ -11,9 +11,9 @@
 
 	<div class="sidebar-menu">
 		<ul>
-			<li><a href="?page=home">홈</a></li>
-			<li><a href="?page=schedule">일정 관리</a></li>
-			<li><a href="?page=tasks">할 일 관리</a></li>
+			<li><a href="<c:url value='/home'/>">홈</a></li>
+			<li><a href="<c:url value='/calendar'/>">일정 관리</a></li>
+			<li><a href="<c:url value='/tasks'/>">할 일 관리</a></li>
 		</ul>
 	</div>
 
