@@ -15,13 +15,6 @@ public class Board {
 	    private Date createdAt;
 	    
 	    private MultipartFile uploadFile; // 파일 업로드 객체
-
-	    //setCreatedAt 2줄 추가
-		public void setCreatedAt(Timestamp timestamp) {
-		}
-		public void setCreatedAt(Date date) {
-		}
-
 	    // Getter & Setter
 //	    public int getId() { return id; }
 //	    public void setId(int id) { this.id = id; }

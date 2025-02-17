@@ -27,6 +27,7 @@
         <th>번호</th>
         <th>제목</th>
         <th>작성일</th>
+        <th>삭제</th>
     </tr>
     <%
         List<Board> boardList = (List<Board>) request.getAttribute("boardList");
@@ -38,6 +39,12 @@
         <td><a href="list"><%= board.getTitle() %></a></td>
 <%--         <td><a href="boardDetail?id=<%= board.getId() %>"><%= board.getTitle() %></a></td> <!-- 추가: 제목 클릭 시 상세 페이지 이동 --> --%>
         <td><%= board.getCreatedAt() %></td>
+          <td>
+            <form action="${pageContext.request.contextPath}/board/delete" method="post" style="display:inline;">
+                <input type="hidden" name="id" value="<%= board.getId() %>">
+                <button type="submit" onclick="return confirm('정말 삭제하시겠습니까?');">삭제</button>
+            </form>
+        </td>
     </tr>
     <% 
             }

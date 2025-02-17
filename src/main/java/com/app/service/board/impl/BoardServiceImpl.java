@@ -42,6 +42,12 @@ public class BoardServiceImpl implements BoardService{
         boardDAO.insertBoard(board);	//DB 저장
     }
     
+    //DAO의 deleteBoard 메서드 호출하는 메서드 추가
+    @Override
+    public void deleteBoard(int id) {
+        boardDAO.deleteBoard(id);
+    }
+    
 //    목록 조회를 위해
     @Override
     public List<Board> getAllBoards() { 

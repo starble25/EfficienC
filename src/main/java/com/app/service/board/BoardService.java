@@ -8,4 +8,6 @@ public interface BoardService {
 	  void addBoard(Board board);
 	  
 	  List<Board> getAllBoards(); // 목록 조회 기능
+
+	void deleteBoard(int id);
 }
