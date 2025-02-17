@@ -8,9 +8,6 @@ import lombok.Getter;
 @Data
 public class User {
 	
-	public User(String email2, String name2, String jumin2) {
-		// TODO Auto-generated constructor stub
-	}
 	int id;
 	String email;
 	String pw;

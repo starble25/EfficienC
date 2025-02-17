@@ -9,4 +9,5 @@ public class UserSearchCondition {
 	String email;
 	String name;
 	String positionCode;
+	String keyword;
 }
