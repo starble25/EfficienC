@@ -1,6 +1,7 @@
 package com.app.dao.board;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -60,5 +61,39 @@ public class BoardDAO {
 	            e.printStackTrace();
 	        }
 	        return boardList;
+	    }
+	    
+	    //board detail 부분
+	    private static final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
+	    private static final String USER = "your_username";
+	    private static final String PASSWORD = "your_password";
+
+	    public Board getBoardById(int id) {
+	        Board board = null;
+	        String sql = "SELECT * FROM board WHERE id = ?";
+	        
+	        try {
+	            Class.forName("oracle.jdbc.driver.OracleDriver"); // 드라이버 로드
+	            try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+	                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
+	                
+	                pstmt.setInt(1, id);
+	                ResultSet rs = pstmt.executeQuery();
+	                
+	                if (rs.next()) {
+	                    board = new Board();
+	                    board.setId(rs.getInt("id"));
+	                    board.setTitle(rs.getString("title"));
+	                    board.setContent(rs.getString("content"));
+	                    board.setCreatedAt(rs.getTimestamp("createdAt"));
+	                }
+	            }
+	        } catch (ClassNotFoundException e) {
+	            throw new RuntimeException("Oracle JDBC Driver not found", e);
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	        
+	        return board;
 	    }
 	}

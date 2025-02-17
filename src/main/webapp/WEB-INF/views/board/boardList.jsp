@@ -20,7 +20,7 @@
 <body>
 <h2>게시글 목록</h2>
 
-<a href="boardForm" class="button">새 글 작성</a> <!-- 추가: 새 글 작성 버튼 -->
+<a href="form" class="button">새 글 작성</a> <!-- 추가: 새 글 작성 버튼 -->
 
 <table>
     <tr>
@@ -35,7 +35,8 @@
     %>
     <tr>
         <td><%= board.getId() %></td>
-        <td><a href="boardDetail?id=<%= board.getId() %>"><%= board.getTitle() %></a></td> <!-- 추가: 제목 클릭 시 상세 페이지 이동 -->
+        <td><a href="list"><%= board.getTitle() %></a></td>
+<%--         <td><a href="boardDetail?id=<%= board.getId() %>"><%= board.getTitle() %></a></td> <!-- 추가: 제목 클릭 시 상세 페이지 이동 --> --%>
         <td><%= board.getCreatedAt() %></td>
     </tr>
     <% 

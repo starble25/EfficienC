@@ -1,6 +1,13 @@
 package com.app.controller.board;
 
+import java.io.IOException;
 import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.app.dao.board.BoardDAO;
 import com.app.dto.board.Board;
 import com.app.service.board.BoardService;
 //@Controller
@@ -69,7 +77,7 @@ public class BoardController {
     @PostMapping("/submit")
     public ModelAndView submitBoard(@ModelAttribute Board board) {
         boardService.addBoard(board);
-        return new ModelAndView("redirect:/boardList"); // 수정: 목록 페이지로 이동
+        return new ModelAndView("redirect:list"); // 수정: 목록 페이지로 이동
     }
 
     @GetMapping("/list") // 추가: 게시글 목록 조회 기능
@@ -79,6 +87,34 @@ public class BoardController {
         mav.addObject("boardList", boardList);
         return mav;
     }
+    
+    
+//    board detail servlet
+    @WebServlet("/detail")
+    public class BoardDetailServlet extends HttpServlet {
+        private static final long serialVersionUID = 1L;
+        
+        protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+            String idParam = request.getParameter("id");
+            if (idParam == null || idParam.isEmpty()) {
+                response.sendRedirect("boardList");
+                return;
+            }
+            
+            int id = Integer.parseInt(idParam);
+            BoardDAO boardDAO = new BoardDAO();
+            Board board = boardDAO.getBoardById(id);
+            
+            if (board == null) {
+                response.sendRedirect("boardList");
+                return;
+            }
+            System.out.println("detail");
+            request.setAttribute("board", board);
+            request.getRequestDispatcher("detail").forward(request, response);
+        }
+    }
+
 }
 
 
