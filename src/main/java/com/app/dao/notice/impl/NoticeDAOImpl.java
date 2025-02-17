@@ -26,5 +26,17 @@ public class NoticeDAOImpl implements NoticeDAO {
 		int result = sqlSessionTemplate.delete("notice_mapper.removeNotice", id);
 		return result;
 	}
+
+	@Override
+	public String getUserNameById(int id) {
+		String name = sqlSessionTemplate.selectOne("notice_mapper.getUserNameById", id);
+		return name;
+	}
+
+	@Override
+	public int saveNotice(Notice notice) {
+		int result = sqlSessionTemplate.insert("notice_mapper.saveNotice", notice);
+		return result;
+	}
 	
 }

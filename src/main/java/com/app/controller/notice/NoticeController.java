@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.app.dto.notice.Notice;
@@ -44,14 +45,42 @@ public class NoticeController {
 		return "/notice/notice";
 	}
 	
+	// 공지 추가
 	@PostMapping
-	public String noticeAction(HttpSession session) {
+	public ResponseEntity<String> noticeAction(HttpSession session, @RequestBody Notice inputNotice) {
+		int loginUserId = (int)session.getAttribute("loginUserId"); // 사용자 id
+		String author = noticeService.getUserNameById(loginUserId); // 사용자 이름
 		LocalDate date = LocalDate.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		String formattedDate = date.format(formatter);
-		System.out.println("현재 날짜: " + formattedDate);
+		String formattedDate = date.format(formatter); // 현재시간
 		
-		return null;
+		Notice notice = new Notice();
+//		int id;			// PK
+//		String title;	// 제목
+//		String content;	// 내용
+//		String author;	// 작성자
+//		String regDate;	// 작성시간 String(yyyy-MM-dd)
+		System.out.println("loginUserId : " + loginUserId);
+		System.out.println("author : " + author);
+		System.out.println("param title : " + inputNotice.getTitle());
+		System.out.println("param content : " + inputNotice.getContent());
+		System.out.println("formattedDate : " + formattedDate);
+		System.out.println("=============");
+		
+		notice.setTitle(inputNotice.getTitle());
+		notice.setContent(inputNotice.getContent());
+		notice.setAuthor(author);
+		notice.setRegDate(formattedDate);
+		
+		int result = noticeService.saveNotice(notice);
+		
+	    if ( result > 0 ) {
+	        System.out.println("saveNotice 성공");
+	        return ResponseEntity.ok("공지추가 성공");
+	    } else {
+	        System.out.println("saveNotice 실패");
+	        return ResponseEntity.status(500).body("공지추가 실패");
+	    }
 	}
 	
 	// 공지 삭제

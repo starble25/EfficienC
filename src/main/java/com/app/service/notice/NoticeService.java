@@ -9,4 +9,8 @@ public interface NoticeService {
 	List<Notice> findNoticeList();
 	
 	int removeNotice(int id);
+	
+	String getUserNameById(int id);
+	
+	int saveNotice(Notice notice);
 }

@@ -27,4 +27,16 @@ public class NoticeServiceImpl implements NoticeService {
 		return result;
 	}
 
+	@Override
+	public String getUserNameById(int id) {
+		String name = noticeDAO.getUserNameById(id);
+		return name;
+	}
+
+	@Override
+	public int saveNotice(Notice notice) {
+		int result = noticeDAO.saveNotice(notice);
+		return result;
+	}
+
 }

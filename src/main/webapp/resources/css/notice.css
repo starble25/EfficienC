@@ -85,21 +85,53 @@
     align-items: center;
 }
 
-.noticeModal .modal-content {
+.noticeModal .modalContent {
+    width: 700px;
+    height: 500px;
     background-color: white;
     padding: 20px;
     border-radius: 10px;
-    width: 400px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
-.noticeModal .modal-content .close {
+.noticeModal .modalContent .closeModal {
     float: right;
+	width: 50px;
+	height: 50px;
     font-size: 24px;
     cursor: pointer;
 }
 
-.noticeModal .modal-content h3 {
+.noticeModal .modalContent h3 {
+	font-size: 28px;
     margin: 0 auto;
-    font-size: 24px;
+}
+
+.noticeModal .modalContent .noticeForm {
+    display: flex;
+    flex-direction: column;
+}
+
+.noticeForm .noticeTitle, input {
+    width: 100%;
+    height: 30px;
+    margin-bottom: 10px;
+}
+
+.noticeForm .noticeContent {
+    width: 100%;
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+.noticeForm textarea {
+    width: 100%;
+    height: 300px;
+    margin-bottom: 5px;
+}
+
+.noticeForm button {
+    width: 60px;
+    height: 30px;
+    right: 0;
 }
