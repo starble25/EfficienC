@@ -1,73 +1,56 @@
 package com.app.controller.login;
 
 import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import com.app.dto.user.User;
 import com.app.service.user.UserService;
+import com.app.util.LoginManager;
 
 @Controller
 public class LoginController {
 
-    @Autowired
-    private UserService userService;
+	// id 와 pw 가 동시에 일치하는 사용자 users Table find
+	// users Table -> cmp_id 체크 후 사이트 이동
+	@Autowired
+	UserService userService;
 
-    /** 📌 회원가입 페이지 이동 */
-    @GetMapping("/register")
-    public String registerUser() {
-        return "login/register";
-    }
 
-    /** 📌 회원가입 처리 */
-    @PostMapping("/register")
-    public String registerUserAction(User user) {
-        int result = userService.saveUser(user); // 비밀번호 암호화 없이 저장
-        return (result > 0) ? "redirect:/login" : "login/register";
-    }
+	@GetMapping("/login")
+	public String login() {
+		return "login/login";
+	}
+	
 
-    /** 📌 로그인 페이지 이동 */
-    @GetMapping("/login")
-    public String login() {
-        return "login/login";
-    }
+	@PostMapping("/login")
+	public String loginAction(User user, HttpSession session) {
 
-    /** 📌 로그인 처리 */
-    @PostMapping("/login")
-    public String loginAction(@RequestParam String email, 
-                              @RequestParam String pw, 
-                              HttpSession session, 
-                              Model model) {
-        System.out.println("[로그인 시도] 이메일: " + email + ", 비밀번호(입력값): " + pw);
+		User loginUser = userService.checkUserLogin(user);
 
-        // 이메일을 소문자로 변환하여 DB 조회
-        User user = userService.findUserByEmail(email.toLowerCase());
+		if (loginUser == null) { // 아이디X? 아이디O&비번X null
+			System.out.println("로그인 실패");
+			return "login/login";
+		} else {
 
-        if (user == null) {
-            model.addAttribute("error", "존재하지 않는 이메일입니다.");
-            return "login/login";
-        }
+			LoginManager.setSessionLogin(session, loginUser.getEmail());
+			session.setAttribute("loginUserEmail", loginUser.getEmail());
+			session.setAttribute("loginUserId", loginUser.getId());
+		
+			return "redirect:/main";
+		}
+	}
 
-        System.out.println("[DB 조회] 비밀번호: " + user.getPw());
-
-        // ✅ 비밀번호 검증 (암호화 없이 단순 비교)
-        if (user.getPw().equals(pw)) {
-            session.setAttribute("userEmail", user.getEmail());
-            session.setAttribute("userName", user.getName());
-            return "redirect:/calendar";
-        } else {
-            model.addAttribute("error", "이메일 또는 비밀번호가 잘못되었습니다.");
-            return "login/login";
-        }
-    }
-
-    /** 📌 로그아웃 처리 */
-    @GetMapping("/logout")
-    public String logout(HttpSession session) {
-        session.invalidate();
-        return "redirect:/login";
-    }
+	@GetMapping("/logout")
+	public String logoutAction(HttpSession session) {
+		System.out.println("사용자 로그아웃함");
+		LoginManager.logout(session);
+		//session.invalidate();
+		
+		return "redirect:/login";
+	}
 }
