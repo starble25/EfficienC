@@ -59,37 +59,5 @@
 		WHERE email = #{email}
 	</update>
 	
-	
-	<select id="findUserListBySearchCondition"
-		parameterType="UserSearchCondition" resultType="User">
-
-		SELECT *
-		FROM USERS
-		<where>
-			<if test="email != null and email != '' or name != null and name != ''">
-				(
-				<if test="email != null and email != ''">
-					id LIKE '%' || #{searchKeyword} || '%'
-				</if>
-				<if test="name != null and name != ''">
-					<if test="email != null and email != ''">
-						OR name LIKE '%' || #{searchKeyword} || '%'
-					</if>
-					<if test="email == null or email == ''">
-						name LIKE '%' || #{searchKeyword} || '%'
-					</if>
-				</if>
-				)
-			</if>
-			
-			<if test="positionCode != null and positionCode != ''">
-				AND position_code = #{positionCode}
-			</if>
-			
-			<if test="deptCode != null and deptCode != ''">
-				AND dept_code = #{deptCode}
-			</if>
-		</where>
-	</select>
 
 </mapper>

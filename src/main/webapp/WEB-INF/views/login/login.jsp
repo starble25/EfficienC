@@ -15,10 +15,10 @@
 			<div class="formSection">
 				<div class="itemContainer">
 					<div>
-						<input type="text" name="email" placeholder="이메일" class="item">
+						<input type="text" name="email" placeholder="이메일" class="item" required>
 					</div>
 					<div class="itemContainer">
-						<input type="password" name="pw" placeholder="비밀번호" class="item"><br>
+						<input type="password" name="pw" placeholder="비밀번호" class="item" required><br>
 					</div>
 					<div class="itemContainer">
 						<button type=submit class="item btn">로그인</button>

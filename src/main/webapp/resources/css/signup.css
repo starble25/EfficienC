@@ -66,3 +66,8 @@
 .detail {
 	width:80%;
 }
+
+.error-msg{
+	font-size:small;
+	color: red;
+}
