@@ -18,11 +18,11 @@
         </div>
         <div class="itemContainer">
             <table>
-                <tr>
+                <tr style="background-color: orange;">
                     <th class="colTitle">제목</th>
                     <th class="colAuthor">작성자</th>
                     <th class="colDate">작성일</th>
-                    <th class="colBtn">수정/삭제</th>
+                    <th class="colBtn">삭제</th>
                 </tr>
                 
                 <c:forEach var="notice" items="${noticeList}">
@@ -35,7 +35,7 @@
                         </td>
                     </tr>
                     <tr class="rowContent" style="display:none;">
-                        <td colspan="4">${notice.content}</td>
+                        <td colspan="4" style="padding: 0 0 0 15px; line-height: 5px;">${notice.content}</td>
                     </tr>
                 </c:forEach>
             </table>
@@ -50,6 +50,7 @@
     	//공지내용 토글
         $(".showContent").click(function(){
             $(this).next(".rowContent").toggle();
+            $(this).next(".rowContent").toggleClass("rowAnime");
         });
         
     	//공지삭제

@@ -8,11 +8,15 @@
 /* 전체 컨테이너 */
 .noticeContainer {
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     border: 1px solid black;
 }
 
 /* 공지사항 */
 .noticeContainer #noticeHeader {
+    width: 70%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -33,7 +37,7 @@
 
 /* 공지목록 컨테이너 */
 .noticeContainer .itemContainer {
-    width: 100%;
+    width: 70%;
     display: flex;
     flex-direction: column;
     border: 1px solid black;
@@ -64,12 +68,34 @@
     }
 }
 
+.noticeContainer .itemContainer .showContent {
+    background-color: aqua;
+    cursor: pointer;
+}
+
+.itemContainer table th, td {
+    padding-left: 10px;
+}
+
 .itemContainer table .rowContent td {
     min-height: 130px;
     width: 100%;
     padding: 15px;
 }
 
+@keyframes rowAnime {
+    from {
+        height: 0;
+        opacity: 0;
+    }
+    to {
+        height: 100px;
+        opacity: 1;
+    }
+}
+.rowAnime {
+    animation: rowAnime 0.5s forwards;
+}
 
 /* 공지사항 추가 모달창 */
 .noticeModal {
@@ -96,8 +122,8 @@
 
 .noticeModal .modalContent .closeModal {
     float: right;
-	width: 50px;
-	height: 50px;
+	width: 30px;
+	height: 30px;
     font-size: 24px;
     cursor: pointer;
 }
