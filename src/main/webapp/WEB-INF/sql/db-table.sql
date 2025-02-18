@@ -84,6 +84,16 @@ START WITH 1
 INCREMENT BY 1
 NOCYCLE;
 
+
+--할 일 목록
+CREATE TABLE tasks (
+    id NUMBER GENERATED ALWAYS AS IDENTITY PRIMARY KEY, --GENERATED ALWAYS AS IDENTITY 자동증가되는 값 가짐을 의미
+    title VARCHAR2(255) NOT NULL,
+    description CLOB, --CLOB : 대용량의 텍스트 데이터를 저장
+    status VARCHAR2(20) DEFAULT 'TODO' CHECK (status IN ('TODO', 'IN_PROGRESS', 'DONE')) --기본값:TODO, check제약 조건때문에 값은 'TODO', 'IN_PROGRESS', 'DONE' 중 하나여야 함. 
+);
+
+CREATE SEQUENCE tasks_PK
 /*
 -- ADDRESS TABLE DB
 BEGIN
@@ -97,4 +107,54 @@ BEGIN
     VALUES (ADDRESS_PK.NEXTVAL, 1, (select id from users where cmp_id='203'), 'F');
 END;
 /
+*/
+
+-- 공지사항
+CREATE TABLE NOTICE (
+    id NUMBER PRIMARY KEY,
+    title VARCHAR2(255),
+    content VARCHAR2(255),
+    author VARCHAR(32),
+    reg_date VARCHAR2(10)
+);
+
+CREATE SEQUENCE NOTICE_PK
+START WITH 1
+INCREMENT BY 1
+NOCYCLE;
+
+
+--게시판 보드
+CREATE TABLE board (
+    ID         NUMBER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    TITLE      VARCHAR2(255) NOT NULL,
+    CONTENT    CLOB NOT NULL,
+    FILE_NAME  VARCHAR2(255),
+    CREATED_AT DATE DEFAULT SYSDATE
+);
+
+CREATE SEQUENCE board_PK
+START WITH 1
+INCREMENT BY 1
+NOCYCLE;
+
+
+/*
+INSERT INTO NOTICE
+VALUES (
+    notice_pk.nextval, 
+    '첫 공지사항', 
+    '내용123123', 
+    '김작성', 
+    '2025-02-11'
+);
+
+INSERT INTO NOTICE
+VALUES (
+    notice_pk.nextval, 
+    '오늘의 공지사항', 
+    '오늘의 공지사항입니다~~ 12421412397213', 
+    '이공지', 
+    '2025-02-12'
+);
 */
