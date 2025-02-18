@@ -17,7 +17,7 @@ public class MainController {
     public String main(HttpServletRequest request) {
         // 메뉴 리스트 생성 (예시)
         List<MenuItem> menuList = new ArrayList<>();
-        menuList.add(new MenuItem("홈", "/home", false));
+        menuList.add(new MenuItem("홈", "/main", false));
         menuList.add(new MenuItem("공지사항", "/notice", false));
         menuList.add(new MenuItem("사내게시판", "/board", false));
         menuList.add(new MenuItem("마이페이지", "/mypage", false));

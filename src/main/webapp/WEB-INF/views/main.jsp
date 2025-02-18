@@ -16,7 +16,7 @@
 
   <div class="content">
     <h1>메인 페이지</h1>
-    <p>이곳에 메인 콘텐츠를 작성하세요.</p>
+    <jsp:include page="/WEB-INF/views/common/MainContent.jsp" />
     <button onclick="location.href='/logout'">로그아웃</button>
   </div>
 </body>
