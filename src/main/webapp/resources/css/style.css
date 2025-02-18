@@ -1,0 +1,66 @@
+@charset "UTF-8";
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: sans-serif;
+}
+
+/* 사이드바 */
+.sidebar {
+  width: 200px;             
+  background-color: #E3F7F0; 
+  min-height: 100vh;        
+  float: left;              
+  padding: 20px;
+}
+
+/* 로고 */
+.sidebar .logo {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 40px;
+  color: #666;
+}
+
+/* 메뉴 */
+.menu {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.menu li {
+  margin-bottom: 15px;
+  position: relative;
+  padding-left: 25px;
+  color: #666;
+}
+.menu li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 7px;
+  width: 10px;
+  height: 10px;
+  border: 1px solid #666;
+  border-radius: 50%;
+  background-color: #fff;
+}
+.menu li.active {
+  background-color: #d0ede6;
+  border-radius: 5px;
+}
+.menu li a {
+  text-decoration: none;
+  color: inherit;
+  font-size: 14px;
+}
+
+/* 메인 콘텐츠 */
+.content {
+  margin-left: 200px;
+  padding: 20px;
+}
