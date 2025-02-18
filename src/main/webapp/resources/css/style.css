@@ -1,14 +1,16 @@
 @charset "UTF-8";
+/* 기본 초기화 */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+
 body {
   font-family: sans-serif;
 }
 
-/* 사이드바 */
+/* 사이드바 영역 */
 .sidebar {
   width: 200px;             
   background-color: #E3F7F0; 

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -13,7 +14,8 @@
 		<ul class="menu">
 			<!-- requestScope.menuList 로부터 메뉴 생성 -->
 			<c:forEach var="menuItem" items="${requestScope.menuList}">
-				<li class="<c:if test='${menuItem.active}'>active</c:if>"><a
+				<!-- EL 삼항연산자 (EL 2.2 이상) -->
+				<li class="${menuItem.active ? 'active' : ''}"><a
 					href="<c:url value='${menuItem.link}'/>"> <c:out
 							value="${menuItem.name}" />
 				</a></li>
