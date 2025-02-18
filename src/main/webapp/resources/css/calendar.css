@@ -9,21 +9,21 @@ body {
 }
 
 /* 📌 왼쪽 사이드바 (고정 위치) */
-.sidebar {
+.calendarSidebar {
     width: 260px;
     height: 100vh;
     background-color: #f8f9fa;
     padding: 20px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     position: fixed;
-    left: 0;
+    left: 200px;
     top: 0;
     overflow-y: auto;
     z-index: 10;
 }
 
 /* 📌 "일정 등록" 버튼 */
-.sidebar button {
+.calendarSidebar button {
     width: 100%;
     padding: 10px;
     background-color: #007bff;
@@ -35,7 +35,7 @@ body {
     margin-bottom: 15px;
 }
 
-.sidebar button:hover {
+.calendarSidebar button:hover {
     background-color: #0056b3;
 }
 

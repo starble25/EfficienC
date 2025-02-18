@@ -1,16 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html>
-
+<html lang="ko">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+  <meta charset="UTF-8">
+  <title>Main Page</title>
+  <!-- /resources/css/style.css 경로를 JSTL로 로드 -->
+  <link rel="stylesheet" href="<c:url value='/css/style.css'/>" />
 </head>
-
 <body>
-	<h1>project main page</h1>
-	<button onclick="location.href = '/logout'">로그아웃</button>
-</body>
+  <!-- 공통 사이드바 include -->
+  <jsp:include page="/WEB-INF/views/common/sidebar.jsp" />
 
+  <div class="content">
+    <h1>메인 페이지</h1>
+    <jsp:include page="/WEB-INF/views/common/MainContent.jsp" />
+    <button onclick="location.href='/logout'">로그아웃</button>
+  </div>
+</body>
 </html>
