@@ -22,6 +22,20 @@ public class CalendarController {
 
     @Autowired
     UserService userService;
+    
+    @Autowired
+    CalendarService calendarService;
+
+    // 캘린더 페이지 렌더링 (JSP로 이동)
+    @GetMapping("/calendar")
+    public String showCalendar(Model model, HttpSession session) {
+        System.out.println("sesson.loginUserId : " + session.getAttribute("loginUserId"));
+        if (session.getAttribute("loginUserId") == null) {
+            return "redirect:/login";
+        } else {
+        	return "/calendar/calendar";
+        }
+    }
 
     // 📌 캘린더 페이지 렌더링 (JSP로 이동)
     @GetMapping
