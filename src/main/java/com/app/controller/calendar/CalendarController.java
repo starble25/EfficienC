@@ -1,61 +1,62 @@
 package com.app.controller.calendar;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
-import com.app.dto.MenuItem;
-import com.app.dto.calendar.CalendarDTO;
-import com.app.service.calendar.CalendarService;
-import com.app.service.user.UserService;
-
-import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller
-public class CalendarController {
+import javax.servlet.http.HttpSession;
 
-    @Autowired
-    UserService userService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.app.dto.MenuItem;
+import com.app.dto.calendar.CalendarDTO;
+import com.app.service.calendar.CalendarService;
+
+@Controller
+@RequestMapping("/calendar")
+public class CalendarController {
     
     @Autowired
     CalendarService calendarService;
 
-    // 캘린더 페이지 렌더링 (JSP로 이동)
-    @GetMapping("/calendar")
-    public String showCalendar(Model model, HttpSession session) {
-        System.out.println("sesson.loginUserId : " + session.getAttribute("loginUserId"));
-        if (session.getAttribute("loginUserId") == null) {
-            return "redirect:/login";
-        } else {
-        	return "/calendar/calendar";
-        }
-    }
-
     // 📌 캘린더 페이지 렌더링 (JSP로 이동)
     @GetMapping
-    public String showCalendar(Model model) {
-    	List<MenuItem> menuList = new ArrayList<>();
-        menuList.add(new MenuItem("홈", "/main", false));
-        menuList.add(new MenuItem("공지사항", "/notice", false));
-        menuList.add(new MenuItem("사내게시판", "/board", false));
-        menuList.add(new MenuItem("마이페이지", "/mypage", false));
-        menuList.add(new MenuItem("캘린더", "/calendar", false));
-        menuList.add(new MenuItem("ToDoList", "/task/list", true)); // 현재 활성화
-        menuList.add(new MenuItem("주소록", "/address", false));
-        menuList.add(new MenuItem("전자결제", "/payment", false));
-
-        // request 스코프에 저장하여 JSP에서 사용 가능하도록 함
-        model.addAttribute("menuList", menuList);
+    public String showCalendar(Model model,  HttpSession session) {
+    	//loginUserId값 가져오기
+        if (session.getAttribute("loginUserId") == null) {
+            return "redirect:/login";
+            
+        } else {
+        	
+	    	List<MenuItem> menuList = new ArrayList<>();
+	        menuList.add(new MenuItem("홈", "/main", false));
+	        menuList.add(new MenuItem("공지사항", "/notice", false));
+	        menuList.add(new MenuItem("사내게시판", "/board", false));
+	        menuList.add(new MenuItem("마이페이지", "/mypage", false));
+	        menuList.add(new MenuItem("캘린더", "/calendar", false));
+	        menuList.add(new MenuItem("ToDoList", "/task/list", true)); // 현재 활성화
+	        menuList.add(new MenuItem("주소록", "/address", false));
+	        menuList.add(new MenuItem("전자결제", "/payment", false));
+	
+	        // request 스코프에 저장하여 JSP에서 사용 가능하도록 함
+	        model.addAttribute("menuList", menuList);
+	        
+	        List<CalendarDTO> events = calendarService.getAllEvents();
+	        model.addAttribute("events", events);
+	        return "calendar/calendar";
+        }
         
-        List<CalendarDTO> events = calendarService.getAllEvents();
-        model.addAttribute("events", events);
-        return "calendar/calendar";
     }
 
     // 일정 등록 폼 (새 창에서 열림)
