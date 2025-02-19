@@ -17,6 +17,7 @@ body {
 	min-height: 100vh;
 	float: left;
 	padding: 20px;
+	padding-right: 15px;
 }
 
 /* 로고 */
