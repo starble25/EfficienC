@@ -43,11 +43,9 @@ public class CalendarController {
 	        menuList.add(new MenuItem("홈", "/main", false));
 	        menuList.add(new MenuItem("공지사항", "/notice", false));
 	        menuList.add(new MenuItem("사내게시판", "/board/list", false));
-	        menuList.add(new MenuItem("마이페이지", "/mypage", false));
 	        menuList.add(new MenuItem("캘린더", "/calendar", false));
-	        menuList.add(new MenuItem("ToDoList", "/tasks", false)); // true로 변경하면 현재 활성화
+	        menuList.add(new MenuItem("ToDoList", "/tasks", false)); // 현재 활성화
 	        menuList.add(new MenuItem("주소록", "/address", false));
-	        menuList.add(new MenuItem("전자결제", "/payment", false));
 	
 	        // request 스코프에 저장하여 JSP에서 사용 가능하도록 함
 	        model.addAttribute("menuList", menuList);
