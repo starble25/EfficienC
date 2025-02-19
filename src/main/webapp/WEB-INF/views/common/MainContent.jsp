@@ -9,7 +9,7 @@
 <body>
     <div>
         <!-- main.jpg 이미지를 표시 -->
-        <img src="/image/main.jpg">
+        <img src="/image/main.jpg" style="width:1200px; height:auto;">
     </div>
 </body>
 </html>

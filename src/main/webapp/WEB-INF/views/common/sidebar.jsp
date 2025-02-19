@@ -9,7 +9,7 @@
 </head>
 <body>
 	<div class="sidebar">
-		<div class="logo">LOGO</div>
+		<div class="logo">EfficienC</div>
 		<ul class="menu">
 			<!-- requestScope.menuList 로부터 메뉴 생성 -->
 			<c:forEach var="menuItem" items="${requestScope.menuList}">
