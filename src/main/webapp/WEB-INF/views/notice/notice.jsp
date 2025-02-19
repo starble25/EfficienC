@@ -16,14 +16,14 @@
 	<!-- 공통 사이드바 include -->
 	<jsp:include page="/WEB-INF/views/common/sidebar.jsp" />
 
-    <div class="noticeContainer">
+    <div class="noticeContainer" style="padding: 10px;">
         <div id="noticeHeader">
             <h2>공지사항</h2>
             <button id="btnInputNotice">공지작성</button>
         </div>
         <div class="itemContainer">
             <table>
-                <tr style="background-color: #9ae49d;">
+                <tr style="background-color: #EAEAEA;">
                     <th class="colTitle">제목</th>
                     <th class="colAuthor">작성자</th>
                     <th class="colDate">작성일</th>
