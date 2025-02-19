@@ -19,10 +19,10 @@ public class MainController {
         List<MenuItem> menuList = new ArrayList<>();
         menuList.add(new MenuItem("홈", "/main", false));
         menuList.add(new MenuItem("공지사항", "/notice", false));
-        menuList.add(new MenuItem("사내게시판", "/board", false));
+        menuList.add(new MenuItem("사내게시판", "/board/list", false));
         menuList.add(new MenuItem("마이페이지", "/mypage", false));
         menuList.add(new MenuItem("캘린더", "/calendar", false));
-        menuList.add(new MenuItem("ToDoList", "/task/list", false)); // 현재 활성화
+        menuList.add(new MenuItem("ToDoList", "/tasks", false)); // 현재 활성화
         menuList.add(new MenuItem("주소록", "/address", false));
         menuList.add(new MenuItem("전자결제", "/payment", false));
 

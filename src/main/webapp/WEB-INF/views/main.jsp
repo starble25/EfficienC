@@ -15,9 +15,8 @@
   <jsp:include page="/WEB-INF/views/common/sidebar.jsp" />
 
   <div class="content">
-    <h1>메인 페이지</h1>
     <jsp:include page="/WEB-INF/views/common/MainContent.jsp" />
-    <button onclick="location.href='/logout'">로그아웃</button>
+    
   </div>
 </body>
 </html>

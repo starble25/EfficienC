@@ -8,9 +8,13 @@
 <title>공지사항</title>
 
 <link href="/css/notice.css?after" rel="stylesheet">
+<link rel="stylesheet" href="<c:url value='/css/style.css'/>" />
 
 </head>
 <body>
+	<!-- 공통 사이드바 include -->
+	<jsp:include page="/WEB-INF/views/common/sidebar.jsp" />
+
     <div class="noticeContainer">
         <div id="noticeHeader">
             <h2>공지사항</h2>

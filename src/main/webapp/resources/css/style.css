@@ -63,6 +63,7 @@ body {
 
 /* 메인 콘텐츠 */
 .content {
+	background-color:#eef1f6;
   margin-left: 200px;
   padding: 20px;
 }

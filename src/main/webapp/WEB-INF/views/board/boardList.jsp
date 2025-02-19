@@ -2,12 +2,14 @@
     pageEncoding="UTF-8"%>
 <!--     2줄 임포트 추가 -->
     <%@ page import="java.util.List" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.app.dto.board.Board" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>게시글 목록</title>
+<link rel="stylesheet" href="<c:url value='/css/style.css'/>" />
 <style>
     body { font-family: Arial, sans-serif; width: 600px; margin: auto; }
     table { width: 100%; border-collapse: collapse; margin-top: 10px; }
@@ -18,6 +20,7 @@
 </style>
 </head>
 <body>
+<jsp:include page="/WEB-INF/views/common/sidebar.jsp" />
 <h2>게시글 목록</h2>
 
 <a href="form" class="button">새 글 작성</a> <!-- 추가: 새 글 작성 버튼 -->

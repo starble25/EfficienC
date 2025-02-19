@@ -1,5 +1,6 @@
 package com.app.controller.address;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.app.dto.MenuItem;
 import com.app.dto.address.Address;
 import com.app.dto.user.User;
 import com.app.service.address.AddressService;
@@ -29,8 +31,22 @@ public class AddressController {
 	
 	// address 메인 페이지 연결
 	@GetMapping("/address")
-	public String addressMain(Model model, HttpSession session) {
-		System.out.println("sesson.loginUserId : " + session.getAttribute("loginUserId"));
+	public String addressMain(Model model, HttpSession session, HttpServletRequest request) {
+		//sidebar
+		List<MenuItem> menuList = new ArrayList<>();
+        menuList.add(new MenuItem("홈", "/main", false));
+        menuList.add(new MenuItem("공지사항", "/notice", false));
+        menuList.add(new MenuItem("사내게시판", "/board/list", false));
+        menuList.add(new MenuItem("마이페이지", "/mypage", false));
+        menuList.add(new MenuItem("캘린더", "/calendar", false));
+        menuList.add(new MenuItem("ToDoList", "/tasks", false)); // 현재 활성화
+        menuList.add(new MenuItem("주소록", "/address", false));
+        menuList.add(new MenuItem("전자결제", "/payment", false));
+
+        // request 스코프에 저장하여 JSP에서 사용 가능하도록 함
+        request.setAttribute("menuList", menuList);
+        //
+		
 		if( session.getAttribute("loginUserId") == null ) {
 			return "redirect:/login";
 		}

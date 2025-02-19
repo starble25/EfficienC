@@ -42,7 +42,7 @@ public class CalendarController {
 	    	List<MenuItem> menuList = new ArrayList<>();
 	        menuList.add(new MenuItem("홈", "/main", false));
 	        menuList.add(new MenuItem("공지사항", "/notice", false));
-	        menuList.add(new MenuItem("사내게시판", "/board", false));
+	        menuList.add(new MenuItem("사내게시판", "/board/list", false));
 	        menuList.add(new MenuItem("마이페이지", "/mypage", false));
 	        menuList.add(new MenuItem("캘린더", "/calendar", false));
 	        menuList.add(new MenuItem("ToDoList", "/task/list", false)); // true로 변경하면 현재 활성화

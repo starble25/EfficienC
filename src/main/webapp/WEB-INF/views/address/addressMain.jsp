@@ -9,11 +9,12 @@
 <title>Insert title here</title>
 
 <link href="/css/addressMain.css?after" rel="stylesheet">
+<link rel="stylesheet" href="<c:url value='/css/style.css'/>" />
 
 </head>
 <body>
+	<jsp:include page="/WEB-INF/views/common/sidebar.jsp" />
 	<h1>주소록 메인 페이지</h1>
-	<h2>${showAddress}</h2>
     <div class="addressMainContainer">
         <div class="searchBar">
 	        <form action="" method="post">

@@ -6,6 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>작업 목록</title>
+
+<link rel="stylesheet" href="<c:url value='/css/style.css'/>" />
 <style>
 .board {
 	display: flex;
@@ -25,6 +27,8 @@
 </style>
 </head>
 <body>
+	<jsp:include page="/WEB-INF/views/common/sidebar.jsp" />
+
 	<h1>작업 목록</h1>
 	<form action="tasks/add" method="post">
 		<input type="text" name="title" placeholder="새 작업 입력" required>

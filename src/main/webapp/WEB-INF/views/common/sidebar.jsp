@@ -20,6 +20,7 @@
 				</a></li>
 			</c:forEach>
 		</ul>
+			<button onclick="location.href='/logout'">로그아웃</button>
 	</div>
 	
 	<!-- 추가된 JavaScript: 현재 URL에 따라 active 클래스 부여 -->
@@ -35,5 +36,7 @@
 		    });
 		});
 	</script>
+	
+
 </body>
 </html>

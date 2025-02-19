@@ -2,8 +2,10 @@ package com.app.controller.notice;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.app.dto.MenuItem;
 import com.app.dto.notice.Notice;
 import com.app.service.notice.NoticeService;
 
@@ -28,10 +31,26 @@ public class NoticeController {
 	NoticeService noticeService;
 	
 	@GetMapping
-	public String notice(HttpSession session, Model model) {
-//		if( session.getAttribute("loginUserId") == null ) {
-//			return "redirect:/login";
-//		}
+	public String notice(HttpSession session, Model model, HttpServletRequest request) {
+		if( session.getAttribute("loginUserId") == null ) {
+			return "redirect:/login";
+		};
+		
+		//sidebar
+		List<MenuItem> menuList = new ArrayList<>();
+        menuList.add(new MenuItem("홈", "/main", false));
+        menuList.add(new MenuItem("공지사항", "/notice", false));
+        menuList.add(new MenuItem("사내게시판", "/board/list", false));
+        menuList.add(new MenuItem("마이페이지", "/mypage", false));
+        menuList.add(new MenuItem("캘린더", "/calendar", false));
+        menuList.add(new MenuItem("ToDoList", "/tasks", false)); // 현재 활성화
+        menuList.add(new MenuItem("주소록", "/address", false));
+        menuList.add(new MenuItem("전자결제", "/payment", false));
+
+        // request 스코프에 저장하여 JSP에서 사용 가능하도록 함
+        request.setAttribute("menuList", menuList);
+        //
+		
 		
 		LocalDate date = LocalDate.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
