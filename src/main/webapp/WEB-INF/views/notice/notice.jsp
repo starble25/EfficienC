@@ -7,8 +7,9 @@
 <meta charset="UTF-8">
 <title>공지사항</title>
 
-<link href="/css/notice.css?after" rel="stylesheet">
 <link rel="stylesheet" href="<c:url value='/css/style.css'/>" />
+<link href="/css/notice.css?after" rel="stylesheet">
+
 
 </head>
 <body>
