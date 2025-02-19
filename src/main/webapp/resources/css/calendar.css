@@ -1,32 +1,31 @@
 @charset "UTF-8";
 
-body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    display: flex;
-    height: 100vh;
-    overflow: hidden;
-}
+/* body { */
+/*     font-family: Arial, sans-serif; */
+/*     text-align: center; */
+/*     display: flex; */
+/*     height: 100vh; */
+/*     overflow: hidden; */
+/* } */
 
 /* 📌 왼쪽 사이드바 (고정 위치) */
 .calendarSidebar {
-    width: 260px;
+    width: 200px;
     height: 100vh;
     background-color: #f8f9fa;
     padding: 20px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-    position: fixed;
-    left: 200px;
     top: 0;
     overflow-y: auto;
     z-index: 10;
+    float:left;
 }
 
 /* 📌 "일정 등록" 버튼 */
 .calendarSidebar button {
     width: 100%;
     padding: 10px;
-    background-color: #007bff;
+    background-color: #C2E2E8;/*일정등록버튼*/
     color: white;
     border: none;
     border-radius: 5px;
@@ -53,7 +52,7 @@ body {
 
 .calendar-list li {
     display: flex;
-    align-items: center;
+/*     align-items: center; */
     font-size: 14px;
     margin-bottom: 5px;
 }
@@ -85,8 +84,8 @@ body {
 
 /* 📌 캘린더 컨테이너 */
 .calendar-container {
-    width: calc(100% - 280px);
-    margin-left: 280px;
+	width : 60%;
+/*     width: calc(100% - 280px); */
     padding: 20px;
     overflow-x: auto;
     overflow-y: hidden;
@@ -95,7 +94,7 @@ body {
 /* 📌 캘린더 테이블 */
 table {
     width: 100%;
-    min-width: 900px;
+/*     min-width: 900px; */
     border-collapse: collapse;
     table-layout: fixed;
 }
@@ -112,7 +111,7 @@ th, td {
 
 /* 📌 오늘 날짜 강조 (노란색) */
 .today {
-    background-color: #ffeb3b !important;
+    background-color:#EAEAEA !important; /*오늘날짜*/
     font-weight: bold;
 }
 
@@ -139,10 +138,10 @@ th, td {
     position: fixed;
     z-index: 100;
     left: 50%;
-    top: 50%;
+    top: 30%;
     transform: translate(-50%, -50%);
     width: 400px;
-    background-color: white;
+    background-color: #b7b7b7; /*모달창 바탕색*/
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     padding: 20px;
