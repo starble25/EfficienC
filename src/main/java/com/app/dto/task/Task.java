@@ -8,7 +8,7 @@ public class Task {
 	    private String title;
 	    private String description;
 	    private String status; // "TODO", "IN_PROGRESS", "DONE"
-	    
+	   
 
 //	    public Task() {}
 //
@@ -18,7 +18,6 @@ public class Task {
 //	        this.description = description;
 //	        this.status = status;
 //	    }
-//
 //	    public int getId() { return id; }
 //	    public void setId(int id) { this.id = id; }
 //
