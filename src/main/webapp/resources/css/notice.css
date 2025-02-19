@@ -20,8 +20,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-
-    border-bottom: 2px solid blue;
 }
 
 .noticeContainer h2 {
@@ -51,7 +49,7 @@
     /* 행 높이 */
     & tr {
         height: 65px;
-        border-bottom: 1px solid green;
+        border-bottom: 1px solid gray;
     }
 
     /* 행 길이 */
@@ -69,7 +67,7 @@
 }
 
 .noticeContainer .itemContainer .showContent {
-    background-color: aqua;
+    background-color: rgb(216, 216, 216);
     cursor: pointer;
 }
 
@@ -95,6 +93,20 @@
 }
 .rowAnime {
     animation: rowAnime 0.5s forwards;
+}
+
+/* 삭제버튼 */
+.btnDeleteNotice {
+    padding: 5px 10px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #c7352b;
+    }
 }
 
 /* 공지사항 추가 모달창 */

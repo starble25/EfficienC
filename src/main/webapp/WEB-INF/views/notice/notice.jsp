@@ -22,7 +22,7 @@
         </div>
         <div class="itemContainer">
             <table>
-                <tr style="background-color: orange;">
+                <tr style="background-color: #9ae49d;">
                     <th class="colTitle">제목</th>
                     <th class="colAuthor">작성자</th>
                     <th class="colDate">작성일</th>

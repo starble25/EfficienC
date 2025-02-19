@@ -68,17 +68,30 @@ public class AddressController {
 	
 	@PostMapping("/address")
 	public String addressMainAction(Model model, HttpServletRequest request, HttpSession session) {
-		System.out.println("/address POST 요청 들어옴");
-		System.out.println("searchKeyword 값 : " + request.getParameter("searchKeyword"));
-		
-		// 내 주소록 리스트 추가
+		//로그인 id 세션값 받아와서 세팅
 		if( session.getAttribute("loginUserId") == null ) {
 			return "redirect:/login";
 		}
 		int loginUserId = (int) session.getAttribute("loginUserId");
+		
+		//sidebar
+		List<MenuItem> menuList = new ArrayList<>();
+        menuList.add(new MenuItem("홈", "/main", false));
+        menuList.add(new MenuItem("공지사항", "/notice", false));
+        menuList.add(new MenuItem("사내게시판", "/board/list", false));
+        menuList.add(new MenuItem("마이페이지", "/mypage", false));
+        menuList.add(new MenuItem("캘린더", "/calendar", false));
+        menuList.add(new MenuItem("ToDoList", "/tasks", false)); // 현재 활성화
+        menuList.add(new MenuItem("주소록", "/address", false));
+        menuList.add(new MenuItem("전자결제", "/payment", false));
+
+        // request 스코프에 저장하여 JSP에서 사용 가능하도록 함
+        request.setAttribute("menuList", menuList);
+        //
+		
+		// 내 주소록 리스트 추가
 		List<User> addressUserList = addressService.findAddressUserList(loginUserId);
 		model.addAttribute("addressUserList", addressUserList);
-		System.out.println(addressUserList);
 		
 		// 검색결과 주소록
 		int showAddress = 2;
@@ -121,9 +134,6 @@ public class AddressController {
 	@ResponseBody
 	@PostMapping("address/addUser")
 	public void addUser(HttpSession session, @RequestBody String data) {
-		System.out.println("address/addUser ajax post");
-		System.out.println("data(추가할 유저 id) : " + data);
-		
 		if( session.getAttribute("loginUserId") != null ) {
 			
 			int loginUserId = (int) session.getAttribute("loginUserId");

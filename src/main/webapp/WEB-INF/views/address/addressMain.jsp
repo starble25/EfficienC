@@ -14,7 +14,7 @@
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/common/sidebar.jsp" />
-	<h1>주소록 메인 페이지</h1>
+	<h1 id="addressMainTitle" onclick="location.href = '/address'">내 주소록</h1>
     <div class="addressMainContainer">
         <div class="searchBar">
 	        <form action="" method="post">
